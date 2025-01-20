@@ -29,6 +29,7 @@
     
     <!-- Scripts -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <script src="navbar.js"></script>
 
     <!-- ICONS -->
     <link rel="apple-touch-icon" sizes="180x180" href="./images/apple-touch-icon.png">
@@ -137,7 +138,7 @@
                            class="bg-blue-600 hover:bg-blue-700 px-8 py-4 rounded-lg font-medium text-lg text-center transition">
                             Donate Now
                         </a>
-                        <a href="./action.html" 
+                        <a href="/action" 
                            class="bg-gray-700 hover:bg-gray-600 px-8 py-4 rounded-lg font-medium text-lg text-center transition">
                             Take Action
                         </a>
@@ -304,13 +305,13 @@
         <div class="container mx-auto px-4 text-center">
             <h2 class="text-3xl font-bold mb-8">Ready to Take Action?</h2>
             <div class="flex flex-col md:flex-row gap-4 justify-center">
-                <a href="./action.html" 
+                <a href="/action" 
                    class="bg-blue-600 hover:bg-blue-700 px-8 py-4 rounded-lg font-medium text-lg transition">
                     Start Marketing
                 </a>
-                <a href="./designs.html"
+                <a href="/designs"
                    class="bg-gray-700 hover:bg-gray-600 px-8 py-4 rounded-lg font-medium text-lg transition">
-                    Join Design Contest
+                    Browse Designs
                 </a>
             </div>
         </div>
@@ -320,32 +321,13 @@
 	<div id="footer"></div>
 	
 	<script>
-        $(document).ready(function() {
-            $('#navbar').load('/navbar.html');
-            $('#footer').load('/footer.html'); 
+         $(document).ready(function() {
+            $('#navbar').load('/navbar.html', function() {
+                initMobileMenu();
+            });
+
+            $('#footer').load('/footer.html');
         });
-
-		// Mobile menu toggle with jQuery
-		$(document).ready(function() {
-			$('#mobile-menu-button').on('click', function() {
-				$('#mobile-menu').slideToggle(200);
-				$('#mobile-menu').toggleClass('active');
-			});
-
-			// Close menu when clicking outside
-			$(document).on('click', function(e) {
-				if (!$(e.target).closest('#mobile-menu-button').length && !$(e.target).closest('#mobile-menu').length) {
-					$('#mobile-menu').slideUp(200);
-				}
-			});
-
-			// Close menu on resize if we hit desktop breakpoint
-			$(window).resize(function() {
-				if ($(window).width() > 768) {
-					$('#mobile-menu').slideUp(0);
-				}
-			});
-		});
 
         // Smooth scroll for anchor links
         $('a[href^="#"]').click(function(e) {
@@ -373,6 +355,7 @@
                     alert('Failed to copy address. Please try again.');
                 });
         }
+
         // Lazy load images
         document.addEventListener('DOMContentLoaded', function() {
             const lazyImages = document.querySelectorAll('img.lazy-load');

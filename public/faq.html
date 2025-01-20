@@ -14,6 +14,7 @@
 
     <!-- Scripts -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <script src="navbar.js"></script>
 
     <!-- ICONS -->
     <link rel="apple-touch-icon" sizes="180x180" href="./images/apple-touch-icon.png">
@@ -370,8 +371,11 @@
 
     <script>
       $(document).ready(function() {
-          $('#navbar').load('/navbar.html');
-          $('#footer').load('/footer.html'); 
+          $('#navbar').load('/navbar.html', function() {
+              initMobileMenu();
+          });
+
+          $('#footer').load('/footer.html');
       });
 
       // FAQ Functionality
@@ -387,31 +391,6 @@
           // Toggle current answer
           $answer.slideToggle(200);
           $(this).toggleClass('active');
-        });
-      });
-
-      // Mobile menu toggle with jQuery
-      $(document).ready(function () {
-        $('#mobile-menu-button').on('click', function () {
-          $('#mobile-menu').slideToggle(200);
-          $('#mobile-menu').toggleClass('active');
-        });
-
-        // Close menu when clicking outside
-        $(document).on('click', function (e) {
-          if (
-            !$(e.target).closest('#mobile-menu-button').length &&
-            !$(e.target).closest('#mobile-menu').length
-          ) {
-            $('#mobile-menu').slideUp(200);
-          }
-        });
-
-        // Close menu on resize if we hit desktop breakpoint
-        $(window).resize(function () {
-          if ($(window).width() > 768) {
-            $('#mobile-menu').slideUp(0);
-          }
         });
       });
 
