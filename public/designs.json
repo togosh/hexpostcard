@@ -1,0 +1,1581 @@
+[
+    {
+        "id": "1",
+        "designType": "postcard",
+        "coins": [
+            "HEX"
+        ],
+        "images": [
+            "https://hexpostcards.com/designs/HEXpostcard_6.5x9_Fillup_SideA_03.png",
+            "https://hexpostcards.com/designs/HEXpostcard_6.5x9_Fillup_SideB_03.png"
+        ],
+        "pdf": "./designs/HEXpostcard_6.5x9_Fillup_SideA_03.pdf",
+        "creator": "Fillup Banks",
+        "twitter": "https://x.com/fillup_banks"
+    },
+    {
+        "id": "2",
+        "designType": "postcard",
+        "coins": [
+            "HEX",
+            "PLS",
+            "PLSX"
+        ],
+        "images": [
+            "/designs/HEXpostcard_6.5x9_Fillup_BothSides.jpg"
+        ],
+        "creator": "Fillup Banks",
+        "twitter": "https://x.com/fillup_banks"
+    },
+    {
+        "id": "3",
+        "designType": "postcard",
+        "coins": [
+            "HEX"
+        ],
+        "images": [
+            "/designs/HEXpostcards_4.25x11_Fillup_BothSides.jpg"
+        ],
+        "creator": "Fillup Banks",
+        "twitter": "https://x.com/fillup_banks"
+    },
+    {
+        "id": "4",
+        "designType": "postcard",
+        "coins": [
+            "HEX"
+        ],
+        "images": [
+            "/designs/HEXpostcards_THOS_vertical.jpg"
+        ],
+        "creator": "THOS"
+    },
+    {
+        "id": "6",
+        "designType": "postcard",
+        "coins": [
+            "HEX",
+            "PLS",
+            "PLSX"
+        ],
+        "images": [
+            "/contest02/15_Ridho_01.jpg",
+            "/contest02/15_Ridho_02.jpg"
+        ],
+        "creator": "Ridho",
+        "telegram": "https://t.me/RIH69",
+        "address": "0x7A204Fc46c79Fa477cD5Fe79e975b9476BA0cE8d",
+        "contestId": "contest02"
+    },
+    {
+        "id": "7",
+        "designType": "postcard",
+        "coins": [
+            "HEX",
+            "PLS"
+        ],
+        "images": [
+            "/contest02/4_Kita_01.jpg",
+            "/contest02/4_Kita_02.jpg"
+        ],
+        "creator": "Kita Boleh",
+        "telegram": "https://t.me/antidump25",
+        "address": "0x5A9a201007CDE8B95e70C0c0CeDD50F26b6Ba047",
+        "contestId": "contest02"
+    },
+    {
+        "id": "8",
+        "designType": "postcard",
+        "coins": [
+            "HEX"
+        ],
+        "images": [
+            "/contest02/4_Kita_03.jpg",
+            "/contest02/4_Kita_04.jpg"
+        ],
+        "creator": "Kita Boleh",
+        "telegram": "https://t.me/antidump25",
+        "address": "0x5A9a201007CDE8B95e70C0c0CeDD50F26b6Ba047",
+        "contestId": "contest02"
+    },
+    {
+        "id": "9",
+        "designType": "postcard",
+        "coins": [
+            "PLS"
+        ],
+        "images": [
+            "/contest02/2_Flaws_01.jpg",
+            "/contest02/2_Flaws_02.jpg"
+        ],
+        "creator": "Flaws",
+        "contestId": "contest02"
+    },
+    {
+        "id": "10",
+        "designType": "postcard",
+        "coins": [
+            "HEX"
+        ],
+        "images": [
+            "/contest02/2_Flaws_03.jpg"
+        ],
+        "creator": "Flaws",
+        "contestId": "contest02"
+    },
+    {
+        "id": "11",
+        "designType": "postcard",
+        "coins": [
+            "PLS"
+        ],
+        "images": [
+            "/contest02/16_Jise_01.jpg",
+            "/contest02/16_Jise_02.jpg"
+        ],
+        "creator": "Jise",
+        "telegram": "https://t.me/Jise_11",
+        "address": "0x7d99deeac00eBe0dfE3255de7e55FB8A452cE6a8",
+        "contestId": "contest02"
+    },
+    {
+        "id": "12",
+        "designType": "postcard",
+        "coins": [
+            "PLS"
+        ],
+        "images": [
+            "/contest02/8_Cosmo_01.jpg",
+            "/contest02/8_Cosmo_02.jpg"
+        ],
+        "creator": "Cosmo",
+        "telegram": "https://t.me/CosmoNFTs",
+        "twitter": "https://twitter.com/cosmoNFT",
+        "address": "0x0e724D52da1A6B35Be186e638b19707974effFA4",
+        "contestId": "contest02"
+    },
+    {
+        "id": "13",
+        "designType": "postcard",
+        "coins": [
+            "PLS"
+        ],
+        "images": [
+            "/contest02/21_Hachem_01.jpg",
+            "/contest02/21_Hachem_02.jpg"
+        ],
+        "creator": "Hachem",
+        "telegram": "https://t.me/hachemdznn",
+        "contestId": "contest02"
+    },
+    {
+        "id": "14",
+        "designType": "postcard",
+        "coins": [
+            "PLS"
+        ],
+        "images": [
+            "/contest02/24_Ugsh_01.jpg",
+            "/contest02/24_Ugsh_02.jpg"
+        ],
+        "creator": "Ugsh",
+        "address": "0x03Ad09bC16F07fC21EDd1F126b3a53854CbEf650",
+        "contestId": "contest02"
+    },
+    {
+        "id": "15",
+        "designType": "postcard",
+        "coins": [
+            "PLS"
+        ],
+        "images": [
+            "/contest02/22_CryptoTruth_01.jpg"
+        ],
+        "creator": "CryptoTruth",
+        "telegram": "https://t.me/CryptoTruth365",
+        "address": "0xFf6e83A0F5dC4C617094d2837866c8BceBB6214A",
+        "contestId": "contest02"
+    },
+    {
+        "id": "16",
+        "designType": "postcard",
+        "coins": [
+            "PLS"
+        ],
+        "images": [
+            "/contest02/23_Tob_01.jpg"
+        ],
+        "creator": "Tob",
+        "telegram": "https://t.me/tobzwei",
+        "address": "0xa59269584Fa2583A74F32D4a7E6d430DbB648D26",
+        "contestId": "contest02"
+    },
+    {
+        "id": "17",
+        "designType": "postcard",
+        "coins": [
+            "PLS"
+        ],
+        "images": [
+            "/contest02/18_Faaz_01.jpg"
+        ],
+        "creator": "Faaz",
+        "telegram": "https://t.me/faazx0",
+        "address": "0x5e0885D5348D36fc480F5e7D834495569D770c23",
+        "contestId": "contest02"
+    },
+    {
+        "id": "18",
+        "designType": "postcard",
+        "coins": [
+            "PLS"
+        ],
+        "images": [
+            "/contest02/11_CryBaby_01.jpg"
+        ],
+        "creator": "CryBaby",
+        "telegram": "https://t.me/Papahaliffreal",
+        "address": "0x9Ff6429723B0Dd4e0c6fb52CccEcd26b676A52c7",
+        "contestId": "contest02"
+    },
+    {
+        "id": "19",
+        "designType": "postcard",
+        "coins": [
+            "PLS"
+        ],
+        "images": [
+            "/contest02/1_MaiaD393_02.jpg"
+        ],
+        "creator": "MaiaD",
+        "telegram": "https://t.me/MaiaD393",
+        "twitter": "https://twitter.com/traveler393",
+        "address": "0x3949Ba0c01C6b095BB74CF68d851A3aD3346C8C4",
+        "contestId": "contest02"
+    },
+    {
+        "id": "20",
+        "designType": "postcard",
+        "coins": [
+            "PLSX"
+        ],
+        "images": [
+            "/contest02/1_MaiaD393_07.jpg"
+        ],
+        "creator": "MaiaD",
+        "contestId": "contest02"
+    },
+    {
+        "id": "21",
+        "designType": "postcard",
+        "coins": [
+            "PLS"
+        ],
+        "images": [
+            "/contest02/1_MaiaD393_03.jpg"
+        ],
+        "creator": "MaiaD",
+        "telegram": "https://t.me/MaiaD393",
+        "twitter": "https://twitter.com/traveler393",
+        "address": "0x3949Ba0c01C6b095BB74CF68d851A3aD3346C8C4",
+        "contestId": "contest02"
+    },
+    {
+        "id": "22",
+        "designType": "postcard",
+        "coins": [
+            "HEX",
+            "PLS",
+            "PLSX"
+        ],
+        "images": [
+            "/contest02/1_MaiaD393_04.jpg"
+        ],
+        "creator": "MaiaD",
+        "contestId": "contest02"
+    },
+    {
+        "id": "23",
+        "designType": "postcard",
+        "coins": [
+            "HEX"
+        ],
+        "images": [
+            "/contest/HEXpostcarddesign_015.jpg",
+            "/contest/HEXpostcarddesign_015b.jpg"
+        ],
+        "creator": "0xJohn",
+        "telegram": "https://t.me/crypto0xJohn",
+        "contestId": "contest"
+    },
+    {
+        "id": "24",
+        "designType": "postcard",
+        "coins": [
+            "HEX"
+        ],
+        "images": [
+            "/contest/HEXpostcarddesign_014.jpg",
+            "/contest/HEXpostcarddesign_014b.jpg"
+        ],
+        "creator": "Kax Design",
+        "twitter": "https://twitter.com/kax_design",
+        "telegram": "https://t.me/kdesign25",
+        "contestId": "contest"
+    },
+    {
+        "id": "25",
+        "designType": "postcard",
+        "coins": [
+            "HEX"
+        ],
+        "images": [
+            "/contest/HEXpostcarddesign_014dark.jpg",
+            "/contest/HEXpostcarddesign_014darkb.jpg"
+        ],
+        "creator": "Kax Design",
+        "twitter": "https://twitter.com/kax_design",
+        "telegram": "https://t.me/kdesign25",
+        "contestId": "contest"
+    },
+    {
+        "id": "26",
+        "designType": "postcard",
+        "coins": [
+            "HEX"
+        ],
+        "images": [
+            "/contest/HEXpostcarddesign_007.jpg"
+        ],
+        "creator": "EcoBuildr",
+        "twitter": "https://twitter.com/EcoBuildr",
+        "contestId": "contest"
+    },
+    {
+        "id": "27",
+        "designType": "postcard",
+        "coins": [
+            "HEX"
+        ],
+        "images": [
+            "/contest/HEXpostcarddesign_008.jpg"
+        ],
+        "creator": "EcoBuildr",
+        "contestId": "contest"
+    },
+    {
+        "id": "28",
+        "designType": "postcard",
+        "coins": [
+            "HEX"
+        ],
+        "images": [
+            "/contest/HEXpostcarddesign_011.jpg",
+            "/contest/HEXpostcarddesign_011b.jpg"
+        ],
+        "creator": "B3NN0",
+        "contestId": "contest"
+    },
+    {
+        "id": "29",
+        "designType": "postcard",
+        "coins": [
+            "HEX"
+        ],
+        "images": [
+            "/contest/HEXpostcarddesign_018.jpg",
+            "/contest/HEXpostcarddesign_018b.jpg"
+        ],
+        "creator": "Neptune Creates",
+        "contestId": "contest"
+    },
+    {
+        "id": "30",
+        "designType": "postcard",
+        "coins": [
+            "PLS"
+        ],
+        "images": [
+            "/contest/HEXpostcarddesign_018c.jpg",
+            "/contest/HEXpostcarddesign_018d.jpg"
+        ],
+        "creator": "Neptune Creates",
+        "contestId": "contest"
+    },
+    {
+        "id": "31",
+        "designType": "postcard",
+        "coins": [
+            "HEX"
+        ],
+        "images": [
+            "/contest/HEXpostcarddesign_004.jpg"
+        ],
+        "creator": "EcoBuildr",
+        "twitter": "https://twitter.com/EcoBuildr",
+        "contestId": "contest"
+    },
+    {
+        "id": "32",
+        "designType": "postcard",
+        "coins": [
+            "HEX"
+        ],
+        "images": [
+            "/contest/HEXpostcarddesign_005.jpg"
+        ],
+        "creator": "EcoBuildr",
+        "contestId": "contest"
+    },
+    {
+        "id": "33",
+        "designType": "postcard",
+        "coins": [
+            "HEX"
+        ],
+        "images": [
+            "/contest/HEXpostcarddesign_009.jpg"
+        ],
+        "creator": "EcoBuildr",
+        "twitter": "https://twitter.com/EcoBuildr",
+        "contestId": "contest"
+    },
+    {
+        "id": "34",
+        "designType": "postcard",
+        "coins": [
+            "HEX"
+        ],
+        "images": [
+            "/contest/HEXpostcarddesign_010.jpg"
+        ],
+        "creator": "EcoBuildr",
+        "contestId": "contest"
+    },
+    {
+        "id": "35",
+        "designType": "postcard",
+        "coins": [
+            "PLS"
+        ],
+        "images": [
+            "/contest03/HEXpostcards_035_SurfGuy_a.jpg",
+            "/contest03/HEXpostcards_035_SurfGuy_b.jpg"
+        ],
+        "creator": "SurfGuy",
+        "telegram": "https://t.me/SurfGuy",
+        "contestId": "contest03"
+    },
+    {
+        "id": "36",
+        "designType": "postcard",
+        "coins": [
+            "HEX"
+        ],
+        "images": [
+            "/contest03/HEXpostcards_036_Heiihh_a.jpg",
+            "/contest03/HEXpostcards_036_Heiihh_b.jpg"
+        ],
+        "creator": "Heih",
+        "telegram": "https://t.me/Heiihh",
+        "contestId": "contest03"
+    },
+    {
+        "id": "37",
+        "designType": "postcard",
+        "coins": [
+            "HEX"
+        ],
+        "images": [
+            "/contest03/HEXpostcards_037_Hexgeta_a.jpg",
+            "/contest03/HEXpostcards_037_Hexgeta_b.jpg"
+        ],
+        "creator": "Hexgeta",
+        "telegram": "https://t.me/hexgeta",
+        "twitter": "https://twitter.com/hexgeta",
+        "contestId": "contest03"
+    },
+    {
+        "id": "38",
+        "designType": "postcard",
+        "coins": [
+            "HEX"
+        ],
+        "images": [
+            "/contest03/HEXpostcards_038_OTCTrader_a.jpg",
+            "/contest03/HEXpostcards_038_OTCTrader_b.jpg"
+        ],
+        "creator": "OTC Trader",
+        "telegram": "https://t.me/otctrader28",
+        "twitter": "https://twitter.com/otctrader28",
+        "contestId": "contest03"
+    },
+    {
+        "id": "39",
+        "designType": "postcard",
+        "coins": [
+            "HEX"
+        ],
+        "images": [
+            "/contest03/HEXpostcards_039_OTCTrader_a.jpg",
+            "/contest03/HEXpostcards_039_OTCTrader_b.jpg"
+        ],
+        "creator": "OTC Trader",
+        "telegram": "https://t.me/otctrader28",
+        "twitter": "https://twitter.com/otctrader28",
+        "contestId": "contest03"
+    },
+    {
+        "id": "40",
+        "designType": "postcard",
+        "coins": [
+            "HEX"
+        ],
+        "images": [
+            "/contest03/HEXpostcards_040_OTCTrader_a.jpg",
+            "/contest03/HEXpostcards_040_OTCTrader_b.jpg"
+        ],
+        "creator": "OTC Trader",
+        "telegram": "https://t.me/otctrader28",
+        "twitter": "https://twitter.com/otctrader28",
+        "contestId": "contest03"
+    },
+    {
+        "id": "41",
+        "designType": "postcard",
+        "coins": [
+            "HEX"
+        ],
+        "images": [
+            "/contest03/HEXpostcards_041_OTCTrader_a.jpg",
+            "/contest03/HEXpostcards_041_OTCTrader_b.jpg"
+        ],
+        "creator": "OTC Trader",
+        "telegram": "https://t.me/otctrader28",
+        "twitter": "https://twitter.com/otctrader28",
+        "contestId": "contest03"
+    },
+    {
+        "id": "42",
+        "designType": "postcard",
+        "coins": [
+            "HEX"
+        ],
+        "images": [
+            "/contest03/HEXpostcards_042_OTCTrader_a.jpg",
+            "/contest03/HEXpostcards_042_OTCTrader_b.jpg"
+        ],
+        "creator": "OTC Trader",
+        "telegram": "https://t.me/otctrader28",
+        "twitter": "https://twitter.com/otctrader28",
+        "contestId": "contest03"
+    },
+    {
+        "id": "43",
+        "designType": "postcard",
+        "coins": [
+            "HEX"
+        ],
+        "images": [
+            "/contest03/HEXpostcards_043_Yagiz_a.jpg",
+            "/contest03/HEXpostcards_043_Yagiz_b.jpg"
+        ],
+        "creator": "Yagiz",
+        "telegram": "https://t.me/yagizturkoglu",
+        "twitter": "https://twitter.com/HellTronx",
+        "contestId": "contest03"
+    },
+    {
+        "id": "44",
+        "designType": "postcard",
+        "coins": [
+            "PLS"
+        ],
+        "images": [
+            "/contest03/HEXpostcards_044_Hexgeta_a.jpg",
+            "/contest03/HEXpostcards_044_Hexgeta_b.jpg"
+        ],
+        "creator": "Hexgeta",
+        "telegram": "https://t.me/hexgeta",
+        "twitter": "https://twitter.com/hexgeta",
+        "contestId": "contest03"
+    },
+    {
+        "id": "46",
+        "designType": "postcard",
+        "coins": [
+            "PLS"
+        ],
+        "images": [
+            "/contest03/HEXpostcards_046_AWildSJ_a.jpg",
+            "/contest03/HEXpostcards_046_AWildSJ_b.jpg"
+        ],
+        "creator": "AWildSJ",
+        "telegram": "https://t.me/AWildSJ",
+        "twitter": "https://twitter.com/awildsj",
+        "address": "0xDE4AAe135C953a485F38672C8e4522e660e24b85",
+        "contestId": "contest03"
+    },
+    {
+        "id": "47",
+        "designType": "postcard",
+        "coins": [
+            "HEX"
+        ],
+        "images": [
+            "/contest03/HEXpostcards_047_Miguelon_a.jpg",
+            "/contest03/HEXpostcards_047_Miguelon_b.jpg"
+        ],
+        "creator": "Miguelon",
+        "contestId": "contest03"
+    },
+    {
+        "id": "48",
+        "designType": "postcard",
+        "coins": [
+            "HEX"
+        ],
+        "images": [
+            "/contest03/HEXpostcards_048_Nevan_a.jpg",
+            "/contest03/HEXpostcards_048_Nevan_b.jpg"
+        ],
+        "creator": "Nevan Draws",
+        "telegram": "https://t.me/Pulsepay",
+        "contestId": "contest03"
+    },
+    {
+        "id": "49",
+        "designType": "postcard",
+        "coins": [
+            "HEX"
+        ],
+        "images": [
+            "/contest03/HEXpostcards_049_HEXGlenn_a.png",
+            "/contest03/HEXpostcards_049_HEXGlenn_b.png"
+        ],
+        "creator": "HEX Glenn",
+        "telegram": "https://t.me/hexglenn",
+        "contestId": "contest03"
+    },
+    {
+        "id": "50",
+        "designType": "postcard",
+        "coins": [
+            "HEX"
+        ],
+        "images": [
+            "/contest03/HEXpostcards_050_HEXGlenn_a.png",
+            "/contest03/HEXpostcards_050_HEXGlenn_b.png"
+        ],
+        "creator": "HEX Glenn",
+        "telegram": "https://t.me/hexglenn",
+        "contestId": "contest03"
+    },
+    {
+        "id": "51",
+        "designType": "postcard",
+        "coins": [
+            "HEX"
+        ],
+        "images": [
+            "/contest03/HEXpostcards_051_HEXGlenn_a.png",
+            "/contest03/HEXpostcards_051_HEXGlenn_b.png"
+        ],
+        "creator": "HEX Glenn",
+        "telegram": "https://t.me/hexglenn",
+        "contestId": "contest03"
+    },
+    {
+        "id": "52",
+        "designType": "postcard",
+        "coins": [
+            "HEX",
+            "PLS"
+        ],
+        "images": [
+            "/contest03/HEXpostcards_052_HEXGlenn_a.png",
+            "/contest03/HEXpostcards_052_HEXGlenn_b.png"
+        ],
+        "creator": "HEX Glenn",
+        "telegram": "https://t.me/hexglenn",
+        "contestId": "contest03"
+    },
+    {
+        "id": "53",
+        "designType": "postcard",
+        "coins": [
+            "PLS"
+        ],
+        "images": [
+            "/contest03/HEXpostcards_053_HEXGlenn_a.png",
+            "/contest03/HEXpostcards_053_HEXGlenn_b.png"
+        ],
+        "creator": "HEX Glenn",
+        "telegram": "https://t.me/hexglenn",
+        "contestId": "contest03"
+    },
+    {
+        "id": "54",
+        "designType": "postcard",
+        "coins": [
+            "HEX",
+            "PLS",
+            "PLSX"
+        ],
+        "images": [
+            "/contest03/HEXpostcards_054_Wael_a.png",
+            "/contest03/HEXpostcards_054_Wael_b.png"
+        ],
+        "creator": "Wael Ben Said",
+        "telegram": "https://t.me/TnHexican",
+        "contestId": "contest03"
+    },
+    {
+        "id": "55",
+        "designType": "postcard",
+        "coins": [
+            "HEX",
+            "PLS",
+            "PLSX"
+        ],
+        "images": [
+            "/contest03/HEXpostcards_055_Ecobuildr_a.jpg",
+            "/contest03/HEXpostcards_055_Ecobuildr_b.jpg"
+        ],
+        "creator": "EcoBuildr",
+        "telegram": "https://t.me/EcoBuild_davin_HEX_OG_Texas",
+        "twitter": "https://twitter.com/EcoBuildr",
+        "contestId": "contest03"
+    },
+    {
+        "id": "56",
+        "designType": "postcard",
+        "coins": [
+            "HEX"
+        ],
+        "images": [
+            "/contest03/HEXpostcards_056_Ecobuildr_a.jpg",
+            "/contest03/HEXpostcards_056_Ecobuildr_b.jpg"
+        ],
+        "creator": "EcoBuildr",
+        "telegram": "https://t.me/EcoBuild_davin_HEX_OG_Texas",
+        "twitter": "https://twitter.com/EcoBuildr",
+        "contestId": "contest03"
+    },
+    {
+        "id": "57",
+        "designType": "postcard",
+        "coins": [
+            "HEX"
+        ],
+        "images": [
+            "/contest03/HEXpostcards_057_Ecobuildr_a.jpg",
+            "/contest03/HEXpostcards_057_Ecobuildr_b.jpg"
+        ],
+        "creator": "EcoBuildr",
+        "telegram": "https://t.me/EcoBuild_davin_HEX_OG_Texas",
+        "twitter": "https://twitter.com/EcoBuildr",
+        "contestId": "contest03"
+    },
+    {
+        "id": "58",
+        "designType": "postcard",
+        "coins": [
+            "HEX",
+            "PLS"
+        ],
+        "images": [
+            "/contest03/HEXpostcards_058_MatiAllin_a.jpg",
+            "/contest03/HEXpostcards_058_MatiAllin_b.jpg"
+        ],
+        "creator": "Mati Allin",
+        "telegram": "https://t.me/MatiAllin",
+        "twitter": "https://twitter.com/MatiAllin",
+        "contestId": "contest03"
+    },
+    {
+        "id": "59",
+        "designType": "postcard",
+        "coins": [
+            "PLS"
+        ],
+        "images": [
+            "/contest03/HEXpostcards_059_SurfGuy_a.jpg",
+            "/contest03/HEXpostcards_059_SurfGuy_b.jpg"
+        ],
+        "creator": "SurfGuy",
+        "telegram": "https://t.me/SurfGuy",
+        "contestId": "contest03"
+    },
+    {
+        "id": "60",
+        "designType": "postcard",
+        "coins": [
+            "HEX",
+            "PLS"
+        ],
+        "images": [
+            "/contest04/HEXpostcards_060_EcoBuildr_a.jpg",
+            "/contest04/HEXpostcards_060_EcoBuildr_b.jpg"
+        ],
+        "creator": "Ecobuildr",
+        "telegram": "https://t.me/EcoBuild_davin_HEX_OG_Texas",
+        "twitter": "https://twitter.com/EcoBuildr",
+        "contestId": "contest04"
+    },
+    {
+        "id": "61",
+        "designType": "postcard",
+        "coins": [
+            "HEX"
+        ],
+        "images": [
+            "/contest04/HEXpostcards_061_MrsHexican_a.jpg",
+            "/contest04/HEXpostcards_061_MrsHexican_b.jpg"
+        ],
+        "creator": "Mrs Hexican",
+        "telegram": "https://t.me/MrsHexican",
+        "twitter": "https://twitter.com/MrsHexican",
+        "contestId": "contest04"
+    },
+    {
+        "id": "62",
+        "designType": "postcard",
+        "coins": [
+            "HEX"
+        ],
+        "images": [
+            "/contest04/HEXpostcards_062_MrsHexican_a.jpg",
+            "/contest04/HEXpostcards_062_MrsHexican_b.jpg"
+        ],
+        "creator": "Mrs Hexican",
+        "telegram": "https://t.me/MrsHexican",
+        "twitter": "https://twitter.com/MrsHexican",
+        "contestId": "contest04"
+    },
+    {
+        "id": "63",
+        "designType": "postcard",
+        "coins": [
+            "HEX"
+        ],
+        "images": [
+            "/contest04/HEXpostcards_063_AliSaei_a.jpg",
+            "/contest04/HEXpostcards_063_AliSaei_b.jpg"
+        ],
+        "creator": "Ali Saei",
+        "twitter": "https://x.com/AliSaei31507218",
+        "contestId": "contest04"
+    },
+    {
+        "id": "64",
+        "designType": "postcard",
+        "coins": [
+            "HEX"
+        ],
+        "images": [
+            "/contest04/HEXpostcards_064_GarO5555_a.jpg",
+            "/contest04/HEXpostcards_064_GarO5555_b.jpg"
+        ],
+        "creator": "GarO#5555",
+        "twitter": "https://x.com/gar_crypto",
+        "contestId": "contest04"
+    },
+    {
+        "id": "65",
+        "designType": "postcard",
+        "coins": [
+            "HEX"
+        ],
+        "images": [
+            "/contest04/HEXpostcards_065_CryptoGainsClub_a.jpg"
+        ],
+        "creator": "CryptoGainsClub",
+        "twitter": "https://x.com/CryptoGainsClub",
+        "contestId": "contest04"
+    },
+    {
+        "id": "66",
+        "designType": "postcard",
+        "coins": [
+            "HEX"
+        ],
+        "images": [
+            "/contest04/HEXpostcards_066_Hexgeta.jpg"
+        ],
+        "creator": "Hexgeta",
+        "telegram": "https://t.me/hexgeta",
+        "twitter": "https://twitter.com/hexgeta",
+        "contestId": "contest04"
+    },
+    {
+        "id": "67",
+        "designType": "postcard",
+        "coins": [
+            "HEX"
+        ],
+        "images": [
+            "/contest04/HEXpostcards_067_Hexgeta.jpg"
+        ],
+        "creator": "Hexgeta",
+        "telegram": "https://t.me/hexgeta",
+        "twitter": "https://twitter.com/hexgeta",
+        "contestId": "contest04"
+    },
+    {
+        "id": "68",
+        "designType": "postcard",
+        "coins": [
+            "HEX"
+        ],
+        "images": [
+            "/contest04/HEXpostcards_068_Hexgeta.jpg"
+        ],
+        "creator": "Hexgeta",
+        "telegram": "https://t.me/hexgeta",
+        "twitter": "https://twitter.com/hexgeta",
+        "contestId": "contest04"
+    },
+    {
+        "id": "69",
+        "designType": "postcard",
+        "coins": [
+            "HEX"
+        ],
+        "images": [
+            "/contest04/HEXpostcards_069_Hexgeta.jpg"
+        ],
+        "creator": "Hexgeta",
+        "telegram": "https://t.me/hexgeta",
+        "twitter": "https://twitter.com/hexgeta",
+        "contestId": "contest04"
+    },
+    {
+        "id": "70",
+        "designType": "postcard",
+        "coins": [
+            "HEX",
+            "PLS",
+            "PLSX"
+        ],
+        "images": [
+            "/contest04/HEXpostcards_070_EuphoriaDesign.jpg"
+        ],
+        "creator": "Euphoria Design",
+        "twitter": "https://x.com/EuphoriaWeb3",
+        "contestId": "contest04"
+    },
+    {
+        "id": "71",
+        "designType": "postcard",
+        "coins": [
+            "HEX",
+            "PLS",
+            "PLSX"
+        ],
+        "images": [
+            "/contest04/HEXpostcards_071_EuphoriaDesign.jpg"
+        ],
+        "creator": "Euphoria Design",
+        "twitter": "https://x.com/EuphoriaWeb3",
+        "contestId": "contest04"
+    },
+    {
+        "id": "72",
+        "designType": "postcard",
+        "coins": [
+            "HEX"
+        ],
+        "images": [
+            "/contest04/HEXpostcards_072_EuphoriaDesign.jpg"
+        ],
+        "creator": "Euphoria Design",
+        "twitter": "https://x.com/EuphoriaWeb3",
+        "contestId": "contest04"
+    },
+    {
+        "id": "73",
+        "designType": "postcard",
+        "coins": [
+            "HEX"
+        ],
+        "images": [
+            "/contest04/HEXpostcards_073_EuphoriaDesign.jpg"
+        ],
+        "creator": "Euphoria Design",
+        "twitter": "https://x.com/EuphoriaWeb3",
+        "contestId": "contest04"
+    },
+    {
+        "id": "74",
+        "designType": "postcard",
+        "coins": [
+            "HEX"
+        ],
+        "images": [
+            "/contest04/HEXpostcards_074_0xUltra.jpg"
+        ],
+        "creator": "0xUltra",
+        "twitter": "https://x.com/UltraBoolish",
+        "contestId": "contest04"
+    },
+    {
+        "id": "75",
+        "designType": "postcard",
+        "coins": [
+            "HEX"
+        ],
+        "images": [
+            "/contest04/HEXpostcards_075_VerityaThalassa_a.jpg"
+        ],
+        "creator": "Veritya Thalassa",
+        "twitter": "https://x.com/i_am_veritya",
+        "contestId": "contest04"
+    },
+    {
+        "id": "76",
+        "designType": "letter",
+        "coins": [
+            "HEX"
+        ],
+        "images": [
+            "/contest05/HEXpostcards_076_Defidazzle_HEX_page-0001.jpg",
+            "/contest05/HEXpostcards_076_Defidazzle_HEX_page-0002.jpg"
+        ],
+        "pdf": "/contest05/HEXpostcards_076_Defidazzle_HEX.pdf",
+        "creator": "Defidazzle",
+        "telegram": "https://t.me/DazzleQing",
+        "contestId": "contest05"
+    },
+    {
+        "id": "76",
+        "designType": "letter",
+        "coins": [
+            "PLS"
+        ],
+        "images": [
+            "/contest05/HEXpostcards_076_Defidazzle_PLS_page-0001.jpg",
+            "/contest05/HEXpostcards_076_Defidazzle_PLS_page-0002.jpg"
+        ],
+        "pdf": "/contest05/HEXpostcards_076_Defidazzle_PLS.pdf",
+        "creator": "Defidazzle",
+        "telegram": "https://t.me/DazzleQing",
+        "contestId": "contest05"
+    },
+    {
+        "id": "76",
+        "designType": "letter",
+        "coins": [
+            "PLSX"
+        ],
+        "images": [
+            "/contest05/HEXpostcards_076_Defidazzle_PLSX_page-0001.jpg",
+            "/contest05/HEXpostcards_076_Defidazzle_PLSX_page-0002.jpg"
+        ],
+        "pdf": "/contest05/HEXpostcards_076_Defidazzle_PLSX.pdf",
+        "creator": "Defidazzle",
+        "telegram": "https://t.me/DazzleQing",
+        "contestId": "contest05"
+    },
+    {
+        "id": "77",
+        "designType": "letter",
+        "coins": [
+            "HEX",
+            "PLS"
+        ],
+        "images": [
+            "/contest05/HEXpostcards_077_Meidika_page-0001.jpg",
+            "/contest05/HEXpostcards_077_Meidika_page-0002.jpg"
+        ],
+        "pdf": "/contest05/HEXpostcards_077_Meidika.pdf",
+        "creator": "Meidika",
+        "telegram": "https://t.me/AdirathN",
+        "twitter": "https://x.com/Crisangelcrypto",
+        "contestId": "contest05"
+    },
+    {
+        "id": "77",
+        "designType": "letter",
+        "coins": [
+            "PLS",
+            "PLSX"
+        ],
+        "images": [
+            "/contest05/HEXpostcards_077_Meidika_page-0002.jpg",
+            "/contest05/HEXpostcards_077_Meidika_page-0003.jpg"
+        ],
+        "pdf": "/contest05/HEXpostcards_077_Meidika.pdf",
+        "creator": "Meidika",
+        "telegram": "https://t.me/AdirathN",
+        "twitter": "https://x.com/Crisangelcrypto",
+        "contestId": "contest05"
+    },
+    {
+        "id": "78",
+        "designType": "letter",
+        "coins": [
+            "HEX",
+            "PLS"
+        ],
+        "images": [
+            "/contest05/HEXpostcards_078_Condor_01.jpg",
+            "/contest05/HEXpostcards_078_Condor_02.jpg"
+        ],
+        "creator": "Condor",
+        "contestId": "contest05"
+    },
+    {
+        "id": "79",
+        "designType": "letter",
+        "coins": [
+            "HEX"
+        ],
+        "images": [
+            "/contest05/HEXpostcards_079_Rebel_page-0001.jpg",
+            "/contest05/HEXpostcards_079_Rebel_page-0002.jpg"
+        ],
+        "pdf": "/contest05/HEXpostcards_079_Rebel.pdf",
+        "creator": "Rebel",
+        "contestId": "contest05"
+    },
+    {
+        "id": "79",
+        "designType": "letter",
+        "coins": [
+            "HEX"
+        ],
+        "images": [
+            "/contest05/HEXpostcards_079_Rebel_page-0003.jpg",
+            "/contest05/HEXpostcards_079_Rebel_page-0004.jpg"
+        ],
+        "pdf": "/contest05/HEXpostcards_079_Rebel.pdf",
+        "creator": "Rebel",
+        "contestId": "contest05"
+    },
+    {
+        "id": "79",
+        "designType": "letter",
+        "coins": [
+            "HEX"
+        ],
+        "images": [
+            "/contest05/HEXpostcards_079_Rebel_page-0005.jpg",
+            "/contest05/HEXpostcards_079_Rebel_page-0006.jpg"
+        ],
+        "pdf": "/contest05/HEXpostcards_079_Rebel.pdf",
+        "creator": "Rebel",
+        "contestId": "contest05"
+    },
+    {
+        "id": "79",
+        "designType": "letter",
+        "coins": [
+            "HEX"
+        ],
+        "images": [
+            "/contest05/HEXpostcards_079_Rebel_page-0007.jpg"
+        ],
+        "pdf": "/contest05/HEXpostcards_079_Rebel.pdf",
+        "creator": "Rebel",
+        "contestId": "contest05"
+    },
+    {
+        "id": "80",
+        "designType": "letter",
+        "coins": [
+            "HEX"
+        ],
+        "images": [
+            "/contest05/HEXpostcards_080_NotFound0000_page-0001.jpg",
+            "/contest05/HEXpostcards_080_NotFound0000_page-0002.jpg"
+        ],
+        "pdf": "/contest05/HEXpostcards_080_NotFound0000.pdf",
+        "creator": "NotFound0000",
+        "telegram": "https://t.me/Not_Found00000",
+        "contestId": "contest05"
+    },
+    {
+        "id": "80",
+        "designType": "letter",
+        "coins": [
+            "PLS"
+        ],
+        "images": [
+            "/contest05/HEXpostcards_080_NotFound0000_page-0003.jpg",
+            "/contest05/HEXpostcards_080_NotFound0000_page-0004.jpg"
+        ],
+        "pdf": "/contest05/HEXpostcards_080_NotFound0000.pdf",
+        "creator": "NotFound0000",
+        "telegram": "https://t.me/Not_Found00000",
+        "contestId": "contest05"
+    },
+    {
+        "id": "80",
+        "designType": "letter",
+        "coins": [
+            "PLSX"
+        ],
+        "images": [
+            "/contest05/HEXpostcards_080_NotFound0000_page-0005.jpg",
+            "/contest05/HEXpostcards_080_NotFound0000_page-0006.jpg"
+        ],
+        "pdf": "/contest05/HEXpostcards_080_NotFound0000.pdf",
+        "creator": "NotFound0000",
+        "telegram": "https://t.me/Not_Found00000",
+        "contestId": "contest05"
+    },
+    {
+        "id": "82",
+        "designType": "letter",
+        "coins": [
+            "HEX"
+        ],
+        "images": [
+            "/contest05/HEXpostcards_082_MaximusGenius_HEX.png",
+            "/contest05/HEXpostcards_082_MaximusGenius_HEX_02.png"
+        ],
+        "creator": "MaximusGenius",
+        "telegram": "https://t.me/KekiusArmy",
+        "contestId": "contest05"
+    },
+    {
+        "id": "82",
+        "designType": "letter",
+        "coins": [
+            "PLS"
+        ],
+        "images": [
+            "/contest05/HEXpostcards_082_MaximusGenius_PLS.png",
+            "/contest05/HEXpostcards_082_MaximusGenius_PLS_02.png"
+        ],
+        "creator": "MaximusGenius",
+        "telegram": "https://t.me/KekiusArmy",
+        "contestId": "contest05"
+    },
+    {
+        "id": "82",
+        "designType": "letter",
+        "coins": [
+            "PLSX"
+        ],
+        "images": [
+            "/contest05/HEXpostcards_082_MaximusGenius_PLSX.png",
+            "/contest05/HEXpostcards_082_MaximusGenius_PLSX_02.png"
+        ],
+        "creator": "MaximusGenius",
+        "telegram": "https://t.me/KekiusArmy",
+        "contestId": "contest05"
+    },
+    {
+        "id": "83a",
+        "designType": "letter",
+        "coins": [
+            "HEX"
+        ],
+        "images": [
+            "/contest05/HEXpostcards_083_Hexgeta_HEX_01_page-0001.jpg"
+        ],
+        "pdf": "/contest05/HEXpostcards_083_Hexgeta_HEX_01.pdf",
+        "creator": "Hexgeta",
+        "twitter": "https://x.com/hexgeta",
+        "contestId": "contest05"
+    },
+    {
+        "id": "83b",
+        "designType": "letter",
+        "coins": [
+            "HEX"
+        ],
+        "images": [
+            "/contest05/HEXpostcards_083_Hexgeta_HEX_02_page-0001.jpg"
+        ],
+        "pdf": "/contest05/HEXpostcards_083_Hexgeta_HEX_02.pdf",
+        "creator": "Hexgeta",
+        "twitter": "https://x.com/hexgeta",
+        "contestId": "contest05"
+    },
+    {
+        "id": "83c",
+        "designType": "letter",
+        "coins": [
+            "HEX"
+        ],
+        "images": [
+            "/contest05/HEXpostcards_083_Hexgeta_HEX_03_page-0001.jpg"
+        ],
+        "pdf": "/contest05/HEXpostcards_083_Hexgeta_HEX_03.pdf",
+        "creator": "Hexgeta",
+        "twitter": "https://x.com/hexgeta",
+        "contestId": "contest05"
+    },
+    {
+        "id": "84",
+        "designType": "letter",
+        "coins": [
+            "HEX"
+        ],
+        "images": [
+            "/contest05/HEXpostcards_084_Adenstar_HEX_page-0001.jpg"
+        ],
+        "pdf": "/contest05/HEXpostcards_084_Adenstar_HEX.pdf",
+        "creator": "Adenstar",
+        "telegram": "https://t.me/Adenstar31",
+        "twitter": "https://x.com/Adenstar31",
+        "contestId": "contest05"
+    },
+    {
+        "id": "84",
+        "designType": "letter",
+        "coins": [
+            "PLS"
+        ],
+        "images": [
+            "/contest05/HEXpostcards_084_Adenstar_PLS_page-0001.jpg"
+        ],
+        "pdf": "/contest05/HEXpostcards_084_Adenstar_PLS.pdf",
+        "creator": "Adenstar",
+        "telegram": "https://t.me/Adenstar31",
+        "twitter": "https://x.com/Adenstar31",
+        "contestId": "contest05"
+    },
+    {
+        "id": "85",
+        "designType": "letter",
+        "coins": [
+            "HEX"
+        ],
+        "images": [
+            "/contest05/HEXpostcards_Letter_HEX_page-0001.jpg",
+            "/contest05/HEXpostcards_Letter_HEX_page-0002.jpg"
+        ],
+        "pdf": "/contest05/HEXpostcards_Letter_HEX.pdf",
+        "creator": "Anonymous",
+        "contestId": "contest05"
+    },
+    {
+        "id": "85",
+        "designType": "letter",
+        "coins": [
+            "PLS"
+        ],
+        "images": [
+            "/contest05/HEXpostcards_Letter_PLS_page-0001.jpg",
+            "/contest05/HEXpostcards_Letter_PLS_page-0002.jpg"
+        ],
+        "pdf": "/contest05/HEXpostcards_Letter_PLS.pdf",
+        "creator": "Anonymous",
+        "contestId": "contest05"
+    },
+    {
+        "id": "85",
+        "designType": "letter",
+        "coins": [
+            "PLSX"
+        ],
+        "images": [
+            "/contest05/HEXpostcards_Letter_PLSX_page-0001.jpg",
+            "/contest05/HEXpostcards_Letter_PLSX_page-0002.jpg"
+        ],
+        "pdf": "/contest05/HEXpostcards_Letter_PLSX.pdf",
+        "creator": "Anonymous",
+        "contestId": "contest05"
+    },
+    {
+        "id": "86a",
+        "designType": "letter",
+        "coins": [
+            "HEX"
+        ],
+        "images": [
+            "/contest05/HEXpostcards_086_EuphoriaDesign_HEX_page-0001.jpg",
+            "/contest05/HEXpostcards_086_EuphoriaDesign_HEX_page-0002.jpg"
+        ],
+        "creator": "Euphoria Design",
+        "twitter": "https://x.com/EuphoriaWeb3",
+        "contestId": "contest05"
+    },
+    {
+        "id": "86a",
+        "designType": "letter",
+        "coins": [
+            "HEX"
+        ],
+        "images": [
+            "/contest05/HEXpostcards_086_EuphoriaDesign_HEX_page-0003.jpg"
+        ],
+        "creator": "Euphoria Design",
+        "twitter": "https://x.com/EuphoriaWeb3",
+        "contestId": "contest05"
+    },
+    {
+        "id": "86b",
+        "designType": "letter",
+        "coins": [
+            "PLS",
+            "PLSX"
+        ],
+        "images": [
+            "/contest05/HEXpostcards_086_EuphoriaDesign_PLS_page-0001.jpg",
+            "/contest05/HEXpostcards_086_EuphoriaDesign_PLS_page-0002.jpg"
+        ],
+        "creator": "Euphoria Design",
+        "twitter": "https://x.com/EuphoriaWeb3",
+        "contestId": "contest05"
+    },
+    {
+        "id": "86b",
+        "designType": "letter",
+        "coins": [
+            "PLS",
+            "PLSX"
+        ],
+        "images": [
+            "/contest05/HEXpostcards_086_EuphoriaDesign_PLS_page-0003.jpg",
+            "/contest05/HEXpostcards_086_EuphoriaDesign_PLS_page-0004.jpg"
+        ],
+        "creator": "Euphoria Design",
+        "twitter": "https://x.com/EuphoriaWeb3",
+        "contestId": "contest05"
+    },
+    {
+        "id": "87",
+        "designType": "letter",
+        "coins": [
+            "PLS"
+        ],
+        "images": [
+            "/contest05/HEXpostcards_087_Mimpo_PLS-1.jpg",
+            "/contest05/HEXpostcards_087_Mimpo_PLS-2.jpg"
+        ],
+        "pdf": "/contest05/HEXpostcards_087_Mimpo_PLS.pdf",
+        "creator": "Mimpo",
+        "telegram": "https://t.me/mimpowo",
+        "contestId": "contest05"
+    },
+    {
+        "id": "88",
+        "designType": "letter",
+        "coins": [
+            "PLS"
+        ],
+        "images": [
+            "/contest05/HEXpostcards_088_KyleCruise.jpg"
+        ],
+        "creator": "Kyle Cruise",
+        "twitter": "https://x.com/KCCrypto369",
+        "contestId": "contest05"
+    },
+    {
+        "id": "89",
+        "designType": "letter",
+        "coins": [
+            "HEX",
+            "PLS"
+        ],
+        "images": [
+            "/contest05/HEXpostcards_089_Goldkey_HEX.jpg",
+            "/contest05/HEXpostcards_089_Goldkey_PLS.jpg"
+        ],
+        "creator": "Goldkey",
+        "contestId": "contest05"
+    },
+    {
+        "id": "90",
+        "designType": "letter",
+        "coins": [
+            "HEX"
+        ],
+        "images": [
+            "/contest05/HEXpostcards_090_Rebel_page-0001.jpg",
+            "/contest05/HEXpostcards_090_Rebel_page-0002.jpg"
+        ],
+        "pdf": "/contest05/HEXpostcards_090_Rebel.pdf",
+        "creator": "Rebel",
+        "contestId": "contest05"
+    },
+    {
+        "id": "90",
+        "designType": "letter",
+        "coins": [
+            "HEX"
+        ],
+        "images": [
+            "/contest05/HEXpostcards_090_Rebel_page-0003.jpg",
+            "/contest05/HEXpostcards_090_Rebel_page-0004.jpg"
+        ],
+        "pdf": "/contest05/HEXpostcards_090_Rebel.pdf",
+        "creator": "Rebel",
+        "contestId": "contest05"
+    },
+    {
+        "id": "90",
+        "designType": "letter",
+        "coins": [
+            "PLS"
+        ],
+        "images": [
+            "/contest05/HEXpostcards_090_Rebel_Pulsechain_page-0001.jpg",
+            "/contest05/HEXpostcards_090_Rebel_Pulsechain_page-0002.jpg"
+        ],
+        "pdf": "/contest05/HEXpostcards_090_Rebel_Pulsechain.pdf",
+        "creator": "Rebel",
+        "contestId": "contest05"
+    },
+    {
+        "id": "90",
+        "designType": "letter",
+        "coins": [
+            "PLS"
+        ],
+        "images": [
+            "/contest05/HEXpostcards_090_Rebel_Pulsechain_page-0003.jpg",
+            "/contest05/HEXpostcards_090_Rebel_Pulsechain_page-0004.jpg"
+        ],
+        "pdf": "/contest05/HEXpostcards_090_Rebel_Pulsechain.pdf",
+        "creator": "Rebel",
+        "contestId": "contest05"
+    },
+    {
+        "id": "90",
+        "designType": "letter",
+        "coins": [
+            "PLS"
+        ],
+        "images": [
+            "/contest05/HEXpostcards_090_Rebel_Pulsechain_page-0005.jpg",
+            "/contest05/HEXpostcards_090_Rebel_Pulsechain_page-0006.jpg"
+        ],
+        "pdf": "/contest05/HEXpostcards_090_Rebel_Pulsechain.pdf",
+        "creator": "Rebel",
+        "contestId": "contest05"
+    },
+    {
+        "id": "90",
+        "designType": "letter",
+        "coins": [
+            "PLSX"
+        ],
+        "images": [
+            "/contest05/HEXpostcards_090_Rebel_PulseX_page-0001.jpg",
+            "/contest05/HEXpostcards_090_Rebel_PulseX_page-0002.jpg"
+        ],
+        "pdf": "/contest05/HEXpostcards_090_Rebel_PulseX.pdf",
+        "creator": "Rebel",
+        "contestId": "contest05"
+    },
+    {
+        "id": "90",
+        "designType": "letter",
+        "coins": [
+            "PLSX"
+        ],
+        "images": [
+            "/contest05/HEXpostcards_090_Rebel_PulseX_page-0003.jpg",
+            "/contest05/HEXpostcards_090_Rebel_PulseX_page-0004.jpg"
+        ],
+        "pdf": "/contest05/HEXpostcards_090_Rebel_PulseX.pdf",
+        "creator": "Rebel",
+        "contestId": "contest05"
+    }
+]

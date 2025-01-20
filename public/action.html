@@ -1,0 +1,508 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Take Action - HEXpostcards<</title>
+
+    <!-- Styles -->
+    <link
+      href="https://cdnjs.cloudflare.com/ajax/libs/tailwindcss/2.2.19/tailwind.min.css"
+      rel="stylesheet"
+    />
+    <link href="./css/styles.css" rel="stylesheet" />
+
+    <!-- Scripts -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+
+    <!-- ICONS -->
+    <link rel="apple-touch-icon" sizes="180x180" href="./images/apple-touch-icon.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="./images/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="./images/favicon-16x16.png">
+    <link rel="manifest" href="./site.webmanifest">
+    <link rel="mask-icon" href="./images/safari-pinned-tab.svg" color="#5bbad5">
+    <meta name="msapplication-TileColor" content="#da532c">
+    <meta name="theme-color" content="#ffffff">
+
+    <style>
+      /* Custom components */
+      .resource-card {
+        background-color: #1f2937;
+        border-radius: 0.5rem;
+        transition: transform 0.3s ease;
+      }
+
+      .resource-card:hover {
+        transform: translateY(-5px);
+      }
+
+      .link-card {
+        background-color: #10172d;
+        transition: all 0.3s ease;
+      }
+
+      .link-card:hover {
+        transform: scale(1.02);
+        box-shadow: 0 4px 15px rgba(59, 130, 246, 0.2);
+      }
+
+      .category-title {
+        position: relative;
+        padding-bottom: 0.5rem;
+      }
+
+      .category-title::after {
+        content: '';
+        position: absolute;
+        bottom: 0;
+        left: 0;
+        width: 50px;
+        height: 2px;
+        background-color: #3b82f6;
+      }
+    </style>
+  </head>
+  <body>
+    <!-- Navigation -->
+    <div id="navbar"></div>
+
+    <section class="pt-24 pb-12 bg-gradient-to-b from-blue-900 to-gray-900">
+      <div class="container mx-auto px-4">
+        <div class="text-center">
+          <h1 class="text-4xl md:text-5xl font-bold mb-6">Take Action</h1>
+          <p class="text-xl text-gray-300 max-w-3xl mx-auto">
+            Choose your preferred way to promote HEX and PulseChain. We've
+            compiled the best resources and tools to help you make an impact.
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <!-- Resources Grid -->
+    <section class="py-16">
+      <div class="container mx-auto px-4">
+        <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+          <!-- Postcards -->
+          <div class="resource-card p-6">
+            <h3 class="text-xl font-semibold mb-6 category-title">Postcards</h3>
+            <div class="space-y-4">
+              <a
+                href="https://hex.fillupbanks.com/product/flyer-postcards/"
+                target="_blank"
+                class="link-card block p-4 hover:text-blue-400"
+              >
+                Printing Only
+              </a>
+              <a
+                href="https://hex.fillupbanks.com/product/direct-mail/"
+                target="_blank"
+                class="link-card block p-4 hover:text-blue-400"
+              >
+                Print & Mail
+              </a>
+              <a
+                href="https://t.me/HEXpostcards"
+                target="_blank"
+                class="link-card block p-4 hover:text-blue-400"
+              >
+                Contact Us
+              </a>
+              <a
+                href="./index.html#donate"
+                target="_blank"
+                class="link-card block p-4 hover:text-blue-400"
+              >
+                Donate
+              </a>
+
+              
+            </div>
+          </div>
+
+          <!-- Business Cards -->
+          <div class="resource-card p-6">
+            <h3 class="text-xl font-semibold mb-6 category-title">
+              Business Cards
+            </h3>
+            <div class="space-y-4">
+              <a
+                href="https://hex.fillupbanks.com/product/business-cards/"
+                target="_blank"
+                class="link-card block p-4 hover:text-blue-400"
+              >
+                Hex Promo
+              </a>
+              <a
+                href="https://mailhex.xyz/"
+                target="_blank"
+                class="link-card block p-4 hover:text-blue-400"
+              >
+                MailHEX.xyz (Free)
+              </a>
+            </div>
+          </div>
+
+          <!-- Flyers -->
+          <div class="resource-card p-6">
+            <h3 class="text-xl font-semibold mb-6 category-title">Flyers</h3>
+            <div class="space-y-4">
+              <a
+                href="https://twitter.com/hodpril/status/1519181709014552576"
+                target="_blank"
+                class="link-card block p-4 hover:text-blue-400"
+              >
+                Hodpril
+              </a>
+              <a
+                href="./images/hex_flyer_simundsteed_001.pdf"
+                target="_blank"
+                class="link-card block p-4 hover:text-blue-400"
+              >
+                Simund & Steed
+              </a>
+              <a
+                href="./images/hex_flyer_simundsteed_002.pdf"
+                target="_blank"
+                class="link-card block p-4 hover:text-blue-400"
+              >
+                Simund & Steed 2
+              </a>
+            </div>
+          </div>
+
+          <!-- Stickers -->
+          <div class="resource-card p-6">
+            <h3 class="text-xl font-semibold mb-6 category-title">Stickers</h3>
+            <div class="space-y-4">
+              <a
+                href="https://www.hexmerch.com/search?q=bulk"
+                target="_blank"
+                class="link-card block p-4 hover:text-blue-400"
+              >
+                Hexmerch
+              </a>
+              <a
+                href="https://hex.fillupbanks.com/product/stickers/"
+                target="_blank"
+                class="link-card block p-4 hover:text-blue-400"
+              >
+                Hex Promo
+              </a>
+              <a
+                href="https://crypto-stickers.com/collections/hex-stickers"
+                target="_blank"
+                class="link-card block p-4 hover:text-blue-400"
+              >
+                Crypto Stickers
+              </a>
+            </div>
+          </div>
+
+          <!-- Videos -->
+          <div class="resource-card p-6">
+            <h3 class="text-xl font-semibold mb-6 category-title">Videos</h3>
+            <div class="space-y-4">
+              <a
+                href="https://t.me/Hextiktoksandytshorts"
+                target="_blank"
+                class="link-card block p-4 hover:text-blue-400"
+              >
+                Tiktoks and Shorts
+              </a>
+              <a
+                href="https://hexsearch.io/"
+                target="_blank"
+                class="link-card block p-4 hover:text-blue-400"
+              >
+                HEXsearch.io
+              </a>
+            </div>
+          </div>
+
+          <!-- Pamphlet / Booklet -->
+          <div class="resource-card p-6">
+            <h3 class="text-xl font-semibold mb-6 category-title">
+              Pamphlet / Booklet
+            </h3>
+            <div class="space-y-4">
+              <a
+                href="./images/hex_booklet_hexicangirl.pdf"
+                target="_blank"
+                class="link-card block p-4 hover:text-blue-400"
+              >
+                Hexican Girl
+              </a>
+              <a
+                href="https://t.me/HEXdesign/21216"
+                target="_blank"
+                class="link-card block p-4 hover:text-blue-400"
+              >
+                Money Wallet
+              </a>
+            </div>
+          </div>
+
+          <!-- Yard Signs -->
+          <div class="resource-card p-6">
+            <h3 class="text-xl font-semibold mb-6 category-title">
+              Yard Signs
+            </h3>
+            <div class="space-y-4">
+              <a
+                href="https://hex.fillupbanks.com/product/signs-18-x-24/"
+                target="_blank"
+                class="link-card block p-4 hover:text-blue-400"
+              >
+                Hex.Promo
+              </a>
+              <a
+                href="https://twitter.com/DavidJamesOne/status/1558570500577640448"
+                target="_blank"
+                class="link-card block p-4 hover:text-blue-400"
+              >
+                DavidJamesOne
+              </a>
+            </div>
+          </div>
+
+          <!-- Car Signs -->
+          <div class="resource-card p-6">
+            <h3 class="text-xl font-semibold mb-6 category-title">Car Signs</h3>
+            <div class="space-y-4">
+              <a
+                href="https://twitter.com/superhexwin/status/1445932793637203970"
+                target="_blank"
+                class="link-card block p-4 hover:text-blue-400"
+              >
+                License Plate Frame
+              </a>
+              <a
+                href="https://www.amazon.com/Rayhome-14-6x3-6-Bluetooth-Addressable-Animation/dp/B09MQD24MH/"
+                target="_blank"
+                class="link-card block p-4 hover:text-blue-400"
+              >
+                LED Scrolling
+              </a>
+            </div>
+          </div>
+
+          <!-- Car Magnet -->
+          <div class="resource-card p-6">
+            <h3 class="text-xl font-semibold mb-6 category-title">
+              Car Magnet
+            </h3>
+            <div class="space-y-4">
+              <a
+                href="https://twitter.com/Hexologist31/status/1509993620455133187"
+                target="_blank"
+                class="link-card block p-4 hover:text-blue-400"
+              >
+                Hexologist
+              </a>
+              <a
+                href="https://twitter.com/Hexologist31/status/1515097279815831552"
+                target="_blank"
+                class="link-card block p-4 hover:text-blue-400"
+              >
+                Hexologist 2
+              </a>
+              <a
+                href="https://twitter.com/mallred32/status/1521897178632966144"
+                target="_blank"
+                class="link-card block p-4 hover:text-blue-400"
+              >
+                Matt the Phoenix
+              </a>
+            </div>
+          </div>
+
+          <!-- Clothing -->
+          <div class="resource-card p-6">
+            <h3 class="text-xl font-semibold mb-6 category-title">Clothing</h3>
+            <div class="space-y-4">
+              <a
+                href="https://www.hexmerch.com"
+                target="_blank"
+                class="link-card block p-4 hover:text-blue-400"
+              >
+                Hexmerch
+              </a>
+              <a
+                href="https://cryptowearz.net"
+                target="_blank"
+                class="link-card block p-4 hover:text-blue-400"
+              >
+                Cryptowearz
+              </a>
+              <a
+                href="https://www.hexdays.com"
+                target="_blank"
+                class="link-card block p-4 hover:text-blue-400"
+              >
+                Hex Days
+              </a>
+            </div>
+          </div>
+
+          <!-- Letters -->
+          <!-- <div class="resource-card p-6"> -->
+          <!-- <h3 class="text-xl font-semibold mb-6 category-title">Letters</h3> -->
+          <!-- <div class="space-y-4"> -->
+          <!-- <a href="https://imgur.com/a/LwGngPa" target="_blank" -->
+          <!-- class="link-card block p-4 hover:text-blue-400"> -->
+          <!-- Designs -->
+          <!-- </a> -->
+          <!-- </div> -->
+          <!-- </div> -->
+
+          <!-- Billboards -->
+          <div class="resource-card p-6">
+            <h3 class="text-xl font-semibold mb-6 category-title">
+              Billboards
+            </h3>
+            <div class="space-y-4">
+              <a
+                href="https://twitter.com/richardheartwin/status/1411112998891044872"
+                target="_blank"
+                class="link-card block p-4 hover:text-blue-400"
+              >
+                Moon Travel
+              </a>
+            </div>
+          </div>
+
+          <!-- Logo Files -->
+          <div class="resource-card p-6">
+            <h3 class="text-xl font-semibold mb-6 category-title">
+              Logo Files
+            </h3>
+            <div class="space-y-4">
+              <a
+                href="https://hex.com/downloads"
+                target="_blank"
+                class="link-card block p-4 hover:text-blue-400"
+              >
+                HEX
+              </a>
+              <a
+                href="https://pulsechain.com/Branding.zip"
+                target="_blank"
+                class="link-card block p-4 hover:text-blue-400"
+              >
+                Pulsechain
+              </a>
+              <a
+                href="https://pulsex.com/brand"
+                target="_blank"
+                class="link-card block p-4 hover:text-blue-400"
+              >
+                PulseX
+              </a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Call to Action -->
+    <section class="py-16 bg-blue-900/20">
+      <div class="container mx-auto px-4 text-center">
+        <h2 class="text-3xl font-bold mb-8">Ready to Get Started?</h2>
+        <div class="flex flex-col sm:flex-row gap-4 justify-center">
+          <a
+            href="./designs.html"
+            class="bg-blue-600 hover:bg-blue-700 px-8 py-4 rounded-lg font-medium text-lg transition"
+          >
+            Join Design Contest
+          </a>
+          <a
+            href="https://t.me/HEXpostcards"
+            target="_blank"
+            class="bg-gray-700 hover:bg-gray-600 px-8 py-4 rounded-lg font-medium text-lg transition"
+          >
+            Join Community
+          </a>
+        </div>
+      </div>
+    </section>
+
+    <!-- Important Note -->
+    <section class="py-12">
+      <div class="container mx-auto px-4 text-center">
+        <div class="bg-yellow-600/20 rounded-lg p-6 max-w-2xl mx-auto">
+          <p class="text-xl">
+            <b>NOTE:</b> For any kind of merchandise or advertisement always try
+            to write "HEX.COM" instead of "HEX"!
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <!-- Footer -->
+    <div id="footer"></div>
+
+    <script>
+      $(document).ready(function() {
+        $('#navbar').load('/navbar.html');
+        $('#footer').load('/footer.html'); 
+      });
+
+      // Mobile menu toggle with jQuery
+      $(document).ready(function () {
+        $('#mobile-menu-button').on('click', function () {
+          $('#mobile-menu').slideToggle(200);
+          $('#mobile-menu').toggleClass('active');
+        });
+
+        // Close menu when clicking outside
+        $(document).on('click', function (e) {
+          if (
+            !$(e.target).closest('#mobile-menu-button').length &&
+            !$(e.target).closest('#mobile-menu').length
+          ) {
+            $('#mobile-menu').slideUp(200);
+          }
+        });
+
+        // Close menu on resize if we hit desktop breakpoint
+        $(window).resize(function () {
+          if ($(window).width() > 768) {
+            $('#mobile-menu').slideUp(0);
+          }
+        });
+      });
+
+      // Smooth scroll for anchor links
+      $('a[href^="#"]').click(function (e) {
+        e.preventDefault();
+        let target = $(this.hash);
+        if (target.length) {
+          $('html, body').animate(
+            {
+              scrollTop: target.offset().top - 80,
+            },
+            500
+          );
+        }
+      });
+
+      // Lazy load images
+      document.addEventListener('DOMContentLoaded', function () {
+        const lazyImages = document.querySelectorAll('img.lazy-load');
+
+        const imageObserver = new IntersectionObserver((entries, observer) => {
+          entries.forEach((entry) => {
+            if (entry.isIntersecting) {
+              const img = entry.target;
+              img.src = img.dataset.src;
+              img.classList.add('loaded');
+              observer.unobserve(img);
+            }
+          });
+        });
+
+        lazyImages.forEach((img) => imageObserver.observe(img));
+      });
+    </script>
+  </body>
+</html>

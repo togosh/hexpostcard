@@ -1,0 +1,38 @@
+<nav class="fixed w-full bg-gray-900/90 backdrop-blur-sm z-50 border-b border-gray-800">
+  <div class="container mx-auto px-4 py-4">
+      <div class="flex justify-between items-center">
+          <!-- Logo -->
+          <a href="./index.html">
+                  <div class="flex items-center navbar-logo">
+                      <img src="./images/hexpostcards_logo.png" alt="HEXpostcards" class="h-12">
+                      <span class="ml-3 text-xl font-bold text-white">HEXpostcards</span>
+                  </div>
+          </a>
+          
+          <!-- Desktop Menu -->
+          <div class="hidden md:flex items-center space-x-8">
+              <a href="./designs.html" class="nav-link text-gray-300 hover:text-white">Designs</a>
+              <a href="./action.html" class="nav-link text-gray-300 hover:text-white">Take Action</a>
+              <a href="./faq.html" class="nav-link text-gray-300 hover:text-white">FAQ</a>
+              <a href="./index.html#donate" class="bg-blue-600 hover:bg-blue-700 px-6 py-2 rounded-lg transition">
+                  Donate
+              </a>
+          </div>
+          
+          <!-- Mobile Menu Button -->
+          <button class="md:hidden" id="mobile-menu-button">
+              <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"/>
+              </svg>
+          </button>
+      </div>
+      
+      <!-- Mobile Menu -->
+      <div class="mobile-menu md:hidden mt-4 pb-4" id="mobile-menu">
+          <a href="./designs.html" class="block py-2 text-gray-300 hover:text-white">Designs</a>
+          <a href="./action.html" class="block py-2 text-gray-300 hover:text-white">Take Action</a>
+          <a href="./faq.html" class="block py-2 text-gray-300 hover:text-white">FAQ</a>
+          <a href="./index.html#donate" class="block py-2 text-blue-400 hover:text-white">Donate</a>
+      </div>
+  </div>
+</nav>

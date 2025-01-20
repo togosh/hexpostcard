@@ -1,0 +1,579 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Designs - HEXpostcards</title>
+
+    <!-- Styles -->
+    <link
+      href="https://cdnjs.cloudflare.com/ajax/libs/tailwindcss/2.2.19/tailwind.min.css"
+      rel="stylesheet"
+    />
+    <link href="./css/styles.css" rel="stylesheet" />
+
+    <!-- Scripts -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+
+    <!-- ICONS -->
+    <link rel="apple-touch-icon" sizes="180x180" href="./images/apple-touch-icon.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="./images/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="./images/favicon-16x16.png">
+    <link rel="manifest" href="./site.webmanifest">
+    <link rel="mask-icon" href="./images/safari-pinned-tab.svg" color="#5bbad5">
+    <meta name="msapplication-TileColor" content="#da532c">
+    <meta name="theme-color" content="#ffffff">
+
+    <style>
+      /* Custom components */
+      .design-card {
+        background-color: #1f2937;
+        border-radius: 0.5rem;
+        transition: all 0.3s ease;
+      }
+
+      .design-card:hover {
+        transform: scale(1.02);
+        box-shadow: 0 4px 20px rgba(59, 130, 246, 0.3);
+      }
+
+      .download-btn {
+        opacity: 0;
+        transition: opacity 0.3s ease;
+      }
+
+      .design-card:hover .download-btn {
+        opacity: 1;
+      }
+
+      .design-image {
+        transition: transform 0.3s ease;
+      }
+
+      .design-card:hover .design-image {
+        transform: scale(1.05);
+      }
+
+      .design-card .number {
+        font-size: 2.5rem;
+        font-weight: bold;
+        color: #ffffff;
+        background-color: #3498db;
+        border-radius: 50%;
+        padding: 0.5rem 1rem;
+        z-index: 1000;
+      }
+
+      .filter-btn {
+        transition: all 0.3s ease;
+      }
+
+      .filter-btn.active {
+        background-color: #3b82f6;
+        color: white;
+      }
+
+      /* Loading animation */
+      .loading-spinner {
+        border: 4px solid rgba(255, 255, 255, 0.1);
+        border-left: 4px solid #3b82f6;
+        border-radius: 50%;
+        width: 40px;
+        height: 40px;
+        animation: spin 1s linear infinite;
+      }
+
+      @keyframes spin {
+        0% {
+          transform: rotate(0deg);
+        }
+        100% {
+          transform: rotate(360deg);
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <!-- Navigation -->
+    <div id="navbar"></div>
+
+    <!-- Hero Section -->
+    <section class="pt-24 pb-12 bg-gradient-to-b from-blue-900 to-gray-900">
+      <div class="container mx-auto px-4">
+        <div class="text-center">
+          <h1 class="text-4xl md:text-5xl font-bold mb-6">Design Gallery</h1>
+          <p class="text-xl text-gray-300 max-w-3xl mx-auto">
+            Browse our collection of community-created designs. Download and use
+            these designs for your own marketing efforts.
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <!-- Filter Section -->
+    <section class="py-8 bg-gray-800">
+      <div class="filter-section text-center my-4">
+        <button
+          class="filter-btn bg-gray-700 hover:bg-gray-600 px-4 py-2 rounded-lg active"
+          data-filter="all"
+        >
+          All Designs
+        </button>
+        <button
+          class="filter-btn bg-gray-700 hover:bg-gray-600 px-4 py-2 rounded-lg"
+          data-filter="postcard"
+        >
+          Postcards
+        </button>
+        <button
+          class="filter-btn bg-gray-700 hover:bg-gray-600 px-4 py-2 rounded-lg"
+          data-filter="letter"
+        >
+          Letters
+        </button>
+      </div>
+
+      <div class="coin-filter-section text-center my-4">
+        <button
+          class="filter-btn bg-gray-700 hover:bg-gray-600 px-4 py-2 rounded-lg active"
+          data-coin="all"
+        >
+          All Coins
+        </button>
+        <button
+          class="filter-btn bg-gray-700 hover:bg-gray-600 px-4 py-2 rounded-lg"
+          data-coin="HEX"
+        >
+          HEX
+        </button>
+        <button
+          class="filter-btn bg-gray-700 hover:bg-gray-600 px-4 py-2 rounded-lg"
+          data-coin="PLS"
+        >
+          PLS
+        </button>
+        <button
+          class="filter-btn bg-gray-700 hover:bg-gray-600 px-4 py-2 rounded-lg"
+          data-coin="PLSX"
+        >
+          PLSX
+        </button>
+        <div class="filter-section text-center my-4">
+          <button 
+            class="filter-btn bg-gray-700 hover:bg-gray-600 px-4 py-2 rounded-lg"
+            data-has-pdf="true"
+          >
+            Show Only Printable (PDF)
+          </button>
+        </div>
+      </div>
+    </section>
+
+    <!-- Contest Section -->
+    <section class="py-12 bg-blue-900/20" style="display: none">
+      <div class="container mx-auto px-4">
+        <div class="max-w-4xl mx-auto bg-gray-800 rounded-lg p-8">
+          <div class="text-center">
+            <h2 class="text-3xl font-bold mb-6">Letter Design Contest</h2>
+            <div class="space-y-6">
+              <div class="previous-winners">
+                <!-- <h3 class="text-xl font-semibold mb-4">🏆 Previous Contest Winners</h3> -->
+                <div class="grid md:grid-cols-3 gap-4">
+                  <div class="bg-gray-700 p-4 rounded-lg">
+                    <p class="font-bold">1st Place</p>
+                    <p class="text-blue-400">Mrs Hexican</p>
+                    <p class="text-sm text-gray-400">$600 Prize</p>
+                  </div>
+                  <div class="bg-gray-700 p-4 rounded-lg">
+                    <p class="font-bold">2nd Place</p>
+                    <p class="text-blue-400">Hexgeta</p>
+                    <p class="text-sm text-gray-400">$300 Prize</p>
+                  </div>
+                  <div class="bg-gray-700 p-4 rounded-lg">
+                    <p class="font-bold">3rd Place</p>
+                    <p class="text-blue-400">Euphoria Design</p>
+                    <p class="text-sm text-gray-400">$100 Prize</p>
+                  </div>
+                </div>
+              </div>
+
+              <!-- <div class="next-contest bg-gray-700 p-6 rounded-lg mt-8"> -->
+              <!-- <h3 class="text-xl font-semibold mb-4">Next Contest Coming Soon!</h3> -->
+              <!-- <p class="text-gray-300 mb-4">Join our Telegram group to be notified when the next design contest begins.</p> -->
+              <!-- <div class="space-y-4"> -->
+              <!-- <p class="text-gray-300"><strong>Previous Prize Pool:</strong></p> -->
+              <!-- <ul class="list-disc pl-5 text-gray-300"> -->
+              <!-- <li>1st Place: $600</li> -->
+              <!-- <li>2nd Place: $300</li> -->
+              <!-- <li>3rd Place: $100</li> -->
+              <!-- </ul> -->
+              <!-- <a href="https://t.me/HEXpostcards" target="_blank"  -->
+              <!-- class="bg-blue-600 hover:bg-blue-700 px-8 py-3 rounded-lg inline-block transition mt-4"> -->
+              <!-- Join Telegram Group -->
+              <!-- </a> -->
+              <!-- </div> -->
+              <!-- </div> -->
+
+              <!-- <div class="mt-8 p-4 bg-yellow-600/20 rounded-lg"> -->
+              <!-- <p class="text-lg">💡 <strong>Tips for Contest Success:</strong></p> -->
+              <!-- <ul class="list-disc pl-5 mt-2 space-y-2 text-gray-300"> -->
+              <!-- <li>Always use "HEX.COM" instead of just "HEX"</li> -->
+              <!-- <li>Include clear call-to-actions</li> -->
+              <!-- <li>Ensure text is easily readable</li> -->
+              <!-- <li>Follow provided size specifications</li> -->
+              <!-- <li>Focus on benefits and key features</li> -->
+              <!-- </ul> -->
+              <!-- </div> -->
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Design Grid -->
+    <section class="py-16">
+      <div class="container mx-auto px-4">
+        <div
+          class="grid md:grid-cols-2 lg:grid-cols-3 gap-8"
+          id="design-grid"
+        ></div>
+
+        <!-- Loading Spinner -->
+        <div id="loading" class="text-center py-12 hidden">
+          <div class="loading-spinner mx-auto"></div>
+          <p class="mt-4 text-gray-400">Loading more designs...</p>
+        </div>
+
+        <!-- Load More Button -->
+        <!-- <div class="text-center mt-12">
+          <button
+            id="load-more"
+            class="bg-blue-600 hover:bg-blue-700 px-8 py-3 rounded-lg font-medium text-lg transition"
+          >
+            Load More Designs
+          </button>
+        </div> -->
+      </div>
+    </section>
+
+    <!-- Call to Action -->
+    <section class="py-16 bg-blue-900/20">
+      <div class="container mx-auto px-4 text-center">
+        <h2 class="text-3xl font-bold mb-8">Want to Contribute?</h2>
+        <div class="flex flex-col sm:flex-row gap-4 justify-center">
+          <a
+            href="./designs.html"
+            class="bg-blue-600 hover:bg-blue-700 px-8 py-4 rounded-lg font-medium text-lg transition"
+          >
+            Join Design Contest
+          </a>
+          <a
+            href="https://t.me/HEXpostcards"
+            target="_blank"
+            class="bg-gray-700 hover:bg-gray-600 px-8 py-4 rounded-lg font-medium text-lg transition"
+          >
+            Join Community
+          </a>
+        </div>
+      </div>
+    </section>
+
+    <!-- Footer -->
+    <div id="footer"></div>
+
+    <script>
+      $(document).ready(function() {
+          $('#navbar').load('/navbar.html');
+          $('#footer').load('/footer.html'); 
+      });
+
+      var designs = {};
+      var totalDesigns = 0;
+
+      async function loadDesignsData() {
+        try {
+          const response = await fetch('./designs.json');
+          designs = await response.json();
+          
+          // Initial load of designs
+          totalDesigns = designs.length;
+          //loadDesigns(0, 9);
+          loadDesigns(0, designs.length);
+          
+        } catch (error) {
+          console.error('Error loading designs:', error);
+        }
+      }
+
+      // Call on page load
+      document.addEventListener('DOMContentLoaded', loadDesignsData);
+
+      // Template for creating design cards
+      // function createDesignCard(design) {
+      //   let pdfButton = design.pdf
+      //     ? `<a href="${design.pdf}" target="_blank" class="download-btn bg-blue-600 hover:bg-blue-700 px-6 py-2 rounded-lg inline-block">Download PDF</a>`
+      //     : '';
+
+      //   let telegramLink = design.telegram
+      //     ? `<a href="${design.telegram}" target="_blank" class="text-blue-400 hover:underline">Telegram</a>`
+      //     : '';
+
+      //   let twitterLink = design.twitter
+      //     ? `<a href="${design.twitter}" target="_blank" class="text-blue-400 hover:underline">Twitter</a>`
+      //     : '';
+
+      //   let address = design.address
+      //     ? `<p class="text-gray-400">Donation Address: <span class="text-green-500">${design.address}</span></p>`
+      //     : '';
+
+      //   // Generate HTML for the images
+      //   let imagesHtml = design.images
+      //     .map(
+      //       (image, index) => `
+      //             <div class="relative overflow-hidden rounded-lg mb-4">
+      //               <img src="${image}" alt="${design.creator} Image ${
+      //         index + 1
+      //       }" class="design-image w-full">
+      //               <div class="absolute inset-0 bg-black bg-opacity-50 flex items-center justify-center opacity-0 hover:opacity-100 transition-opacity">
+      //                 <div class="space-y-4">
+      //                   ${pdfButton}
+      //                   <a href="${image}" target="_blank" class="download-btn bg-gray-600 hover:bg-gray-700 px-6 py-2 rounded-lg inline-block">View Image</a>
+      //                 </div>
+      //               </div>
+      //             </div>`
+      //     )
+      //     .join('');
+
+      //   // Set both data-design-type and data-coins attributes
+      //   return `
+      //           <div class="design-card p-6 relative"
+      //               data-design-type="${design.designType}"
+      //               data-coins="${design.coins.join(',')}"
+      //               data-design-id="${design.id}">
+      //             <div class="number absolute top-2 left-2 bg-blue-600 text-white font-bold text-2xl rounded-full px-3 py-1">
+      //               ${design.id}
+      //             </div>
+      //             ${imagesHtml}
+      //             <h3 class="text-lg font-semibold">${
+      //               design.creator
+      //             }</h3>
+      //             ${telegramLink}
+      //             ${twitterLink}
+      //             ${address}
+      //           </div>`;
+
+      //           return `
+      //     <div class="design-card p-6 relative"
+      //         data-design-type="${design.designType}"
+      //         data-coins="${design.coins.join(',')}"
+      //         data-design-id="${design.id}">
+      //       <div class="number absolute top-2 left-2 bg-blue-600 text-white font-bold text-2xl rounded-full px-3 py-1">
+      //         ${design.id}
+      //       </div>
+      //       ${
+      //               design.creator
+      //             }
+      //             ${telegramLink}
+      //             ${twitterLink}
+      //             ${address}
+      //     </div>`;
+      // }
+      function createDesignCard(design) {
+        let pdfButton = design.pdf
+          ? `<a href="${design.pdf}" target="_blank" class="download-btn bg-blue-600 hover:bg-blue-700 px-4 py-2 rounded-lg inline-block text-sm sm:text-base sm:px-6">Download PDF</a>`
+          : '';
+
+        let telegramLink = design.telegram
+          ? `<a href="${design.telegram}" target="_blank" class="text-blue-400 hover:underline text-sm">Telegram</a>`
+          : '';
+
+        let twitterLink = design.twitter
+          ? `<a href="${design.twitter}" target="_blank" class="text-blue-400 hover:underline text-sm">Twitter</a>`
+          : '';
+
+        let address = design.address
+          ? `<p class="text-gray-400 text-sm break-all">${design.address}</p>`
+          : '';
+
+        // Generate HTML for the images with responsive classes
+        let imagesHtml = design.images
+          .map(
+            (image, index) => `
+              <div class="relative overflow-hidden rounded-lg mb-4">
+                <a href="${image}" target="_blank" class="block">
+                  <img src="${image}" 
+                      alt="${design.creator} Image ${index + 1}" 
+                      title="Right-click to save image"
+                      class="design-image w-full h-auto object-cover cursor-pointer"
+                      style="user-select: auto; -webkit-user-drag: auto;">
+                </a>
+                <div class="absolute inset-0 bg-black bg-opacity-50 flex items-center justify-center opacity-0 hover:opacity-100 transition-opacity pointer-events-none">
+                  <div class="space-y-2 sm:space-y-4 p-2 sm:p-4 text-center pointer-events-auto">
+                    ${pdfButton}
+                    <a href="${image}" target="_blank" download
+                      class="download-btn bg-gray-600 hover:bg-gray-700 px-4 py-2 rounded-lg inline-block text-sm sm:text-base sm:px-6">
+                      Download Image
+                    </a>
+                  </div>
+                </div>
+              </div>`
+          )
+          .join('');
+
+        // Add responsive classes to the card container and content
+        return `
+          <div class="design-card p-3 sm:p-6 relative overflow-hidden"
+              data-design-type="${design.designType}"
+              data-coins="${design.coins.join(',')}"
+              data-design-id="${design.id}">
+            <div class="number absolute top-2 left-2 bg-blue-600 text-white font-bold text-lg sm:text-2xl rounded-full px-2 sm:px-3 py-1 z-10">
+              ${design.id}
+            </div>
+            ${imagesHtml}
+            <div class="space-y-2">
+              <h3 class="text-base sm:text-lg font-semibold">${design.creator}</h3>
+              <div class="flex gap-3 flex-wrap">
+                ${telegramLink}
+                ${twitterLink}
+              </div>
+              ${address}
+            </div>
+          </div>`;
+      }
+
+      // Initial load of designs
+      const loadDesigns = (start, count) => {
+        const batch = designs.slice(start, start + count);
+        const html = batch.map(createDesignCard).join('');
+        $('#design-grid').append(html);
+      };
+
+      $(document).ready(function () {
+        let currentTypeFilter = 'all';
+        let currentCoinFilter = 'all';
+
+        // Handle design type filter
+        $('.filter-btn[data-filter]').click(function () {
+          currentTypeFilter = $(this).data('filter');
+          $('.filter-btn[data-filter]').removeClass('active');
+          $(this).addClass('active');
+          
+          // Adjust grid layout based on filter
+          const designGrid = $('#design-grid');
+          if (currentTypeFilter === 'letter') {
+            designGrid.removeClass('lg:grid-cols-3').addClass('lg:grid-cols-2');
+          } else {
+            designGrid.removeClass('lg:grid-cols-2').addClass('lg:grid-cols-3');
+          }
+          
+          applyFilters();
+        });
+
+        // Handle coin filter
+        $('.filter-btn[data-coin]').click(function () {
+          currentCoinFilter = $(this).data('coin');
+          $('.filter-btn[data-coin]').removeClass('active');
+          $(this).addClass('active');
+          applyFilters();
+        });
+
+        // Combined filter function
+        function applyFilters() {
+          $('.design-card').each(function () {
+            const $card = $(this);
+            const designType = $card.data('design-type');
+            const coins = $card.data('coins').toString().split(',');
+
+            const matchesType =
+              currentTypeFilter === 'all' || designType === currentTypeFilter;
+            const matchesCoin =
+              currentCoinFilter === 'all' || coins.includes(currentCoinFilter);
+
+            if (matchesType && matchesCoin) {
+              $card.show();
+            } else {
+              $card.hide();
+            }
+          });
+        }
+
+        // Lazy loading for images
+        const observer = new IntersectionObserver((entries) => {
+          entries.forEach((entry) => {
+            if (entry.isIntersecting) {
+              const img = entry.target;
+              img.src = img.dataset.src;
+              observer.unobserve(img);
+            }
+          });
+        });
+
+        document
+          .querySelectorAll('img[data-src]')
+          .forEach((img) => observer.observe(img));
+
+        // Load more functionality
+        let page = 1;
+        const perPage = 9;
+
+        $('#load-more').click(function () {
+          const $btn = $(this);
+          $btn.prop('disabled', true);
+          $('#loading').removeClass('hidden');
+
+          // Simulate loading more designs
+          setTimeout(() => {
+            // Add more design cards here
+            $btn.prop('disabled', false);
+            $('#loading').addClass('hidden');
+            page++;
+
+            // Hide button if no more designs
+            if (page * perPage >= totalDesigns) {
+              $btn.hide();
+            }
+          }, 1000);
+        });
+      });
+
+      // Mobile menu toggle with jQuery
+      $(document).ready(function () {
+        $('#mobile-menu-button').on('click', function () {
+          $('#mobile-menu').slideToggle(200);
+          $('#mobile-menu').toggleClass('active');
+        });
+
+        // Close menu when clicking outside
+        $(document).on('click', function (e) {
+          if (
+            !$(e.target).closest('#mobile-menu-button').length &&
+            !$(e.target).closest('#mobile-menu').length
+          ) {
+            $('#mobile-menu').slideUp(200);
+          }
+        });
+
+        // Close menu on resize if we hit desktop breakpoint
+        $(window).resize(function () {
+          if ($(window).width() > 768) {
+            $('#mobile-menu').slideUp(0);
+          }
+        });
+      });
+
+      // Smooth scroll for anchor links
+      $('a[href^="#"]').click(function (e) {
+        e.preventDefault();
+        let target = $(this.hash);
+        if (target.length) {
+          $('html, body').animate(
+            {
+              scrollTop: target.offset().top - 80,
+            },
+            500
+          );
+        }
+      });
+    </script>
+  </body>
+</html>

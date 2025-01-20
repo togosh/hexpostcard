@@ -1,0 +1,395 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>HEXpostcards - Direct Mail Marketing for Crypto</title>
+    
+    <!-- Meta tags -->
+    <meta name="description" content="Print and mail a HEX and PulseChain postcard to every mailbox!">
+    
+    <!-- Facebook -->
+    <meta property="og:url" content="https://HEXpostcards.com/">
+    <meta property="og:type" content="website">
+    <meta property="og:title" content="HEXpostcards.com">
+    <meta property="og:description" content="Print and mail a HEX and PulseChain postcard to every mailbox!">
+    <meta property="og:image:url" content="./images/hexpostcardsimage_03.png">
+
+    <!-- Twitter -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta property="twitter:domain" content="HEXpostcards.com">
+    <meta property="twitter:url" content="https://HEXpostcards.com/">
+    <meta name="twitter:title" content="HEXpostcards.com">
+    <meta name="twitter:description" content="Print and mail a HEX and PulseChain postcard to every mailbox!">
+    <meta name="twitter:image" content="./images/hexpostcardsimage_03.png">
+
+    <!-- Styles -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/tailwindcss/2.2.19/tailwind.min.css" rel="stylesheet">
+	<link href="./css/styles.css" rel="stylesheet">
+    
+    <!-- Scripts -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+
+    <!-- ICONS -->
+    <link rel="apple-touch-icon" sizes="180x180" href="./images/apple-touch-icon.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="./images/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="./images/favicon-16x16.png">
+    <link rel="manifest" href="./site.webmanifest">
+    <link rel="mask-icon" href="./images/safari-pinned-tab.svg" color="#5bbad5">
+    <meta name="msapplication-TileColor" content="#da532c">
+    <meta name="theme-color" content="#ffffff">
+
+    <style>
+        /* Custom components */
+        .stats-bar {
+            background: rgba(17, 24, 39, 0.8);
+            backdrop-filter: blur(8px);
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .impact-card {
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .impact-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+        }
+
+        /* Donation cards */
+        .donation-option {
+            background: #1F2937;
+            border-radius: 0.5rem;
+            padding: 1.5rem;
+            transition: transform 0.3s ease;
+        }
+
+        .donation-option:hover {
+            transform: scale(1.02);
+        }
+
+        /* Copy button animation */
+        .copy-success {
+            animation: fadeOut 2s forwards;
+        }
+
+        @keyframes fadeOut {
+            0% { opacity: 1; }
+            70% { opacity: 1; }
+            100% { opacity: 0; }
+        }
+
+        .copy-notification {
+            animation: slideInUp 0.3s forwards, slideOutDown 0.3s forwards 2s;
+        }
+
+        @keyframes slideInUp {
+            from {
+                transform: translateY(100%);
+                opacity: 0;
+            }
+            to {
+                transform: translateY(0);
+                opacity: 1;
+            }
+        }
+
+        @keyframes slideOutDown {
+            from {
+                transform: translateY(0);
+                opacity: 1;
+            }
+            to {
+                transform: translateY(100%);
+                opacity: 0;
+            }
+        }
+
+        /* Smart loading for images */
+        .lazy-load {
+            opacity: 0;
+            transition: opacity 0.3s ease-in;
+        }
+
+        .lazy-load.loaded {
+            opacity: 1;
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation -->
+    <div id="navbar"></div>
+
+    <!-- Hero Section -->
+    <section class="hero-gradient pt-24 pb-16">
+        <div class="container mx-auto px-4">
+            <div class="grid md:grid-cols-2 gap-12 items-center">
+                <div>
+                    <h1 class="text-4xl md:text-5xl font-bold mb-6">
+                        Direct Mail Marketing for <span class="text-blue-400">Crypto</span>
+                    </h1>
+                    <p class="text-xl text-gray-300 mb-8">
+                        We've delivered 536,000+ postcards to high-net-worth households. Join our community-driven initiative to promote HEX and PulseChain through targeted direct mail.
+                    </p>
+                    <div class="flex flex-col sm:flex-row gap-4">
+                        <a href="#donate" 
+                           class="bg-blue-600 hover:bg-blue-700 px-8 py-4 rounded-lg font-medium text-lg text-center transition">
+                            Donate Now
+                        </a>
+                        <a href="./action.html" 
+                           class="bg-gray-700 hover:bg-gray-600 px-8 py-4 rounded-lg font-medium text-lg text-center transition">
+                            Take Action
+                        </a>
+                    </div>
+                </div>
+                <div class="relative">
+                    <div class="relative rounded-lg overflow-hidden shadow-xl">
+                        <div class="absolute inset-0 bg-gradient-to-tr from-black/40 to-transparent z-10"></div>
+                        <!-- Using a placeholder for the postcard image -->
+                        <img 
+                            src="./images/proof007.png"
+                            alt="HEX Postcard Preview" 
+                            class="w-full rounded-lg"
+							style="width: 600px;"
+                        >
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Stats Bar -->
+    <div class="stats-bar">
+        <div class="container mx-auto px-4 py-12">
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8 text-center">
+                <div>
+                    <div class="text-3xl font-bold text-blue-400 mb-2">
+                        536,000+
+                    </div>
+                    <div class="text-gray-400">Postcards Delivered</div>
+                </div>
+                <div>
+                    <div class="text-3xl font-bold text-blue-400 mb-2">
+                        900+
+                    </div>
+                    <div class="text-gray-400">Community Members</div>
+                </div>
+                <div>
+                    <div class="text-3xl font-bold text-blue-400 mb-2">
+                        $0.33-0.45
+                    </div>
+                    <div class="text-gray-400">Cost Per Mailbox</div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Impact Section -->
+    <section class="py-20 bg-gray-900">
+        <div class="container mx-auto px-4">
+            <h2 class="text-3xl font-bold mb-12 text-center">Real Impact, Real Results</h2>
+            <div class="grid md:grid-cols-3 gap-8">
+                <!-- Impact Cards - Visa -->
+                <div class="bg-gray-800 rounded-lg p-6 impact-card">
+                    <div class="flex items-start gap-4">
+                        <img src="./images/visa_logo.png" alt="Visa" class="w-12 h-12 rounded-full">
+                        <div>
+                            <h3 class="font-semibold mb-2">Head of Visa Ventures</h3>
+                            <p class="text-gray-300">
+                                "Holy shit. I just got this insane HEX ad in the physical mail..."
+                            </p>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- WSJ -->
+                <div class="bg-gray-800 rounded-lg p-6 impact-card">
+                    <div class="flex items-start gap-4">
+                        <img src="./images/wsj_logo.png" alt="WSJ" class="w-12 h-12 rounded-full">
+                        <div>
+                            <h3 class="font-semibold mb-2">Global Financial Editor</h3>
+                            <p class="text-gray-300">
+                                "Just got this crypto solicitation mailer, as did my elderly neighbors..."
+                            </p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Wealth Advisor -->
+                <div class="bg-gray-800 rounded-lg p-6 impact-card">
+                    <div class="flex items-start gap-4">
+                        <img src="./images/goldmansachs_logo.jpg" alt="Advisor" class="w-12 h-12 rounded-full">
+                        <div>
+                            <h3 class="font-semibold mb-2">VP Wealth Advisor</h3>
+                            <p class="text-gray-300">
+                                "Getting direct physical mail spam saying earn up to 38% per year..."
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Donation Section -->
+    <section id="donate" class="py-20 bg-gray-800">
+        <div class="container mx-auto px-4">
+            <h2 class="text-3xl font-bold mb-12 text-center">Support Our Mission</h2>
+            
+            <div class="max-w-4xl mx-auto">
+                <div class="grid md:grid-cols-2 gap-8">
+
+                    <!-- Crypto Donation -->
+                    <div class="bg-gray-900 rounded-lg p-6 donation-option">
+                        <h3 class="text-xl font-semibold mb-4">Donate with Crypto</h3>
+                        <p class="text-gray-300 mb-6">
+                            Send any token on Ethereum or PulseChain
+                        </p>
+                        
+                        <!-- Enhanced Address Display -->
+                        <div class="relative">
+                            <!-- Main Address Container -->
+                            <div class="bg-gray-800 rounded-lg p-4 border-2 border-blue-500 group hover:border-blue-400 transition-all">
+                                <div class="flex items-center justify-center" 
+                                     onclick="copyAddress('0x25D4CCeba035AabB7aC79C4F2fEaD5bC74E6B9d8')">
+                                    <!-- Address with Gradient Text -->
+                                    <code class="text-sm break-all bg-gradient-to-r from-blue-400 to-blue-300 text-transparent bg-clip-text font-mono">
+                                        0x25D4CCeba035AabB7aC79C4F2fEaD5bC74E6B9d8
+                                    </code>
+                                    <!-- Enhanced Copy Button with Larger Click Area -->
+                                    <button class="ml-2 p-3 hover:bg-gray-700 rounded transition-all group cursor-pointer flex items-center justify-center min-w-[48px] min-h-[48px]">
+                                        <svg class="w-6 h-6 text-blue-400 group-hover:text-blue-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 5H6a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2v-1M8 5a2 2 0 002 2h2a2 2 0 002-2M8 5a2 2 0 012-2h2a2 2 0 012 2m0 0h2a2 2 0 012 2v3m2 4H10m0 0l3-3m-3 3l3 3"/>
+                                        </svg>
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Success Animation Container - Now Bottom Right -->
+                        <div id="copy-success" class="fixed bg-green-500 text-white px-6 py-3 rounded-lg shadow-lg transform translate-y-[100%] opacity-0 transition-all duration-300 z-50">
+                            Address Copied! 
+                        </div>
+                    </div>
+
+                    <!-- Patreon Subscription -->
+                    <div class="bg-gray-900 rounded-lg p-6 donation-option">
+                        <h3 class="text-xl font-semibold mb-4">Monthly Subscription</h3>
+						<p class="text-gray-300 mb-6">
+                            Support our mission with recurring donations
+                        </p>
+                        
+                        <a href="https://www.patreon.com/hexpostcards" 
+                        target="_blank"
+                        rel="noopener noreferrer" 
+                        class="bg-blue-600 hover:bg-blue-700 text-white py-4 px-8 rounded-lg flex items-center justify-center transition text-lg min-h-[64px]">
+                            Subscribe on Patreon
+                            <svg class="w-6 h-6 ml-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2v-1M8 5a2 2 0 002 2h2a2 2 0 002-2M8 5a2 2 0 012-2h2a2 2 0 012 2m0 0h2a2 2 0 012 2v3m2 4H10m0 0l3-3m-3 3l3 3"/>
+                            </svg>
+                        </a>
+                    </div>
+                </div>
+
+                <div class="mt-8 text-center text-gray-400">
+                    <p>Every donation goes directly to printing and mailing - this is a 100% volunteer project with zero profit!</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Call to Action Section -->
+    <section class="py-20 bg-gray-900">
+        <div class="container mx-auto px-4 text-center">
+            <h2 class="text-3xl font-bold mb-8">Ready to Take Action?</h2>
+            <div class="flex flex-col md:flex-row gap-4 justify-center">
+                <a href="./action.html" 
+                   class="bg-blue-600 hover:bg-blue-700 px-8 py-4 rounded-lg font-medium text-lg transition">
+                    Start Marketing
+                </a>
+                <a href="./designs.html"
+                   class="bg-gray-700 hover:bg-gray-600 px-8 py-4 rounded-lg font-medium text-lg transition">
+                    Join Design Contest
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+	<div id="footer"></div>
+	
+	<script>
+        $(document).ready(function() {
+            $('#navbar').load('/navbar.html');
+            $('#footer').load('/footer.html'); 
+        });
+
+		// Mobile menu toggle with jQuery
+		$(document).ready(function() {
+			$('#mobile-menu-button').on('click', function() {
+				$('#mobile-menu').slideToggle(200);
+				$('#mobile-menu').toggleClass('active');
+			});
+
+			// Close menu when clicking outside
+			$(document).on('click', function(e) {
+				if (!$(e.target).closest('#mobile-menu-button').length && !$(e.target).closest('#mobile-menu').length) {
+					$('#mobile-menu').slideUp(200);
+				}
+			});
+
+			// Close menu on resize if we hit desktop breakpoint
+			$(window).resize(function() {
+				if ($(window).width() > 768) {
+					$('#mobile-menu').slideUp(0);
+				}
+			});
+		});
+
+        // Smooth scroll for anchor links
+        $('a[href^="#"]').click(function(e) {
+            e.preventDefault();
+            let target = $(this.hash);
+            if (target.length) {
+                $('html, body').animate({
+                    scrollTop: target.offset().top - 80
+                }, 500);
+            }
+        });
+        
+        // Copy address functionality with notification
+        function copyAddress(text) {
+            navigator.clipboard.writeText(text)
+                .then(() => {
+                    const notification = document.getElementById('copy-success');
+                    notification.classList.add('copy-notification');
+                    
+                    setTimeout(() => {
+                        notification.classList.remove('copy-notification');
+                    }, 2500);
+                })
+                .catch(() => {
+                    alert('Failed to copy address. Please try again.');
+                });
+        }
+        // Lazy load images
+        document.addEventListener('DOMContentLoaded', function() {
+            const lazyImages = document.querySelectorAll('img.lazy-load');
+            
+            const imageObserver = new IntersectionObserver((entries, observer) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        const img = entry.target;
+                        img.src = img.dataset.src;
+                        img.classList.add('loaded');
+                        observer.unobserve(img);
+                    }
+                });
+            });
+
+            lazyImages.forEach(img => imageObserver.observe(img));
+        });
+    </script>
+</body>
+</html>

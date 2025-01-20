@@ -1,0 +1,3 @@
+User-agent: *
+Disallow: /tutorial
+Disallow: /instructions

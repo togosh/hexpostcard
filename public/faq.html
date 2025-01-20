@@ -1,0 +1,466 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>FAQ - HEXpostcards</title>
+
+    <!-- Styles -->
+    <link
+      href="https://cdnjs.cloudflare.com/ajax/libs/tailwindcss/2.2.19/tailwind.min.css"
+      rel="stylesheet"
+    />
+    <link href="./css/styles.css" rel="stylesheet" />
+
+    <!-- Scripts -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+
+    <!-- ICONS -->
+    <link rel="apple-touch-icon" sizes="180x180" href="./images/apple-touch-icon.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="./images/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="./images/favicon-16x16.png">
+    <link rel="manifest" href="./site.webmanifest">
+    <link rel="mask-icon" href="./images/safari-pinned-tab.svg" color="#5bbad5">
+    <meta name="msapplication-TileColor" content="#da532c">
+    <meta name="theme-color" content="#ffffff">
+
+    <style>
+      .faq-item {
+        border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        transition: all 0.3s ease;
+      }
+
+      .faq-question {
+        cursor: pointer;
+        padding: 1.5rem;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+      }
+
+      .faq-answer {
+        display: none;
+        padding: 0 1.5rem 1.5rem 1.5rem;
+        color: #9ca3af;
+      }
+
+      .faq-question.active {
+        background-color: rgba(59, 130, 246, 0.1);
+      }
+
+      .faq-icon {
+        transition: transform 0.3s ease;
+      }
+
+      .faq-question.active .faq-icon {
+        transform: rotate(180deg);
+      }
+    </style>
+  </head>
+  <body>
+    <!-- Navigation -->
+    <div id="navbar"></div>
+
+    <!-- Main Content -->
+    <main class="pt-24 pb-16">
+      <div class="container mx-auto px-4">
+        <h1 class="text-4xl font-bold mb-12 text-center">
+          Frequently Asked Questions
+        </h1>
+
+        <div class="max-w-3xl mx-auto bg-gray-800 rounded-lg overflow-hidden">
+          <!-- FAQ Item -->
+          <div class="faq-item">
+            <div class="faq-question">
+              <h3 class="text-xl font-semibold">Is this project legit?</h3>
+              <svg
+                class="faq-icon w-6 h-6"
+                fill="none"
+                stroke="currentColor"
+                viewBox="0 0 24 24"
+              >
+                <path
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  stroke-width="2"
+                  d="M19 9l-7 7-7-7"
+                />
+              </svg>
+            </div>
+            <div class="faq-answer">
+              <p class="mb-4">Yes!</p>
+              <ul class="list-disc pl-5 space-y-2">
+                <li>
+                  <a
+                    href="https://twitter.com/RichardHeartWin/status/1530905682559619073"
+                    target="_blank"
+                    class="text-blue-400 hover:text-blue-300"
+                    >Richard Heart Tweet</a
+                  >
+                </li>
+                <li>
+                  <a
+                    href="./team.html"
+                    class="text-blue-400 hover:text-blue-300"
+                    >Meet the Team</a
+                  >
+                </li>
+              </ul>
+            </div>
+          </div>
+
+          <!-- FAQ Item -->
+          <div class="faq-item">
+            <div class="faq-question">
+              <h3 class="text-xl font-semibold">Is direct mail effective?</h3>
+              <svg
+                class="faq-icon w-6 h-6"
+                fill="none"
+                stroke="currentColor"
+                viewBox="0 0 24 24"
+              >
+                <path
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  stroke-width="2"
+                  d="M19 9l-7 7-7-7"
+                />
+              </svg>
+            </div>
+            <div class="faq-answer">
+              <p class="mb-4">Yes, read the statistics:</p>
+              <ul class="list-disc pl-5 space-y-2">
+                <li>
+                  <a
+                    href="https://www.uspsdelivers.com/2020-2021-generational-research-report/"
+                    target="_blank"
+                    class="text-blue-400 hover:text-blue-300"
+                    >USPS® Generational Study</a
+                  >
+                </li>
+                <li>
+                  <a
+                    href="https://www.smallbizgenius.net/by-the-numbers/direct-mail-statistics/"
+                    target="_blank"
+                    class="text-blue-400 hover:text-blue-300"
+                    >Direct Mail Statistics</a
+                  >
+                </li>
+              </ul>
+            </div>
+          </div>
+
+          <!-- FAQ Item -->
+          <div class="faq-item">
+            <div class="faq-question">
+              <h3 class="text-xl font-semibold">
+                Why target the wealthiest people?
+              </h3>
+              <svg
+                class="faq-icon w-6 h-6"
+                fill="none"
+                stroke="currentColor"
+                viewBox="0 0 24 24"
+              >
+                <path
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  stroke-width="2"
+                  d="M19 9l-7 7-7-7"
+                />
+              </svg>
+            </div>
+            <div class="faq-answer">
+              <p>
+                Because they move the price; they have the most money, and
+                they can hold the longest.
+              </p>
+              <img
+                src="https://hexpostcards.com/wealthdistributionchart_powerlaw.png"
+                alt="Wealth Distribution Chart"
+                class="my-4 rounded-lg"
+              />
+              <a
+                href="https://dqydj.com/net-worth-percentiles-by-age/"
+                target="_blank"
+                class="text-blue-400 hover:text-blue-300"
+                >Source: Net Worth Percentiles by Age</a
+              >
+            </div>
+          </div>
+
+          <!-- FAQ Item -->
+          <div class="faq-item">
+            <div class="faq-question">
+              <h3 class="text-xl font-semibold">
+                Will you send mail multiple times?
+              </h3>
+              <svg
+                class="faq-icon w-6 h-6"
+                fill="none"
+                stroke="currentColor"
+                viewBox="0 0 24 24"
+              >
+                <path
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  stroke-width="2"
+                  d="M19 9l-7 7-7-7"
+                />
+              </svg>
+            </div>
+            <div class="faq-answer">
+              <p>
+                Yes, <b>"The Rule of 7"</b> is an old marketing adage that
+                says a potential client needs to see or hear your marketing
+                message 7 times before they'll buy.
+              </p>
+            </div>
+          </div>
+
+          <!-- FAQ Item -->
+          <div class="faq-item">
+            <div class="faq-question">
+              <h3 class="text-xl font-semibold">How to donate?</h3>
+              <svg
+                class="faq-icon w-6 h-6"
+                fill="none"
+                stroke="currentColor"
+                viewBox="0 0 24 24"
+              >
+                <path
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  stroke-width="2"
+                  d="M19 9l-7 7-7-7"
+                />
+              </svg>
+            </div>
+            <div class="faq-answer">
+              <div class="space-y-4">
+                <p>
+                  Donate any coin on Ethereum or PulseChain:<br />
+                  <code class="text-light bg-gray-700 px-2 py-1 rounded"
+                    >0x25D4CCeba035AabB7aC79C4F2fEaD5bC74E6B9d8</code
+                  >
+                </p>
+
+                <p>
+                  Subscribe on Patreon:<br />
+                  <a
+                    href="https://www.patreon.com/HEXpostcards"
+                    target="_blank"
+                    class="text-blue-400 hover:text-blue-300"
+                  >
+                    patreon.com/HEXpostcards
+                  </a>
+                </p>
+              </div>
+            </div>
+          </div>
+
+          <!-- FAQ Item -->
+          <div class="faq-item">
+            <div class="faq-question">
+              <h3 class="text-xl font-semibold">Why use us?</h3>
+              <svg
+                class="faq-icon w-6 h-6"
+                fill="none"
+                stroke="currentColor"
+                viewBox="0 0 24 24"
+              >
+                <path
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  stroke-width="2"
+                  d="M19 9l-7 7-7-7"
+                />
+              </svg>
+            </div>
+            <div class="faq-answer">
+              <ol class="list-decimal pl-5 space-y-4">
+                <li>
+                  Convenience, we handle the entire process, from payment and
+                  taxes to communication and direct mail purchase
+                </li>
+                <li>
+                  Economy of scale, by consolidating funding we can purchase
+                  postcards in bulk and achieve even better pricing
+                </li>
+                <li>
+                  <b><u>No-profit</u></b> service, our team is composed of
+                  volunteers, all donations go directly to buying direct mail
+                </li>
+                <li>
+                  <b><u>No-profit</u></b> rates with our USA vendor, allowing
+                  us to offer printing and mailing services at up to 20% lower
+                  costs compared to the for-profit companies
+                </li>
+              </ol>
+            </div>
+          </div>
+
+          <!-- FAQ Item -->
+          <div class="faq-item">
+            <div class="faq-question">
+              <h3 class="text-xl font-semibold">Do you have tracking?</h3>
+              <svg
+                class="faq-icon w-6 h-6"
+                fill="none"
+                stroke="currentColor"
+                viewBox="0 0 24 24"
+              >
+                <path
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  stroke-width="2"
+                  d="M19 9l-7 7-7-7"
+                />
+              </svg>
+            </div>
+            <div class="faq-answer">
+              <div class="space-y-4">
+                <p>Tracking postcards can be done through:</p>
+                <ul class="list-disc pl-5">
+                  <li>Custom URL</li>
+                  <li>QR Code</li>
+                  <li>Phone Number</li>
+                  <li>Email Address</li>
+                </ul>
+                <p>
+                  However, many recipients may simply search for "HEX" online
+                  without using these tracking methods
+                </p>
+                <p>
+                  The HEX.COM domain is simple, memorable, and effective for
+                  driving traffic
+                </p>
+
+                <p class="mt-6 font-semibold">Conversion Funnel:</p>
+                <ul class="list-disc pl-5">
+                  <li>% read vs trashed</li>
+                  <li>% of those that load site</li>
+                  <li>% of those that research</li>
+                  <li>% of those that invest</li>
+                </ul>
+
+                <p class="mt-6">Random Estimates:</p>
+                <ul class="list-disc pl-5">
+                  <li>1 in 25 read it</li>
+                  <li>1 in 100 load site</li>
+                  <li>1 in 500 invest</li>
+                </ul>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </main>
+
+    <!-- Footer -->
+    <div id="footer"></div>
+
+    <script>
+      $(document).ready(function() {
+          $('#navbar').load('/navbar.html');
+          $('#footer').load('/footer.html'); 
+      });
+
+      // FAQ Functionality
+      $(document).ready(function () {
+        $('.faq-question').click(function () {
+          const $answer = $(this).next('.faq-answer');
+          const $icon = $(this).find('.faq-icon');
+
+          // Close other answers
+          $('.faq-answer').not($answer).slideUp(200);
+          $('.faq-question').not($(this)).removeClass('active');
+
+          // Toggle current answer
+          $answer.slideToggle(200);
+          $(this).toggleClass('active');
+        });
+      });
+
+      // Mobile menu toggle with jQuery
+      $(document).ready(function () {
+        $('#mobile-menu-button').on('click', function () {
+          $('#mobile-menu').slideToggle(200);
+          $('#mobile-menu').toggleClass('active');
+        });
+
+        // Close menu when clicking outside
+        $(document).on('click', function (e) {
+          if (
+            !$(e.target).closest('#mobile-menu-button').length &&
+            !$(e.target).closest('#mobile-menu').length
+          ) {
+            $('#mobile-menu').slideUp(200);
+          }
+        });
+
+        // Close menu on resize if we hit desktop breakpoint
+        $(window).resize(function () {
+          if ($(window).width() > 768) {
+            $('#mobile-menu').slideUp(0);
+          }
+        });
+      });
+
+      // Smooth scroll for anchor links
+      $('a[href^="#"]').click(function (e) {
+        e.preventDefault();
+        let target = $(this.hash);
+        if (target.length) {
+          $('html, body').animate(
+            {
+              scrollTop: target.offset().top - 80,
+            },
+            500
+          );
+        }
+      });
+
+      // Copy address functionality with notification
+      function copyAddress(text) {
+        navigator.clipboard
+          .writeText(text)
+          .then(() => {
+            const notification = document.createElement('div');
+            notification.className =
+              'fixed top-4 right-4 bg-green-500 text-white px-4 py-2 rounded shadow-lg copy-success';
+            notification.textContent = 'Address copied!';
+            document.body.appendChild(notification);
+
+            setTimeout(() => {
+              notification.remove();
+            }, 2000);
+          })
+          .catch(() => {
+            alert('Failed to copy address. Please try again.');
+          });
+      }
+
+      // Lazy load images
+      document.addEventListener('DOMContentLoaded', function () {
+        const lazyImages = document.querySelectorAll('img.lazy-load');
+
+        const imageObserver = new IntersectionObserver(
+          (entries, observer) => {
+            entries.forEach((entry) => {
+              if (entry.isIntersecting) {
+                const img = entry.target;
+                img.src = img.dataset.src;
+                img.classList.add('loaded');
+                observer.unobserve(img);
+              }
+            });
+          }
+        );
+
+        lazyImages.forEach((img) => imageObserver.observe(img));
+      });
+    </script>
+  </body>
+  </html>
+</html>
