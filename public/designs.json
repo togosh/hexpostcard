@@ -1577,5 +1577,86 @@
         "pdf": "/contest05/HEXpostcards_090_Rebel_PulseX.pdf",
         "creator": "Rebel",
         "contestId": "contest05"
+    },
+    {
+        "id": "91",
+        "designType": "letter",
+        "coins": [
+            "HEX"
+        ],
+        "images": [
+            "/contest05/HEXpostcards_091_EuphoriaDesign_HEX_page-0001.jpg"
+        ],
+        "pdf": "/contest05/HEXpostcards_091_EuphoriaDesign.pdf",
+        "creator": "Euphoria Design",
+        "contestId": "contest05",
+        "twitter": "https://x.com/EuphoriaWeb3"
+    },
+    {
+        "id": "91",
+        "designType": "letter",
+        "coins": [
+            "PLS"
+        ],
+        "images": [
+            "/contest05/HEXpostcards_091_EuphoriaDesign_PLS_page-0002.jpg"
+        ],
+        "pdf": "/contest05/HEXpostcards_091_EuphoriaDesign.pdf",
+        "creator": "Euphoria Design",
+        "contestId": "contest05",
+        "twitter": "https://x.com/EuphoriaWeb3"
+    },
+    {
+        "id": "91",
+        "designType": "letter",
+        "coins": [
+            "PLSX"
+        ],
+        "images": [
+            "/contest05/HEXpostcards_091_EuphoriaDesign_PLSX_page-0003.jpg"
+        ],
+        "pdf": "/contest05/HEXpostcards_091_EuphoriaDesign.pdf",
+        "creator": "Euphoria Design",
+        "contestId": "contest05",
+        "twitter": "https://x.com/EuphoriaWeb3"
+    },
+    {
+        "id": "92",
+        "designType": "letter",
+        "coins": [
+            "HEX"
+        ],
+        "images": [
+            "/contest05/HEXpostcards_092_FillupBanks_HEX.jpg"
+        ],
+        "creator": "Fillup Banks",
+        "contestId": "contest05",
+        "twitter": "https://x.com/fillup_banks"
+    },
+    {
+        "id": "92",
+        "designType": "letter",
+        "coins": [
+            "PLS"
+        ],
+        "images": [
+            "/contest05/HEXpostcards_092_FillupBanks_PLS.jpg"
+        ],
+        "creator": "Fillup Banks",
+        "contestId": "contest05",
+        "twitter": "https://x.com/fillup_banks"
+    },
+    {
+        "id": "92",
+        "designType": "letter",
+        "coins": [
+            "PLSX"
+        ],
+        "images": [
+            "/contest05/HEXpostcards_092_FillupBanks_PLSX.jpg"
+        ],
+        "creator": "Fillup Banks",
+        "contestId": "contest05",
+        "twitter": "https://x.com/fillup_banks"
     }
 ]
