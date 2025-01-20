@@ -308,76 +308,6 @@
       // Call on page load
       document.addEventListener('DOMContentLoaded', loadDesignsData);
 
-      // Template for creating design cards
-      // function createDesignCard(design) {
-      //   let pdfButton = design.pdf
-      //     ? `<a href="${design.pdf}" target="_blank" class="download-btn bg-blue-600 hover:bg-blue-700 px-6 py-2 rounded-lg inline-block">Download PDF</a>`
-      //     : '';
-
-      //   let telegramLink = design.telegram
-      //     ? `<a href="${design.telegram}" target="_blank" class="text-blue-400 hover:underline">Telegram</a>`
-      //     : '';
-
-      //   let twitterLink = design.twitter
-      //     ? `<a href="${design.twitter}" target="_blank" class="text-blue-400 hover:underline">Twitter</a>`
-      //     : '';
-
-      //   let address = design.address
-      //     ? `<p class="text-gray-400">Donation Address: <span class="text-green-500">${design.address}</span></p>`
-      //     : '';
-
-      //   // Generate HTML for the images
-      //   let imagesHtml = design.images
-      //     .map(
-      //       (image, index) => `
-      //             <div class="relative overflow-hidden rounded-lg mb-4">
-      //               <img src="${image}" alt="${design.creator} Image ${
-      //         index + 1
-      //       }" class="design-image w-full">
-      //               <div class="absolute inset-0 bg-black bg-opacity-50 flex items-center justify-center opacity-0 hover:opacity-100 transition-opacity">
-      //                 <div class="space-y-4">
-      //                   ${pdfButton}
-      //                   <a href="${image}" target="_blank" class="download-btn bg-gray-600 hover:bg-gray-700 px-6 py-2 rounded-lg inline-block">View Image</a>
-      //                 </div>
-      //               </div>
-      //             </div>`
-      //     )
-      //     .join('');
-
-      //   // Set both data-design-type and data-coins attributes
-      //   return `
-      //           <div class="design-card p-6 relative"
-      //               data-design-type="${design.designType}"
-      //               data-coins="${design.coins.join(',')}"
-      //               data-design-id="${design.id}">
-      //             <div class="number absolute top-2 left-2 bg-blue-600 text-white font-bold text-2xl rounded-full px-3 py-1">
-      //               ${design.id}
-      //             </div>
-      //             ${imagesHtml}
-      //             <h3 class="text-lg font-semibold">${
-      //               design.creator
-      //             }</h3>
-      //             ${telegramLink}
-      //             ${twitterLink}
-      //             ${address}
-      //           </div>`;
-
-      //           return `
-      //     <div class="design-card p-6 relative"
-      //         data-design-type="${design.designType}"
-      //         data-coins="${design.coins.join(',')}"
-      //         data-design-id="${design.id}">
-      //       <div class="number absolute top-2 left-2 bg-blue-600 text-white font-bold text-2xl rounded-full px-3 py-1">
-      //         ${design.id}
-      //       </div>
-      //       ${
-      //               design.creator
-      //             }
-      //             ${telegramLink}
-      //             ${twitterLink}
-      //             ${address}
-      //     </div>`;
-      // }
       function createDesignCard(design) {
         let pdfButton = design.pdf
           ? `<a href="${design.pdf}" target="_blank" class="download-btn bg-blue-600 hover:bg-blue-700 px-4 py-2 rounded-lg inline-block text-sm sm:text-base sm:px-6">Download PDF</a>`
@@ -459,12 +389,12 @@
           $(this).addClass('active');
           
           // Adjust grid layout based on filter
-          const designGrid = $('#design-grid');
-          if (currentTypeFilter === 'letter') {
-            designGrid.removeClass('lg:grid-cols-3').addClass('lg:grid-cols-2');
-          } else {
-            designGrid.removeClass('lg:grid-cols-2').addClass('lg:grid-cols-3');
-          }
+          //const designGrid = $('#design-grid');
+          //if (currentTypeFilter === 'letter') {
+          //  designGrid.removeClass('lg:grid-cols-3').addClass('lg:grid-cols-2');
+          //} else {
+          //  designGrid.removeClass('lg:grid-cols-2').addClass('lg:grid-cols-3');
+          //}
           
           applyFilters();
         });
