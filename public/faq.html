@@ -15,6 +15,7 @@
     <!-- Scripts -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
     <script src="navbar.js"></script>
+    <script src="copyaddress.js"></script>
 
     <!-- ICONS -->
     <link rel="apple-touch-icon" sizes="180x180" href="./images/apple-touch-icon.png">
@@ -407,26 +408,6 @@
           );
         }
       });
-
-      // Copy address functionality with notification
-      function copyAddress(text) {
-        navigator.clipboard
-          .writeText(text)
-          .then(() => {
-            const notification = document.createElement('div');
-            notification.className =
-              'fixed top-4 right-4 bg-green-500 text-white px-4 py-2 rounded shadow-lg copy-success';
-            notification.textContent = 'Address copied!';
-            document.body.appendChild(notification);
-
-            setTimeout(() => {
-              notification.remove();
-            }, 2000);
-          })
-          .catch(() => {
-            alert('Failed to copy address. Please try again.');
-          });
-      }
 
       // Lazy load images
       document.addEventListener('DOMContentLoaded', function () {

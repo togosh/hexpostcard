@@ -30,6 +30,7 @@
     <!-- Scripts -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
     <script src="navbar.js"></script>
+    <script src="copyaddress.js"></script>
 
     <!-- ICONS -->
     <link rel="apple-touch-icon" sizes="180x180" href="./images/apple-touch-icon.png">
@@ -339,22 +340,6 @@
                 }, 500);
             }
         });
-        
-        // Copy address functionality with notification
-        function copyAddress(text) {
-            navigator.clipboard.writeText(text)
-                .then(() => {
-                    const notification = document.getElementById('copy-success');
-                    notification.classList.add('copy-notification');
-                    
-                    setTimeout(() => {
-                        notification.classList.remove('copy-notification');
-                    }, 2500);
-                })
-                .catch(() => {
-                    alert('Failed to copy address. Please try again.');
-                });
-        }
 
         // Lazy load images
         document.addEventListener('DOMContentLoaded', function() {
