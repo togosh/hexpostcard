@@ -314,66 +314,65 @@
 
       function createDesignCard(design) {
         let pdfButton = design.pdf
-          ? `<a href="${design.pdf}" target="_blank" class="download-btn bg-blue-600 hover:bg-blue-700 px-4 py-2 rounded-lg inline-block text-sm sm:text-base sm:px-6">Download PDF</a>`
-          : '';
+            ? `<a href="${design.pdf}" target="_blank" class="download-btn bg-blue-600 hover:bg-blue-700 px-4 py-2 rounded-lg inline-block text-sm sm:text-base sm:px-6 pdf-download">Download PDF</a>`
+            : '';
 
         let telegramLink = design.telegram
-          ? `<a href="${design.telegram}" target="_blank" class="text-blue-400 hover:underline text-sm">Telegram</a>`
-          : '';
+            ? `<a href="${design.telegram}" target="_blank" class="text-blue-400 hover:underline text-sm">Telegram</a>`
+            : '';
 
         let twitterLink = design.twitter
-          ? `<a href="${design.twitter}" target="_blank" class="text-blue-400 hover:underline text-sm">Twitter</a>`
-          : '';
+            ? `<a href="${design.twitter}" target="_blank" class="text-blue-400 hover:underline text-sm">Twitter</a>`
+            : '';
 
         let address = design.address
-          ? `<p class="text-gray-400 text-sm break-all">${design.address}</p>`
-          : '';
+            ? `<p class="text-gray-400 text-sm break-all">${design.address}</p>`
+            : '';
 
-        // Generate HTML for the images with responsive classes
         let imagesHtml = design.images
-          .map(
-            (image, index) => `
-              <div class="relative overflow-hidden rounded-lg mb-4">
-                <a href="${image}" target="_blank" class="block">
-                  <img src="${image}" 
-                      alt="${design.creator} Image ${index + 1}" 
-                      title="Right-click to save image"
-                      class="design-image w-full h-auto object-cover cursor-pointer"
-                      style="user-select: auto; -webkit-user-drag: auto;">
-                </a>
-                <div class="absolute inset-0 bg-black bg-opacity-50 flex items-center justify-center opacity-0 hover:opacity-100 transition-opacity pointer-events-none">
-                  <div class="space-y-2 sm:space-y-4 p-2 sm:p-4 text-center pointer-events-auto">
-                    ${pdfButton}
-                    <a href="${image}" target="_blank" download
-                      class="download-btn bg-gray-600 hover:bg-gray-700 px-4 py-2 rounded-lg inline-block text-sm sm:text-base sm:px-6">
-                      Download Image
-                    </a>
-                  </div>
-                </div>
-              </div>`
-          )
-          .join('');
+            .map(
+                (image, index) => `
+                    <div class="relative overflow-hidden rounded-lg mb-4">
+                        <a href="${image}" target="_blank" class="block">
+                            <img src="${image}" 
+                                alt="${design.creator} Image ${index + 1}" 
+                                title="Right-click to save image"
+                                class="design-image w-full h-auto object-cover cursor-pointer"
+                                style="user-select: auto; -webkit-user-drag: auto;">
+                        </a>
+                        <div class="absolute inset-0 bg-black bg-opacity-50 flex items-center justify-center opacity-0 hover:opacity-100 transition-opacity pointer-events-none">
+                            <div class="space-y-2 sm:space-y-4 p-2 sm:p-4 text-center pointer-events-auto">
+                                ${pdfButton}
+                                <a href="${image}" target="_blank" download
+                                    class="download-btn bg-gray-600 hover:bg-gray-700 px-4 py-2 rounded-lg inline-block text-sm sm:text-base sm:px-6">
+                                    Download Image
+                                </a>
+                            </div>
+                        </div>
+                    </div>`
+            )
+            .join('');
 
-        // Add responsive classes to the card container and content
         return `
-          <div class="design-card p-3 sm:p-6 relative overflow-hidden"
-              data-design-type="${design.designType}"
-              data-coins="${design.coins.join(',')}"
-              data-design-id="${design.id}">
-            <div class="number absolute top-2 left-2 bg-blue-600 text-white font-bold text-lg sm:text-2xl rounded-full px-2 sm:px-3 py-1 z-10">
-              ${design.id}
-            </div>
-            ${imagesHtml}
-            <div class="space-y-2">
-              <h3 class="text-base sm:text-lg font-semibold">${design.creator}</h3>
-              <div class="flex gap-3 flex-wrap">
-                ${telegramLink}
-                ${twitterLink}
-              </div>
-              ${address}
-            </div>
-          </div>`;
-      }
+            <div class="design-card p-3 sm:p-6 relative overflow-hidden"
+                data-design-type="${design.designType}"
+                data-coins="${design.coins.join(',')}"
+                data-has-pdf="${!!design.pdf}"
+                data-design-id="${design.id}">
+                <div class="number absolute top-2 left-2 bg-blue-600 text-white font-bold text-lg sm:text-2xl rounded-full px-2 sm:px-3 py-1 z-10">
+                    ${design.id}
+                </div>
+                ${imagesHtml}
+                <div class="space-y-2">
+                    <h3 class="text-base sm:text-lg font-semibold">${design.creator}</h3>
+                    <div class="flex gap-3 flex-wrap">
+                        ${telegramLink}
+                        ${twitterLink}
+                    </div>
+                    ${address}
+                </div>
+            </div>`;
+    }
 
       // Initial load of designs
       const loadDesigns = (start, count) => {
@@ -385,6 +384,7 @@
       $(document).ready(function () {
         let currentTypeFilter = 'all';
         let currentCoinFilter = 'all';
+        let showOnlyPDF = false;
 
         // Handle design type filter
         $('.filter-btn[data-filter]').click(function () {
@@ -411,25 +411,36 @@
           applyFilters();
         });
 
+        $('.filter-btn[data-has-pdf]').click(function () {
+            $(this).toggleClass('active');
+            showOnlyPDF = $(this).hasClass('active');
+            console.log('PDF filter clicked, showOnlyPDF:', showOnlyPDF); // Debug log
+            applyFilters();
+        });
+
         // Combined filter function
         function applyFilters() {
           $('.design-card').each(function () {
-            const $card = $(this);
-            const designType = $card.data('design-type');
-            const coins = $card.data('coins').toString().split(',');
+              const $card = $(this);
+              const designType = $card.data('design-type');
+              const coins = $card.data('coins').toString().split(',');
+              // Check for PDF using direct property access
+              const hasPDF = $card.find('a[href$=".pdf"]').length > 0;
+              
+              // Add console log to debug PDF status
+              console.log('Card ID:', $card.data('design-id'), 'Has PDF:', hasPDF);
 
-            const matchesType =
-              currentTypeFilter === 'all' || designType === currentTypeFilter;
-            const matchesCoin =
-              currentCoinFilter === 'all' || coins.includes(currentCoinFilter);
+              const matchesType = currentTypeFilter === 'all' || designType === currentTypeFilter;
+              const matchesCoin = currentCoinFilter === 'all' || coins.includes(currentCoinFilter);
+              const matchesPDF = !showOnlyPDF || hasPDF;
 
-            if (matchesType && matchesCoin) {
-              $card.show();
-            } else {
-              $card.hide();
-            }
+              if (matchesType && matchesCoin && matchesPDF) {
+                  $card.show();
+              } else {
+                  $card.hide();
+              }
           });
-        }
+      }
 
         // Lazy loading for images
         const observer = new IntersectionObserver((entries) => {
