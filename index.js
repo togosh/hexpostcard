@@ -35,6 +35,21 @@ if(!DEBUG){
 const app = express();
 app.use(express.json());
 
+app.use((req, res, next) => {
+  // Get host without port number
+  const host = req.headers.host.split(':')[0];
+  
+  // Check if it's not www and not an IP address
+  if (!host.startsWith('www.') && 
+      !host.match(/^(?:[0-9]{1,3}\.){3}[0-9]{1,3}$/) && 
+      host !== 'localhost' && 
+      !DEBUG) {
+      // Redirect to www version
+      return res.redirect(301, `http://www.${host}${req.url}`);
+  }
+  next();
+});
+
 app.use(function(req, res, next) {
 	next();
 });
