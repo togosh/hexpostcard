@@ -1,6 +1,7 @@
 [
     {
         "id": "1",
+        "active": 1,
         "designType": "postcard",
         "coins": [
             "HEX"
@@ -15,6 +16,7 @@
     },
     {
         "id": "2",
+        "active": 1,
         "designType": "postcard",
         "coins": [
             "HEX",
@@ -29,6 +31,7 @@
     },
     {
         "id": "3",
+        "active": 1,
         "designType": "postcard",
         "coins": [
             "HEX"
@@ -41,6 +44,7 @@
     },
     {
         "id": "4",
+        "active": 1,
         "designType": "postcard",
         "coins": [
             "HEX"
@@ -52,6 +56,7 @@
     },
     {
         "id": "6",
+        "active": 1,
         "designType": "postcard",
         "coins": [
             "HEX",
@@ -69,6 +74,7 @@
     },
     {
         "id": "7",
+        "active": 1,
         "designType": "postcard",
         "coins": [
             "HEX",
@@ -85,6 +91,7 @@
     },
     {
         "id": "8",
+        "active": 1,
         "designType": "postcard",
         "coins": [
             "HEX"
@@ -100,6 +107,7 @@
     },
     {
         "id": "9",
+        "active": 1,
         "designType": "postcard",
         "coins": [
             "PLS"
@@ -113,6 +121,7 @@
     },
     {
         "id": "10",
+        "active": 1,
         "designType": "postcard",
         "coins": [
             "HEX"
@@ -125,6 +134,7 @@
     },
     {
         "id": "11",
+        "active": 1,
         "designType": "postcard",
         "coins": [
             "PLS"
@@ -140,6 +150,7 @@
     },
     {
         "id": "12",
+        "active": 1,
         "designType": "postcard",
         "coins": [
             "PLS"
@@ -156,6 +167,7 @@
     },
     {
         "id": "13",
+        "active": 1,
         "designType": "postcard",
         "coins": [
             "PLS"
@@ -170,6 +182,7 @@
     },
     {
         "id": "14",
+        "active": 1,
         "designType": "postcard",
         "coins": [
             "PLS"
@@ -184,6 +197,7 @@
     },
     {
         "id": "15",
+        "active": 1,
         "designType": "postcard",
         "coins": [
             "PLS"
@@ -198,6 +212,7 @@
     },
     {
         "id": "16",
+        "active": 0,
         "designType": "postcard",
         "coins": [
             "PLS"
@@ -212,6 +227,7 @@
     },
     {
         "id": "17",
+        "active": 1,
         "designType": "postcard",
         "coins": [
             "PLS"
@@ -226,6 +242,7 @@
     },
     {
         "id": "18",
+        "active": 1,
         "designType": "postcard",
         "coins": [
             "PLS"
@@ -240,6 +257,7 @@
     },
     {
         "id": "19",
+        "active": 0,
         "designType": "postcard",
         "coins": [
             "PLS"
@@ -255,6 +273,7 @@
     },
     {
         "id": "20",
+        "active": 0,
         "designType": "postcard",
         "coins": [
             "PLSX"
@@ -267,6 +286,7 @@
     },
     {
         "id": "21",
+        "active": 0,
         "designType": "postcard",
         "coins": [
             "PLS"
@@ -282,6 +302,7 @@
     },
     {
         "id": "22",
+        "active": 1,
         "designType": "postcard",
         "coins": [
             "HEX",
@@ -296,6 +317,7 @@
     },
     {
         "id": "23",
+        "active": 1,
         "designType": "postcard",
         "coins": [
             "HEX"
@@ -310,6 +332,7 @@
     },
     {
         "id": "24",
+        "active": 1,
         "designType": "postcard",
         "coins": [
             "HEX"
@@ -325,6 +348,7 @@
     },
     {
         "id": "25",
+        "active": 1,
         "designType": "postcard",
         "coins": [
             "HEX"
@@ -340,6 +364,7 @@
     },
     {
         "id": "26",
+        "active": 1,
         "designType": "postcard",
         "coins": [
             "HEX"
@@ -353,6 +378,7 @@
     },
     {
         "id": "27",
+        "active": 1,
         "designType": "postcard",
         "coins": [
             "HEX"
@@ -365,6 +391,7 @@
     },
     {
         "id": "28",
+        "active": 1,
         "designType": "postcard",
         "coins": [
             "HEX"
@@ -378,6 +405,7 @@
     },
     {
         "id": "29",
+        "active": 1,
         "designType": "postcard",
         "coins": [
             "HEX"
@@ -391,6 +419,7 @@
     },
     {
         "id": "30",
+        "active": 1,
         "designType": "postcard",
         "coins": [
             "PLS"
@@ -404,6 +433,7 @@
     },
     {
         "id": "31",
+        "active": 1,
         "designType": "postcard",
         "coins": [
             "HEX"
@@ -417,6 +447,7 @@
     },
     {
         "id": "32",
+        "active": 1,
         "designType": "postcard",
         "coins": [
             "HEX"
@@ -429,6 +460,7 @@
     },
     {
         "id": "33",
+        "active": 1,
         "designType": "postcard",
         "coins": [
             "HEX"
@@ -442,6 +474,7 @@
     },
     {
         "id": "34",
+        "active": 1,
         "designType": "postcard",
         "coins": [
             "HEX"
@@ -454,6 +487,7 @@
     },
     {
         "id": "35",
+        "active": 1,
         "designType": "postcard",
         "coins": [
             "PLS"
@@ -468,6 +502,7 @@
     },
     {
         "id": "36",
+        "active": 0,
         "designType": "postcard",
         "coins": [
             "HEX"
@@ -482,6 +517,7 @@
     },
     {
         "id": "37",
+        "active": 1,
         "designType": "postcard",
         "coins": [
             "HEX"
@@ -497,6 +533,7 @@
     },
     {
         "id": "38",
+        "active": 1,
         "designType": "postcard",
         "coins": [
             "HEX"
@@ -512,6 +549,7 @@
     },
     {
         "id": "39",
+        "active": 1,
         "designType": "postcard",
         "coins": [
             "HEX"
@@ -527,6 +565,7 @@
     },
     {
         "id": "40",
+        "active": 1,
         "designType": "postcard",
         "coins": [
             "HEX"
@@ -542,6 +581,7 @@
     },
     {
         "id": "41",
+        "active": 1,
         "designType": "postcard",
         "coins": [
             "HEX"
@@ -557,6 +597,7 @@
     },
     {
         "id": "42",
+        "active": 1,
         "designType": "postcard",
         "coins": [
             "HEX"
@@ -572,6 +613,7 @@
     },
     {
         "id": "43",
+        "active": 0,
         "designType": "postcard",
         "coins": [
             "HEX"
@@ -587,6 +629,7 @@
     },
     {
         "id": "44",
+        "active": 1,
         "designType": "postcard",
         "coins": [
             "PLS"
@@ -602,6 +645,7 @@
     },
     {
         "id": "46",
+        "active": 1,
         "designType": "postcard",
         "coins": [
             "PLS"
@@ -618,6 +662,7 @@
     },
     {
         "id": "47",
+        "active": 1,
         "designType": "postcard",
         "coins": [
             "HEX"
@@ -631,6 +676,7 @@
     },
     {
         "id": "48",
+        "active": 1,
         "designType": "postcard",
         "coins": [
             "HEX"
@@ -645,6 +691,7 @@
     },
     {
         "id": "49",
+        "active": 0,
         "designType": "postcard",
         "coins": [
             "HEX"
@@ -659,6 +706,7 @@
     },
     {
         "id": "50",
+        "active": 0,
         "designType": "postcard",
         "coins": [
             "HEX"
@@ -673,6 +721,7 @@
     },
     {
         "id": "51",
+        "active": 1,
         "designType": "postcard",
         "coins": [
             "HEX"
@@ -687,6 +736,7 @@
     },
     {
         "id": "52",
+        "active": 1,
         "designType": "postcard",
         "coins": [
             "HEX",
@@ -702,6 +752,7 @@
     },
     {
         "id": "53",
+        "active": 1,
         "designType": "postcard",
         "coins": [
             "PLS"
@@ -716,6 +767,7 @@
     },
     {
         "id": "54",
+        "active": 1,
         "designType": "postcard",
         "coins": [
             "HEX",
@@ -732,6 +784,7 @@
     },
     {
         "id": "55",
+        "active": 1,
         "designType": "postcard",
         "coins": [
             "HEX",
@@ -749,6 +802,7 @@
     },
     {
         "id": "56",
+        "active": 1,
         "designType": "postcard",
         "coins": [
             "HEX"
@@ -764,6 +818,7 @@
     },
     {
         "id": "57",
+        "active": 1,
         "designType": "postcard",
         "coins": [
             "HEX"
@@ -779,6 +834,7 @@
     },
     {
         "id": "58",
+        "active": 0,
         "designType": "postcard",
         "coins": [
             "HEX",
@@ -795,6 +851,7 @@
     },
     {
         "id": "59",
+        "active": 1,
         "designType": "postcard",
         "coins": [
             "PLS"
@@ -809,6 +866,7 @@
     },
     {
         "id": "60",
+        "active": 1,
         "designType": "postcard",
         "coins": [
             "HEX",
@@ -825,6 +883,7 @@
     },
     {
         "id": "61",
+        "active": 1,
         "designType": "postcard",
         "coins": [
             "HEX"
@@ -840,6 +899,7 @@
     },
     {
         "id": "62",
+        "active": 1,
         "designType": "postcard",
         "coins": [
             "HEX"
@@ -855,6 +915,7 @@
     },
     {
         "id": "63",
+        "active": 1,
         "designType": "postcard",
         "coins": [
             "HEX"
@@ -869,6 +930,7 @@
     },
     {
         "id": "64",
+        "active": 1,
         "designType": "postcard",
         "coins": [
             "HEX"
@@ -883,6 +945,7 @@
     },
     {
         "id": "65",
+        "active": 0,
         "designType": "postcard",
         "coins": [
             "HEX"
@@ -896,6 +959,7 @@
     },
     {
         "id": "66",
+        "active": 1,
         "designType": "postcard",
         "coins": [
             "HEX"
@@ -910,6 +974,7 @@
     },
     {
         "id": "67",
+        "active": 1,
         "designType": "postcard",
         "coins": [
             "HEX"
@@ -924,6 +989,7 @@
     },
     {
         "id": "68",
+        "active": 1,
         "designType": "postcard",
         "coins": [
             "HEX"
@@ -938,6 +1004,7 @@
     },
     {
         "id": "69",
+        "active": 1,
         "designType": "postcard",
         "coins": [
             "HEX"
@@ -952,6 +1019,7 @@
     },
     {
         "id": "70",
+        "active": 1,
         "designType": "postcard",
         "coins": [
             "HEX",
@@ -967,6 +1035,7 @@
     },
     {
         "id": "71",
+        "active": 1,
         "designType": "postcard",
         "coins": [
             "HEX",
@@ -982,6 +1051,7 @@
     },
     {
         "id": "72",
+        "active": 1,
         "designType": "postcard",
         "coins": [
             "HEX"
@@ -995,6 +1065,7 @@
     },
     {
         "id": "73",
+        "active": 1,
         "designType": "postcard",
         "coins": [
             "HEX"
@@ -1008,6 +1079,7 @@
     },
     {
         "id": "74",
+        "active": 0,
         "designType": "postcard",
         "coins": [
             "HEX"
@@ -1021,6 +1093,7 @@
     },
     {
         "id": "75",
+        "active": 0,
         "designType": "postcard",
         "coins": [
             "HEX"
@@ -1034,6 +1107,7 @@
     },
     {
         "id": "76",
+        "active": 1,
         "designType": "letter",
         "coins": [
             "HEX"
@@ -1049,6 +1123,7 @@
     },
     {
         "id": "76",
+        "active": 1,
         "designType": "letter",
         "coins": [
             "PLS"
@@ -1064,6 +1139,7 @@
     },
     {
         "id": "76",
+        "active": 1,
         "designType": "letter",
         "coins": [
             "PLSX"
@@ -1079,6 +1155,7 @@
     },
     {
         "id": "77",
+        "active": 1,
         "designType": "letter",
         "coins": [
             "HEX",
@@ -1096,6 +1173,7 @@
     },
     {
         "id": "77",
+        "active": 1,
         "designType": "letter",
         "coins": [
             "PLS",
@@ -1113,6 +1191,7 @@
     },
     {
         "id": "78",
+        "active": 0,
         "designType": "letter",
         "coins": [
             "HEX",
@@ -1127,6 +1206,7 @@
     },
     {
         "id": "79",
+        "active": 1,
         "designType": "letter",
         "coins": [
             "HEX"
@@ -1141,6 +1221,7 @@
     },
     {
         "id": "79",
+        "active": 1,
         "designType": "letter",
         "coins": [
             "HEX"
@@ -1155,6 +1236,7 @@
     },
     {
         "id": "79",
+        "active": 1,
         "designType": "letter",
         "coins": [
             "HEX"
@@ -1169,6 +1251,7 @@
     },
     {
         "id": "79",
+        "active": 1,
         "designType": "letter",
         "coins": [
             "HEX"
@@ -1182,6 +1265,7 @@
     },
     {
         "id": "80",
+        "active": 1,
         "designType": "letter",
         "coins": [
             "HEX"
@@ -1197,6 +1281,7 @@
     },
     {
         "id": "80",
+        "active": 1,
         "designType": "letter",
         "coins": [
             "PLS"
@@ -1212,6 +1297,7 @@
     },
     {
         "id": "80",
+        "active": 1,
         "designType": "letter",
         "coins": [
             "PLSX"
@@ -1226,7 +1312,50 @@
         "contestId": "contest05"
     },
     {
+        "id": "81",
+        "active": 1,
+        "designType": "letter",
+        "coins": [
+            "HEX"
+        ],
+        "images": [
+            "/contest05/HEXpostcards_081_MrsHexican_HEX.jpg"
+        ],
+        "creator": "Mrs Hexican",
+        "twitter": "https://x.com/MrsHexican",
+        "contestId": "contest05"
+    },
+    {
+        "id": "81",
+        "active": 1,
+        "designType": "letter",
+        "coins": [
+            "PLS"
+        ],
+        "images": [
+            "/contest05/HEXpostcards_081_MrsHexican_PLS.jpg"
+        ],
+        "creator": "Mrs Hexican",
+        "twitter": "https://x.com/MrsHexican",
+        "contestId": "contest05"
+    },
+    {
+        "id": "81",
+        "active": 1,
+        "designType": "letter",
+        "coins": [
+            "PLSX"
+        ],
+        "images": [
+            "/contest05/HEXpostcards_081_MrsHexican_PLSX.jpg"
+        ],
+        "creator": "Mrs Hexican",
+        "twitter": "https://x.com/MrsHexican",
+        "contestId": "contest05"
+    },
+    {
         "id": "82",
+        "active": 1,
         "designType": "letter",
         "coins": [
             "HEX"
@@ -1241,6 +1370,7 @@
     },
     {
         "id": "82",
+        "active": 1,
         "designType": "letter",
         "coins": [
             "PLS"
@@ -1255,6 +1385,7 @@
     },
     {
         "id": "82",
+        "active": 1,
         "designType": "letter",
         "coins": [
             "PLSX"
@@ -1269,6 +1400,7 @@
     },
     {
         "id": "83a",
+        "active": 1,
         "designType": "letter",
         "coins": [
             "HEX"
@@ -1283,6 +1415,7 @@
     },
     {
         "id": "83b",
+        "active": 1,
         "designType": "letter",
         "coins": [
             "HEX"
@@ -1297,6 +1430,7 @@
     },
     {
         "id": "83c",
+        "active": 1,
         "designType": "letter",
         "coins": [
             "HEX"
@@ -1311,6 +1445,7 @@
     },
     {
         "id": "84",
+        "active": 1,
         "designType": "letter",
         "coins": [
             "HEX"
@@ -1326,6 +1461,7 @@
     },
     {
         "id": "84",
+        "active": 1,
         "designType": "letter",
         "coins": [
             "PLS"
@@ -1341,6 +1477,7 @@
     },
     {
         "id": "85",
+        "active": 1,
         "designType": "letter",
         "coins": [
             "HEX"
@@ -1355,6 +1492,7 @@
     },
     {
         "id": "85",
+        "active": 1,
         "designType": "letter",
         "coins": [
             "PLS"
@@ -1369,6 +1507,7 @@
     },
     {
         "id": "85",
+        "active": 1,
         "designType": "letter",
         "coins": [
             "PLSX"
@@ -1383,6 +1522,7 @@
     },
     {
         "id": "86a",
+        "active": 1,
         "designType": "letter",
         "coins": [
             "HEX"
@@ -1397,6 +1537,7 @@
     },
     {
         "id": "86a",
+        "active": 1,
         "designType": "letter",
         "coins": [
             "HEX"
@@ -1410,6 +1551,7 @@
     },
     {
         "id": "86b",
+        "active": 1,
         "designType": "letter",
         "coins": [
             "PLS",
@@ -1425,6 +1567,7 @@
     },
     {
         "id": "86b",
+        "active": 1,
         "designType": "letter",
         "coins": [
             "PLS",
@@ -1440,6 +1583,7 @@
     },
     {
         "id": "87",
+        "active": 1,
         "designType": "letter",
         "coins": [
             "PLS"
@@ -1455,6 +1599,7 @@
     },
     {
         "id": "88",
+        "active": 1,
         "designType": "letter",
         "coins": [
             "PLS"
@@ -1468,6 +1613,7 @@
     },
     {
         "id": "89",
+        "active": 1,
         "designType": "letter",
         "coins": [
             "HEX",
@@ -1482,6 +1628,7 @@
     },
     {
         "id": "90",
+        "active": 1,
         "designType": "letter",
         "coins": [
             "HEX"
@@ -1496,6 +1643,7 @@
     },
     {
         "id": "90",
+        "active": 1,
         "designType": "letter",
         "coins": [
             "HEX"
@@ -1510,6 +1658,7 @@
     },
     {
         "id": "90",
+        "active": 1,
         "designType": "letter",
         "coins": [
             "PLS"
@@ -1524,6 +1673,7 @@
     },
     {
         "id": "90",
+        "active": 1,
         "designType": "letter",
         "coins": [
             "PLS"
@@ -1538,6 +1688,7 @@
     },
     {
         "id": "90",
+        "active": 1,
         "designType": "letter",
         "coins": [
             "PLS"
@@ -1552,6 +1703,7 @@
     },
     {
         "id": "90",
+        "active": 1,
         "designType": "letter",
         "coins": [
             "PLSX"
@@ -1566,6 +1718,7 @@
     },
     {
         "id": "90",
+        "active": 1,
         "designType": "letter",
         "coins": [
             "PLSX"
@@ -1580,6 +1733,7 @@
     },
     {
         "id": "91",
+        "active": 1,
         "designType": "letter",
         "coins": [
             "HEX"
@@ -1594,6 +1748,7 @@
     },
     {
         "id": "91",
+        "active": 1,
         "designType": "letter",
         "coins": [
             "PLS"
@@ -1608,6 +1763,7 @@
     },
     {
         "id": "91",
+        "active": 1,
         "designType": "letter",
         "coins": [
             "PLSX"
@@ -1622,6 +1778,7 @@
     },
     {
         "id": "92",
+        "active": 1,
         "designType": "letter",
         "coins": [
             "HEX"
@@ -1635,6 +1792,7 @@
     },
     {
         "id": "92",
+        "active": 1,
         "designType": "letter",
         "coins": [
             "PLS"
@@ -1648,6 +1806,7 @@
     },
     {
         "id": "92",
+        "active": 1,
         "designType": "letter",
         "coins": [
             "PLSX"

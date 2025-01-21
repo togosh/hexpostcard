@@ -298,6 +298,8 @@
         try {
           const response = await fetch('/designs.json');
           designs = await response.json();
+
+          designs = designs.filter(design => design.active === 1);
           
           // Initial load of designs
           totalDesigns = designs.length;
