@@ -12,7 +12,11 @@
         ],
         "pdf": "./designs/HEXpostcard_6.5x9_Fillup_SideA_03.pdf",
         "creator": "Fillup Banks",
-        "twitter": "https://x.com/fillup_banks"
+        "twitter": "https://x.com/fillup_banks",
+        "contestWinner": {
+            "contestId": 0,
+            "type": "Original"
+        }
     },
     {
         "id": "2",
@@ -27,7 +31,11 @@
             "/designs/HEXpostcard_6.5x9_Fillup_BothSides.jpg"
         ],
         "creator": "Fillup Banks",
-        "twitter": "https://x.com/fillup_banks"
+        "twitter": "https://x.com/fillup_banks",
+        "contestWinner": {
+            "contestId": 2,
+            "type": "Recreation"
+        }
     },
     {
         "id": "3",
@@ -40,7 +48,11 @@
             "/designs/HEXpostcards_4.25x11_Fillup_BothSides.jpg"
         ],
         "creator": "Fillup Banks",
-        "twitter": "https://x.com/fillup_banks"
+        "twitter": "https://x.com/fillup_banks",
+        "contestWinner": {
+            "contestId": 0,
+            "type": "Hexscout"
+        }
     },
     {
         "id": "4",
@@ -87,7 +99,11 @@
         "creator": "Kita Boleh",
         "telegram": "https://t.me/antidump25",
         "address": "0x5A9a201007CDE8B95e70C0c0CeDD50F26b6Ba047",
-        "contestId": "contest02"
+        "contestId": "contest02",
+        "contestWinner": {
+            "contestId": 2,
+            "type": "Honorable Mention"
+        }
     },
     {
         "id": "8",
@@ -103,7 +119,11 @@
         "creator": "Kita Boleh",
         "telegram": "https://t.me/antidump25",
         "address": "0x5A9a201007CDE8B95e70C0c0CeDD50F26b6Ba047",
-        "contestId": "contest02"
+        "contestId": "contest02",
+        "contestWinner": {
+            "contestId": 2,
+            "type": "Honorable Mention"
+        }
     },
     {
         "id": "9",
@@ -328,7 +348,11 @@
         ],
         "creator": "0xJohn",
         "telegram": "https://t.me/crypto0xJohn",
-        "contestId": "contest"
+        "contestId": "contest",
+        "contestWinner": {
+            "contestId": 1,
+            "place": 1
+        }
     },
     {
         "id": "24",
@@ -344,7 +368,11 @@
         "creator": "Kax Design",
         "twitter": "https://twitter.com/kax_design",
         "telegram": "https://t.me/kdesign25",
-        "contestId": "contest"
+        "contestId": "contest",
+        "contestWinner": {
+            "contestId": 1,
+            "place": 2
+        }
     },
     {
         "id": "25",
@@ -360,7 +388,11 @@
         "creator": "Kax Design",
         "twitter": "https://twitter.com/kax_design",
         "telegram": "https://t.me/kdesign25",
-        "contestId": "contest"
+        "contestId": "contest",
+        "contestWinner": {
+            "contestId": 1,
+            "place": 2
+        }
     },
     {
         "id": "26",
@@ -415,7 +447,11 @@
             "/contest/HEXpostcarddesign_018b.jpg"
         ],
         "creator": "Neptune Creates",
-        "contestId": "contest"
+        "contestId": "contest",
+        "contestWinner": {
+            "contestId": 1,
+            "type": "Honorable Mention"
+        }
     },
     {
         "id": "30",
@@ -429,7 +465,11 @@
             "/contest/HEXpostcarddesign_018d.jpg"
         ],
         "creator": "Neptune Creates",
-        "contestId": "contest"
+        "contestId": "contest",
+        "contestWinner": {
+            "contestId": 1,
+            "type": "Honorable Mention"
+        }
     },
     {
         "id": "31",
@@ -443,7 +483,11 @@
         ],
         "creator": "EcoBuildr",
         "twitter": "https://twitter.com/EcoBuildr",
-        "contestId": "contest"
+        "contestId": "contest",
+        "contestWinner": {
+            "contestId": 1,
+            "type": "Honorable Mention"
+        }
     },
     {
         "id": "32",
@@ -517,7 +561,11 @@
         "creator": "Hexgeta",
         "telegram": "https://t.me/hexgeta",
         "twitter": "https://twitter.com/hexgeta",
-        "contestId": "contest03"
+        "contestId": "contest03",
+        "contestWinner": {
+            "contestId": 3,
+            "place": 1
+        }
     },
     {
         "id": "37",
@@ -533,7 +581,11 @@
         "creator": "Hexgeta",
         "telegram": "https://t.me/hexgeta",
         "twitter": "https://twitter.com/hexgeta",
-        "contestId": "contest03"
+        "contestId": "contest03",
+        "contestWinner": {
+            "contestId": 3,
+            "place": 1
+        }
     },
     {
         "id": "38",
@@ -645,7 +697,11 @@
         "creator": "Hexgeta",
         "telegram": "https://t.me/hexgeta",
         "twitter": "https://twitter.com/hexgeta",
-        "contestId": "contest03"
+        "contestId": "contest03",
+        "contestWinner": {
+            "contestId": 3,
+            "place": 2
+        }
     },
     {
         "id": "46",
@@ -676,7 +732,11 @@
             "/contest03/HEXpostcards_047_Miguelon_b.jpg"
         ],
         "creator": "Miguelon",
-        "contestId": "contest03"
+        "contestId": "contest03",
+        "contestWinner": {
+            "contestId": 3,
+            "place": 3
+        }
     },
     {
         "id": "48",
@@ -752,7 +812,11 @@
         ],
         "creator": "HEX Glenn",
         "telegram": "https://t.me/hexglenn",
-        "contestId": "contest03"
+        "contestId": "contest03",
+        "contestWinner": {
+            "contestId": 3,
+            "type": "Honorable Mention"
+        }
     },
     {
         "id": "53",
@@ -818,7 +882,11 @@
         "creator": "EcoBuildr",
         "telegram": "https://t.me/EcoBuild_davin_HEX_OG_Texas",
         "twitter": "https://twitter.com/EcoBuildr",
-        "contestId": "contest03"
+        "contestId": "contest03",
+        "contestWinner": {
+            "contestId": 3,
+            "type": "Honorable Mention"
+        }
     },
     {
         "id": "57",
@@ -899,7 +967,11 @@
         "creator": "Mrs Hexican",
         "telegram": "https://t.me/MrsHexican",
         "twitter": "https://twitter.com/MrsHexican",
-        "contestId": "contest04"
+        "contestId": "contest04",
+        "contestWinner": {
+            "contestId": 4,
+            "type": "???"
+        }
     },
     {
         "id": "62",
@@ -945,7 +1017,11 @@
         ],
         "creator": "GarO#5555",
         "twitter": "https://x.com/gar_crypto",
-        "contestId": "contest04"
+        "contestId": "contest04",
+        "contestWinner": {
+            "contestId": 4,
+            "type": "???"
+        }
     },
     {
         "id": "65",
@@ -1019,7 +1095,11 @@
         "creator": "Hexgeta",
         "telegram": "https://t.me/hexgeta",
         "twitter": "https://twitter.com/hexgeta",
-        "contestId": "contest04"
+        "contestId": "contest04",
+        "contestWinner": {
+            "contestId": 4,
+            "type": "???"
+        }
     },
     {
         "id": "70",
@@ -1035,7 +1115,11 @@
         ],
         "creator": "Euphoria Design",
         "twitter": "https://x.com/EuphoriaWeb3",
-        "contestId": "contest04"
+        "contestId": "contest04",
+        "contestWinner": {
+            "contestId": 4,
+            "type": "???"
+        }
     },
     {
         "id": "71",
@@ -1327,7 +1411,11 @@
         ],
         "creator": "Mrs Hexican",
         "twitter": "https://x.com/MrsHexican",
-        "contestId": "contest05"
+        "contestId": "contest05",
+        "contestWinner": {
+            "contestId": 5,
+            "place": 1
+        }
     },
     {
         "id": "81",
@@ -1341,7 +1429,11 @@
         ],
         "creator": "Mrs Hexican",
         "twitter": "https://x.com/MrsHexican",
-        "contestId": "contest05"
+        "contestId": "contest05",
+        "contestWinner": {
+            "contestId": 5,
+            "place": 1
+        }
     },
     {
         "id": "81",
@@ -1355,7 +1447,11 @@
         ],
         "creator": "Mrs Hexican",
         "twitter": "https://x.com/MrsHexican",
-        "contestId": "contest05"
+        "contestId": "contest05",
+        "contestWinner": {
+            "contestId": 5,
+            "place": 1
+        }
     },
     {
         "id": "82",
@@ -1415,7 +1511,11 @@
         "pdf": "/contest05/HEXpostcards_083_Hexgeta_HEX_01.pdf",
         "creator": "Hexgeta",
         "twitter": "https://x.com/hexgeta",
-        "contestId": "contest05"
+        "contestId": "contest05",
+        "contestWinner": {
+            "contestId": 5,
+            "place": 2
+        }
     },
     {
         "id": "83b",
@@ -1537,7 +1637,11 @@
         ],
         "creator": "Euphoria Design",
         "twitter": "https://x.com/EuphoriaWeb3",
-        "contestId": "contest05"
+        "contestId": "contest05",
+        "contestWinner": {
+            "contestId": 5,
+            "place": 3
+        }
     },
     {
         "id": "86a",
@@ -1551,7 +1655,11 @@
         ],
         "creator": "Euphoria Design",
         "twitter": "https://x.com/EuphoriaWeb3",
-        "contestId": "contest05"
+        "contestId": "contest05",
+        "contestWinner": {
+            "contestId": 5,
+            "place": 3
+        }
     },
     {
         "id": "86b",
@@ -1748,7 +1856,11 @@
         "pdf": "/contest05/HEXpostcards_091_EuphoriaDesign.pdf",
         "creator": "Euphoria Design",
         "contestId": "contest05",
-        "twitter": "https://x.com/EuphoriaWeb3"
+        "twitter": "https://x.com/EuphoriaWeb3",
+        "contestWinner": {
+            "contestId": 5,
+            "type": "Recreation"
+        }
     },
     {
         "id": "91",
@@ -1763,7 +1875,11 @@
         "pdf": "/contest05/HEXpostcards_091_EuphoriaDesign.pdf",
         "creator": "Euphoria Design",
         "contestId": "contest05",
-        "twitter": "https://x.com/EuphoriaWeb3"
+        "twitter": "https://x.com/EuphoriaWeb3",
+        "contestWinner": {
+            "contestId": 5,
+            "type": "Recreation"
+        }
     },
     {
         "id": "91",
@@ -1778,7 +1894,11 @@
         "pdf": "/contest05/HEXpostcards_091_EuphoriaDesign.pdf",
         "creator": "Euphoria Design",
         "contestId": "contest05",
-        "twitter": "https://x.com/EuphoriaWeb3"
+        "twitter": "https://x.com/EuphoriaWeb3",
+        "contestWinner": {
+            "contestId": 5,
+            "type": "Recreation"
+        }
     },
     {
         "id": "92",
@@ -1792,7 +1912,11 @@
         ],
         "creator": "Fillup Banks",
         "contestId": "contest05",
-        "twitter": "https://x.com/fillup_banks"
+        "twitter": "https://x.com/fillup_banks",
+        "contestWinner": {
+            "contestId": 5,
+            "type": "Recreation"
+        }
     },
     {
         "id": "92",
@@ -1806,7 +1930,11 @@
         ],
         "creator": "Fillup Banks",
         "contestId": "contest05",
-        "twitter": "https://x.com/fillup_banks"
+        "twitter": "https://x.com/fillup_banks",
+        "contestWinner": {
+            "contestId": 5,
+            "type": "Recreation"
+        }
     },
     {
         "id": "92",
@@ -1820,6 +1948,10 @@
         ],
         "creator": "Fillup Banks",
         "contestId": "contest05",
-        "twitter": "https://x.com/fillup_banks"
+        "twitter": "https://x.com/fillup_banks",
+        "contestWinner": {
+            "contestId": 5,
+            "type": "Recreation"
+        }
     }
 ]

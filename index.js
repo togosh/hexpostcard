@@ -74,7 +74,7 @@ app.use(express.static(path.join(__dirname, 'public')));
 app.get("/", 			      function(req, res){ res.sendFile('/index.html', 			        {root: __dirname}); });
 app.get("/faq", 		    function(req, res){ res.sendFile('/public/faq.html', 		      {root: __dirname}); });
 app.get("/designs", 		function(req, res){ res.sendFile('/public/designs.html', 		  {root: __dirname}); });
-app.get("/contest", 		function(req, res){ res.sendFile('/public/contest.html', 		  {root: __dirname}); });
+app.get("/contest", 		function(req, res){ res.sendFile('/public/designs.html', 		  {root: __dirname}); });
 app.get("/donate", 		  function(req, res){ res.sendFile('/public/index.html#donate', {root: __dirname}); });
 app.get("/sacrifice", 	function(req, res){ res.sendFile('/public/donate.html', 	    {root: __dirname}); });
 app.get("/sac", 		    function(req, res){ res.sendFile('/public/donate.html', 	    {root: __dirname}); });
