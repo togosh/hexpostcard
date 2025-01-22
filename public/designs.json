@@ -302,7 +302,7 @@
     },
     {
         "id": "22",
-        "active": 1,
+        "active": 0,
         "designType": "postcard",
         "coins": [
             "HEX",
@@ -447,7 +447,7 @@
     },
     {
         "id": "32",
-        "active": 1,
+        "active": 0,
         "designType": "postcard",
         "coins": [
             "HEX"
@@ -466,23 +466,11 @@
             "HEX"
         ],
         "images": [
-            "/contest/HEXpostcarddesign_009.jpg"
-        ],
-        "creator": "EcoBuildr",
-        "twitter": "https://twitter.com/EcoBuildr",
-        "contestId": "contest"
-    },
-    {
-        "id": "34",
-        "active": 1,
-        "designType": "postcard",
-        "coins": [
-            "HEX"
-        ],
-        "images": [
+            "/contest/HEXpostcarddesign_009.jpg",
             "/contest/HEXpostcarddesign_010.jpg"
         ],
         "creator": "EcoBuildr",
+        "twitter": "https://twitter.com/EcoBuildr",
         "contestId": "contest"
     },
     {
@@ -523,9 +511,25 @@
             "HEX"
         ],
         "images": [
-            "/contest03/HEXpostcards_037_Hexgeta_a.jpg",
+            "/contest03/HEXpostcards_037_Hexgeta_a.jpg"
+        ],
+        "pdf": "/designs/HEXpostcards_Newprint_9x6_01.pdf",
+        "creator": "Hexgeta",
+        "telegram": "https://t.me/hexgeta",
+        "twitter": "https://twitter.com/hexgeta",
+        "contestId": "contest03"
+    },
+    {
+        "id": "37",
+        "active": 1,
+        "designType": "postcard",
+        "coins": [
+            "HEX"
+        ],
+        "images": [
             "/contest03/HEXpostcards_037_Hexgeta_b.jpg"
         ],
+        "pdf": "/designs/HEXpostcards_Newprint_9x6_02.pdf",
         "creator": "Hexgeta",
         "telegram": "https://t.me/hexgeta",
         "twitter": "https://twitter.com/hexgeta",
@@ -866,7 +870,7 @@
     },
     {
         "id": "60",
-        "active": 1,
+        "active": 0,
         "designType": "postcard",
         "coins": [
             "HEX",
