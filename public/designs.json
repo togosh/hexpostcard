@@ -555,29 +555,10 @@
             "HEX"
         ],
         "images": [
-            "/contest03/HEXpostcards_037_Hexgeta_a.jpg"
-        ],
-        "pdf": "/designs/HEXpostcards_Newprint_9x6_01.pdf",
-        "creator": "Hexgeta",
-        "telegram": "https://t.me/hexgeta",
-        "twitter": "https://twitter.com/hexgeta",
-        "contestId": "contest03",
-        "contestWinner": {
-            "contestId": 3,
-            "place": 1
-        }
-    },
-    {
-        "id": "37",
-        "active": 1,
-        "designType": "postcard",
-        "coins": [
-            "HEX"
-        ],
-        "images": [
+            "/contest03/HEXpostcards_037_Hexgeta_a.jpg",
             "/contest03/HEXpostcards_037_Hexgeta_b.jpg"
         ],
-        "pdf": "/designs/HEXpostcards_Newprint_9x6_02.pdf",
+        "pdf": "/designs/HEXpostcards_Newprint_Hexgeta_9x6_BothSides.pdf",
         "creator": "Hexgeta",
         "telegram": "https://t.me/hexgeta",
         "twitter": "https://twitter.com/hexgeta",
