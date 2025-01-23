@@ -483,11 +483,7 @@
         ],
         "creator": "EcoBuildr",
         "twitter": "https://twitter.com/EcoBuildr",
-        "contestId": "contest",
-        "contestWinner": {
-            "contestId": 1,
-            "type": "Honorable Mention"
-        }
+        "contestId": "contest"
     },
     {
         "id": "32",
@@ -863,11 +859,7 @@
         "creator": "EcoBuildr",
         "telegram": "https://t.me/EcoBuild_davin_HEX_OG_Texas",
         "twitter": "https://twitter.com/EcoBuildr",
-        "contestId": "contest03",
-        "contestWinner": {
-            "contestId": 3,
-            "type": "Honorable Mention"
-        }
+        "contestId": "contest03"
     },
     {
         "id": "57",
