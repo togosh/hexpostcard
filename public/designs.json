@@ -247,7 +247,7 @@
     },
     {
         "id": "17",
-        "active": 1,
+        "active": 0,
         "designType": "postcard",
         "coins": [
             "PLS"
@@ -262,7 +262,7 @@
     },
     {
         "id": "18",
-        "active": 1,
+        "active": 0,
         "designType": "postcard",
         "coins": [
             "PLS"
