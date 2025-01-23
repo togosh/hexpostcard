@@ -10,7 +10,7 @@
             "https://hexpostcards.com/designs/HEXpostcard_6.5x9_Fillup_SideA_03.png",
             "https://hexpostcards.com/designs/HEXpostcard_6.5x9_Fillup_SideB_03.png"
         ],
-        "pdf": "./designs/HEXpostcard_6.5x9_Fillup_SideA_03.pdf",
+        "pdf": "/designs/HEXpostcard_6.5x9_Fillup_SideA_03.pdf",
         "creator": "Fillup Banks",
         "twitter": "https://x.com/fillup_banks",
         "contestWinner": {
@@ -30,6 +30,7 @@
         "images": [
             "/designs/HEXpostcard_6.5x9_Fillup_BothSides.jpg"
         ],
+        "pdf": "/designs/HEXpostcards_6.5x9_FillupBanks_HEXPLSPLSX_02.pdf",
         "creator": "Fillup Banks",
         "twitter": "https://x.com/fillup_banks",
         "contestWinner": {
