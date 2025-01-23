@@ -335,7 +335,7 @@
       // Global variables
       var designs = {};
       var totalDesigns = 0;
-      let currentTypeFilter = 'all';
+      let currentTypeFilter = 'letter';
       let currentCoinFilter = 'all';
       let showOnlyPDF = false;
       let currentWinnerFilter = 'winners-only';
@@ -484,11 +484,13 @@
       }
 
       function initializeFilters() {
-        // Set winners-only as default active filter
+        // Set winners-only and letters as default active filters
         $('.filter-btn[data-winner="all"]').removeClass('active');
         $('.filter-btn[data-winner="winners-only"]').addClass('active');
         
-        // Apply filters immediately after loading
+        $('.filter-btn[data-filter]').removeClass('active');
+        $('.filter-btn[data-filter="letter"]').addClass('active');
+        
         applyFilters();
       }
 
