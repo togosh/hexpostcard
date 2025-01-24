@@ -37,19 +37,27 @@ body {
   transform-origin: bottom left;
 }
 
-/* Ensure navbar stays on top */
+/* Navigation */
 nav.fixed {
-  z-index: 50;
+  z-index: 9999;
 }
 
-/* Design card number should stay below navbar */
-.design-card .number {
+nav .container {
+  position: relative;
+}
+
+/* Design cards */
+.design-card {
+  position: relative;
   z-index: 1;
 }
 
-/* Ensure design cards and their content stay below navbar */
-.design-card {
-  z-index: 0;
+.design-card .number {
+  z-index: 2;
+}
+
+#mobile-menu {
+  z-index: 9998;
 }
 
 /* Mobile menu styles */
@@ -108,6 +116,6 @@ nav.fixed {
   max-width: 58rem;
 }
 
-.hidden {
+.hidden-element {
   display: none;
 }
