@@ -107,3 +107,7 @@ nav.fixed {
 .max-w-4xl {
   max-width: 58rem;
 }
+
+.hidden {
+  display: none;
+}
