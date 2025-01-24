@@ -37,6 +37,21 @@ body {
   transform-origin: bottom left;
 }
 
+/* Ensure navbar stays on top */
+nav.fixed {
+  z-index: 50;
+}
+
+/* Design card number should stay below navbar */
+.design-card .number {
+  z-index: 1;
+}
+
+/* Ensure design cards and their content stay below navbar */
+.design-card {
+  z-index: 0;
+}
+
 /* Mobile menu styles */
 /* .mobile-menu {
   display: none;
