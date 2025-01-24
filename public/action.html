@@ -56,8 +56,13 @@
       }
 
       .link-card {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
         background-color: #10172d;
         transition: all 0.3s ease;
+        padding: 1rem;
+        margin-bottom: 0.5rem;
       }
 
       .link-card:hover {
@@ -78,6 +83,12 @@
         width: 50px;
         height: 2px;
         background-color: #3b82f6;
+      }
+
+      .price-tag {
+        color: #60a5fa;
+        font-size: 0.875rem;
+        font-weight: 500;
       }
     </style>
   </head>
@@ -101,30 +112,38 @@
     <section class="py-16">
       <div class="container mx-auto px-4">
         <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+
           <!-- Postcards -->
           <div class="resource-card p-6">
-            <h3 class="text-xl font-semibold mb-6 category-title">Postcards</h3>
+            <h3 class="text-xl font-semibold mb-6 category-title">Postcards / Letters</h3>
             <div class="space-y-4">
-              <a
+              <!-- <a
                 href="https://hex.fillupbanks.com/product/flyer-postcards/"
                 target="_blank"
                 class="link-card block p-4 hover:text-blue-400"
               >
-                Printing Only
-              </a>
+                <span>Printing Only</span>
+                <span class="price-tag">$0.10 each</span>
+              </a> -->
               <a
-                href="https://hex.fillupbanks.com/product/direct-mail/"
+                href="/tutorial"
                 target="_blank"
                 class="link-card block p-4 hover:text-blue-400"
               >
-                Print & Mail
+                <span>Printing & Mailing</span>
+                <span class="price-tag">$0.35 each</span>
               </a>
               <a
                 href="/designs"
-                target="_blank"
                 class="link-card block p-4 hover:text-blue-400"
               >
                 View Designs
+              </a>
+              <a
+                href="/#donate"
+                class="link-card block p-4 hover:text-blue-400"
+              >
+                Donate
               </a>
             </div>
           </div>
@@ -140,14 +159,16 @@
                 target="_blank"
                 class="link-card block p-4 hover:text-blue-400"
               >
-                Hex Promo
+                <span>Hex Promo</span>
+                <span class="price-tag">$0.03 each</span>
               </a>
               <a
                 href="https://mailhex.xyz/"
                 target="_blank"
                 class="link-card block p-4 hover:text-blue-400"
               >
-                MailHEX.xyz (Free)
+                <span>MailHEX.xyz</span>
+                <span class="price-tag">FREE</span>
               </a>
             </div>
           </div>
@@ -161,7 +182,8 @@
                 target="_blank"
                 class="link-card block p-4 hover:text-blue-400"
               >
-                Hexmerch
+                <span>Hexmerch</span>
+                <span class="price-tag">$0.11 each</span>
               </a>
               <!-- <a
                 href="https://hex.fillupbanks.com/product/stickers/"
@@ -175,7 +197,8 @@
                 target="_blank"
                 class="link-card block p-4 hover:text-blue-400"
               >
-                Crypto Stickers
+                <span>Crypto Stickers</span>
+                <span class="price-tag">$0.20 each</span>
               </a>
             </div>
           </div>
@@ -191,14 +214,16 @@
                 target="_blank"
                 class="link-card block p-4 hover:text-blue-400"
               >
-                Hex.Promo
+                <span>Hex.Promo</span>
+                <span class="price-tag">$9 each</span>
               </a>
               <a
                 href="https://twitter.com/DavidJamesOne/status/1558570500577640448"
                 target="_blank"
                 class="link-card block p-4 hover:text-blue-400"
               >
-                DavidJamesOne
+                <span>DavidJamesOne</span>
+                <span class="price-tag">$7 each</span>
               </a>
             </div>
           </div>
@@ -212,14 +237,16 @@
                 target="_blank"
                 class="link-card block p-4 hover:text-blue-400"
               >
-                License Plate Frame
+                <span>License Plate Frame</span>
+                <span class="price-tag">$10 each</span>
               </a>
               <a
                 href="https://www.amazon.com/Rayhome-14-6x3-6-Bluetooth-Addressable-Animation/dp/B09MQD24MH/"
                 target="_blank"
                 class="link-card block p-4 hover:text-blue-400"
               >
-                LED Scrolling
+                <span>LED Scrolling</span>
+                <span class="price-tag">$60 each</span>
               </a>
             </div>
           </div>
@@ -235,21 +262,24 @@
                 target="_blank"
                 class="link-card block p-4 hover:text-blue-400"
               >
-                Hexologist
+              <span>Hexologist</span>
+              <span class="price-tag">$40 each</span>
               </a>
               <a
                 href="https://twitter.com/Hexologist31/status/1515097279815831552"
                 target="_blank"
                 class="link-card block p-4 hover:text-blue-400"
               >
-                Hexologist 2
+                <span>Hexologist 2</span>
+                <span class="price-tag">$40 each</span>
               </a>
               <a
                 href="https://twitter.com/mallred32/status/1521897178632966144"
                 target="_blank"
                 class="link-card block p-4 hover:text-blue-400"
               >
-                Matt the Phoenix
+                <span>Matt the Phoenix</span>
+                <span class="price-tag">$40 each</span>
               </a>
             </div>
           </div>
@@ -291,14 +321,16 @@
                 target="_blank"
                 class="link-card block p-4 hover:text-blue-400"
               >
-                Hodpril
+                <span>Hodpril</span>
+                <span class="price-tag">$0.15 each</span>
               </a>
               <a
                 href="./images/hex_flyer_simundsteed_001.pdf"
                 target="_blank"
                 class="link-card block p-4 hover:text-blue-400"
               >
-                Simund & Steed
+                <span>Simund & Steed</span>
+                <span class="price-tag">$0.15 each</span>
               </a>
               <!-- <a
                 href="./images/hex_flyer_simundsteed_002.pdf"
@@ -312,7 +344,8 @@
                 target="_blank"
                 class="link-card block p-4 hover:text-blue-400"
               >
-                Hexican Girl
+                <span>Hexican Girl</span>
+                <span class="price-tag">$0.60 each</span>
               </a>
             </div>
           </div>
@@ -326,7 +359,8 @@
                 target="_blank"
                 class="link-card block p-4 hover:text-blue-400"
               >
-                X (Twitter)
+                <span>X (Twitter)</span>
+                <span class="price-tag">$4 CPM</span>
               </a>
             </div>
           </div>
@@ -374,14 +408,16 @@
                 target="_blank"
                 class="link-card block p-4 hover:text-blue-400"
               >
-                Moon Travel
+                <span>Moon Travel</span>
+                <span class="price-tag">$300 month</span>
               </a>
               <a
                 href="https://x.com/hexaholics/status/1547828624601952256"
                 target="_blank"
                 class="link-card block p-4 hover:text-blue-400"
               >
-                90% Off
+                <span>90% Off</span>
+                <span class="price-tag">$300 month</span>
               </a>
 
             </div>
