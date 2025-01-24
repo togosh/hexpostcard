@@ -89,6 +89,10 @@ app.get("/faq", 		    function(req, res){ res.sendFile('/public/faq.html', 		   
 app.get("/disclaimer", 	function(req, res){ res.sendFile('/public/disclaimer.html', 	{root: __dirname}); });
 app.get("/terms", 		  function(req, res){ res.sendFile('/public/terms.html', 		    {root: __dirname}); });
 
+app.get("/why", 		      function(req, res){ res.sendFile('/public/whydirectmail.html', {root: __dirname}); });
+app.get("/whymail", 		  function(req, res){ res.sendFile('/public/whydirectmail.html', {root: __dirname}); });
+app.get("/whydirectmail", function(req, res){ res.sendFile('/public/whydirectmail.html', {root: __dirname}); });
+
 app.get(["/tutorial", "/instructions"], function(req, res) {
   res.set('X-Robots-Tag', 'noindex, nofollow');
   res.sendFile('/public/tutorial.html', {root: __dirname});
