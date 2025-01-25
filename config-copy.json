@@ -1,0 +1,9 @@
+{
+	"debug": true,
+	"hostname": "AAA",
+	"https": {
+		"cert": "./ssl/AAA.crt",
+		"ca": "./ssl/BBB.ca-bundle",
+		"key": "./ssl/CCC.key"
+	}
+}
