@@ -75,7 +75,6 @@ app.get("/", 			      function(req, res){ res.sendFile('/index.html', 			       
 app.get("/faq", 		    function(req, res){ res.sendFile('/public/faq.html', 		      {root: __dirname}); });
 app.get("/designs", 		function(req, res){ res.sendFile('/public/designs.html', 		  {root: __dirname}); });
 app.get("/contest", 		function(req, res){ res.sendFile('/public/designs.html', 		  {root: __dirname}); });
-app.get("/donate", 		  function(req, res){ res.sendFile('/public/index.html#donate', {root: __dirname}); });
 app.get("/sacrifice", 	function(req, res){ res.sendFile('/public/donate.html', 	    {root: __dirname}); });
 app.get("/sac", 		    function(req, res){ res.sendFile('/public/donate.html', 	    {root: __dirname}); });
 app.get("/action", 	    function(req, res){ res.sendFile('/public/action.html',       {root: __dirname}); });
@@ -92,6 +91,10 @@ app.get("/terms", 		  function(req, res){ res.sendFile('/public/terms.html', 		 
 app.get("/why", 		      function(req, res){ res.sendFile('/public/whydirectmail.html', {root: __dirname}); });
 app.get("/whymail", 		  function(req, res){ res.sendFile('/public/whydirectmail.html', {root: __dirname}); });
 app.get("/whydirectmail", function(req, res){ res.sendFile('/public/whydirectmail.html', {root: __dirname}); });
+
+app.get("/donate", function(req, res){ 
+  res.redirect('/#donate');
+});
 
 app.get(["/tutorial", "/instructions"], function(req, res) {
   res.set('X-Robots-Tag', 'noindex, nofollow');
