@@ -1,0 +1,271 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Community Gallery - HEXpostcards</title>
+
+    <!-- Styles -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/tailwindcss/2.2.19/tailwind.min.css" rel="stylesheet">
+	<link href="/css/styles.css" rel="stylesheet">
+    
+    <!-- Scripts -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <script src="navbar.js"></script>
+
+    <!-- ICONS -->
+    <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16.png">
+    <link rel="manifest" href="/site.webmanifest">
+    <link rel="mask-icon" href="/images/safari-pinned-tab.svg" color="#5bbad5">
+    <meta name="msapplication-TileColor" content="#da532c">
+    <meta name="theme-color" content="#ffffff">
+
+    <style>
+        .gallery-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 1rem;
+            padding: 1rem;
+        }
+        
+        .gallery-item {
+            position: relative;
+            padding-bottom: 100%;
+            background: #1f2937;
+            border-radius: 0.5rem;
+            overflow: hidden;
+            cursor: pointer;
+            transition: transform 0.3s ease;
+        }
+        
+        .gallery-item:hover {
+            transform: scale(1.02);
+        }
+        
+        .gallery-item img {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+        
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.9);
+            z-index: 1000;
+            padding: 2rem;
+        }
+        
+        .modal-content {
+            max-width: 90%;
+            max-height: 90vh;
+            margin: auto;
+            display: block;
+        }
+        
+        .modal-nav {
+            position: fixed;
+            top: 50%;
+            transform: translateY(-50%);
+            padding: 1rem;
+            color: white;
+            cursor: pointer;
+            font-size: 2rem;
+            background: rgba(0, 0, 0, 0.5);
+            border-radius: 50%;
+            width: 3rem;
+            height: 3rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .modal-prev { left: 1rem; }
+        .modal-next { right: 1rem; }
+        
+        @media (max-width: 768px) {
+            .gallery-grid {
+                grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+            }
+            
+            .modal-nav {
+                padding: 0.5rem;
+                font-size: 1.5rem;
+            }
+        }
+    </style>
+</head>
+<body class="bg-gray-900 text-white">
+    <!-- Navigation -->
+    <div id="navbar"></div>
+
+    <section class="pt-24 pb-4">
+        <div class="container mx-auto px-4">
+            <h1 class="text-4xl font-bold mb-6 text-center">Community Gallery</h1>
+            <p class="text-xl text-gray-300 max-w-3xl mx-auto text-center mb-12">
+                Browse our collection of community moments, testimonials, and results
+            </p>
+        </div>
+    </section>
+
+    <div class="gallery-grid" id="gallery"></div>
+
+    <div class="modal" id="imageModal">
+        <span class="modal-nav modal-prev" onclick="changeImage(-1)">❮</span>
+        <span class="modal-nav modal-next" onclick="changeImage(1)">❯</span>
+        <img class="modal-content" id="modalImage">
+    </div>
+
+    <!-- Call to Action Section -->
+    <section class="py-20 bg-gray-900">
+        <div class="container mx-auto px-4 text-center">
+            <h2 class="text-3xl font-bold mb-8">Ready to Take Action?</h2>
+            <div class="flex flex-col md:flex-row gap-4 justify-center">
+                <a href="/action" 
+                   class="bg-blue-600 hover:bg-blue-700 px-8 py-4 rounded-lg font-medium text-lg transition">
+                    Start Marketing
+                </a>
+                <a href="/designs"
+                   class="bg-gray-700 hover:bg-gray-600 px-8 py-4 rounded-lg font-medium text-lg transition">
+                    Browse Designs
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+	<div id="footer"></div>
+	
+	<script>
+         $(document).ready(function() {
+            $('#navbar').load('/navbar.html', function() {
+                initMobileMenu();
+            });
+
+            $('#footer').load('/footer.html');
+        });
+
+        // Smooth scroll for anchor links
+        $('a[href^="#"]').click(function(e) {
+            e.preventDefault();
+            let target = $(this.hash);
+            if (target.length) {
+                $('html, body').animate({
+                    scrollTop: target.offset().top - 80
+                }, 500);
+            }
+        });
+
+        // Lazy load images
+        document.addEventListener('DOMContentLoaded', function() {
+            const lazyImages = document.querySelectorAll('img.lazy-load');
+            
+            const imageObserver = new IntersectionObserver((entries, observer) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        const img = entry.target;
+                        img.src = img.dataset.src;
+                        img.classList.add('loaded');
+                        observer.unobserve(img);
+                    }
+                });
+            });
+
+            lazyImages.forEach(img => imageObserver.observe(img));
+        });
+    </script>
+
+    <script>
+        const images = [
+            // Add your image paths here
+            '/gallery/hexpostcards_tweet.png',
+            '/gallery/hexpostcards_richard_outboundmessaging_tweet.png',
+            '/gallery/hexpostcards_richard_wishsatoshisentletter_tweet.png',
+            '/gallery/rh_ad_feedback - Copy.jpg',
+            '/gallery/proof002a.png',
+
+            '/gallery/proof004.png',
+            '/gallery/proof006.png',
+            '/gallery/proof003.png',
+            '/gallery/HEXtwitterbotswarm.PNG',
+            '/gallery/dog.jpg',
+
+            '/gallery/ruleof7.png',
+            '/gallery/proof005.png',
+            '/gallery/MomgotinmailCapture.PNG',
+            '/gallery/HEXpostcards_CrabbyCrypto_20220810.PNG',
+            '/gallery/hexpostcards_hexicantreasure_atx.png',
+
+            '/gallery/photo_2023-01-25_11-45-01.jpg',
+            '/gallery/eddm_photo_2022-05-11_12-06-24.jpg',
+            '/gallery/card004.jpg',
+            '/gallery/card005.jpg',
+            '/gallery/FaO5hUCUcAAgfhy.jpeg',
+
+            '/gallery/HEXadvertisingpackage.jpeg',
+            '/gallery/FfnINCMXEBMFNwq.jpeg',
+            '/gallery/hexpostcards_construction.jpeg',
+            '/gallery/FfbmfyZXEAMqHz5.jpg',
+            '/gallery/Ff7WUmwWQAMW90V.jpg',
+
+            '/gallery/Ff_43YmWQAIXcbh.jpg',
+            '/gallery/Gh_m6sYWUAE4UHQ.jpg',
+            '/gallery/HEXpostcards_cryptocoffee.png',
+            '/gallery/HEXpostcards_kntx.png',
+            '/gallery/HEXpostcards_hexscout.png',
+        ];
+        
+        let currentImageIndex = 0;
+        const gallery = document.getElementById('gallery');
+        const modal = document.getElementById('imageModal');
+        const modalImg = document.getElementById('modalImage');
+
+        // Load images
+        images.forEach((src, index) => {
+            const item = document.createElement('div');
+            item.className = 'gallery-item';
+            
+            const img = document.createElement('img');
+            img.src = src;
+            img.loading = 'lazy';
+            img.onclick = () => openModal(index);
+            
+            item.appendChild(img);
+            gallery.appendChild(item);
+        });
+
+        function openModal(index) {
+            currentImageIndex = index;
+            modal.style.display = 'flex';
+            modalImg.src = images[currentImageIndex];
+        }
+
+        function changeImage(direction) {
+            currentImageIndex = (currentImageIndex + direction + images.length) % images.length;
+            modalImg.src = images[currentImageIndex];
+        }
+
+        modal.onclick = function(e) {
+            if (e.target === modal) {
+                modal.style.display = 'none';
+            }
+        }
+
+        // Keyboard navigation
+        document.addEventListener('keydown', function(e) {
+            if (modal.style.display === 'flex') {
+                if (e.key === 'ArrowLeft') changeImage(-1);
+                if (e.key === 'ArrowRight') changeImage(1);
+                if (e.key === 'Escape') modal.style.display = 'none';
+            }
+        });
+    </script>
+</body>
+</html>

@@ -87,6 +87,8 @@ app.get("/guide", 		  function(req, res){ res.sendFile('/public/tutorial.html', 
 app.get("/faq", 		    function(req, res){ res.sendFile('/public/faq.html', 		      {root: __dirname}); });
 app.get("/disclaimer", 	function(req, res){ res.sendFile('/public/disclaimer.html', 	{root: __dirname}); });
 app.get("/terms", 		  function(req, res){ res.sendFile('/public/terms.html', 		    {root: __dirname}); });
+app.get("/gallery", 		function(req, res){ res.sendFile('/public/gallery.html', 		  {root: __dirname}); });
+app.get("/community", 	function(req, res){ res.sendFile('/public/gallery.html', 		  {root: __dirname}); });
 
 app.get("/why", 		      function(req, res){ res.sendFile('/public/whydirectmail.html', {root: __dirname}); });
 app.get("/whymail", 		  function(req, res){ res.sendFile('/public/whydirectmail.html', {root: __dirname}); });
