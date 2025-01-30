@@ -71,37 +71,65 @@ if(!DEBUG){
 
 app.use(express.static(path.join(__dirname, 'public')));
 
+
 app.get("/", 			      function(req, res){ res.sendFile('/index.html', 			        {root: __dirname}); });
-app.get("/faq", 		    function(req, res){ res.sendFile('/public/faq.html', 		      {root: __dirname}); });
+
+
+app.get(["/donate", 
+        "/donation", 
+        "/sacrifice", 
+        "/sac"], 
+                        function(req, res){ res.redirect('/#donate');
+});
+
+
+app.get("/design", 		  function(req, res){ res.sendFile('/public/designs.html', 		  {root: __dirname}); });
 app.get("/designs", 		function(req, res){ res.sendFile('/public/designs.html', 		  {root: __dirname}); });
 app.get("/contest", 		function(req, res){ res.sendFile('/public/designs.html', 		  {root: __dirname}); });
-app.get("/sacrifice", 	function(req, res){ res.sendFile('/public/donate.html', 	    {root: __dirname}); });
-app.get("/sac", 		    function(req, res){ res.sendFile('/public/donate.html', 	    {root: __dirname}); });
+
+
 app.get("/action", 	    function(req, res){ res.sendFile('/public/action.html',       {root: __dirname}); });
 app.get("/takeaction", 	function(req, res){ res.sendFile('/public/action.html',       {root: __dirname}); });
 app.get("/advertise", 	function(req, res){ res.sendFile('/public/action.html',       {root: __dirname}); });
 app.get("/list", 		    function(req, res){ res.sendFile('/public/action.html',       {root: __dirname}); });
-app.get("/team", 		    function(req, res){ res.sendFile('/public/team.html', 		    {root: __dirname}); });
-app.get("/about", 		  function(req, res){ res.sendFile('/public/team.html', 		    {root: __dirname}); });
-app.get("/guide", 		  function(req, res){ res.sendFile('/public/tutorial.html', 	  {root: __dirname}); });
+
+
+app.get(["/tutorial", 
+        "/instructions",
+        "/guide"], 
+                        function(req, res) {
+                                            res.set('X-Robots-Tag', 'noindex, nofollow');
+                                            res.sendFile('/public/tutorial.html',     {root: __dirname});});
+
+
 app.get("/faq", 		    function(req, res){ res.sendFile('/public/faq.html', 		      {root: __dirname}); });
+
+
+app.get(["/team", 
+        "/about"], 
+                        function(req, res) {
+                                            res.set('X-Robots-Tag', 'noindex, nofollow');
+                                            res.sendFile('/public/team.html',         {root: __dirname}); });
+
+
 app.get("/disclaimer", 	function(req, res){ res.sendFile('/public/disclaimer.html', 	{root: __dirname}); });
+
+
 app.get("/terms", 		  function(req, res){ res.sendFile('/public/terms.html', 		    {root: __dirname}); });
+
+
 app.get("/gallery", 		function(req, res){ res.sendFile('/public/gallery.html', 		  {root: __dirname}); });
 app.get("/community", 	function(req, res){ res.sendFile('/public/gallery.html', 		  {root: __dirname}); });
+app.get("/pictures", 		function(req, res){ res.sendFile('/public/gallery.html', 		  {root: __dirname}); });
 
-app.get("/why", 		      function(req, res){ res.sendFile('/public/whydirectmail.html', {root: __dirname}); });
-app.get("/whymail", 		  function(req, res){ res.sendFile('/public/whydirectmail.html', {root: __dirname}); });
-app.get("/whydirectmail", function(req, res){ res.sendFile('/public/whydirectmail.html', {root: __dirname}); });
 
-app.get("/donate", function(req, res){ 
-  res.redirect('/#donate');
-});
+app.get(["/why", 
+        "/whymail",
+        "/whydirectmail"], 
+                          function(req, res) {
+                                              res.set('X-Robots-Tag', 'noindex, nofollow');
+                                              res.sendFile('/public/whydirectmail.html', {root: __dirname}); });
 
-app.get(["/tutorial", "/instructions"], function(req, res) {
-  res.set('X-Robots-Tag', 'noindex, nofollow');
-  res.sendFile('/public/tutorial.html', {root: __dirname});
-});
 
 httpServer.listen(httpPort, hostname, () => { log(`Server running at http://${hostname}:${httpPort}/`);});
 if(!DEBUG){ httpsServer.listen(httpsPort, hostname, () => { 

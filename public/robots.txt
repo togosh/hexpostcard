@@ -1,3 +1,9 @@
 User-agent: *
 Disallow: /tutorial
 Disallow: /instructions
+Disallow: /guide
+Disallow: /team
+Disallow: /about
+Disallow: /why
+Disallow: /whymail
+Disallow: /whydirectmail
