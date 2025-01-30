@@ -108,7 +108,6 @@ app.get("/faq", 		    function(req, res){ res.sendFile('/public/faq.html', 		   
 app.get(["/team", 
         "/about"], 
                         function(req, res) {
-                                            res.set('X-Robots-Tag', 'noindex, nofollow');
                                             res.sendFile('/public/team.html',         {root: __dirname}); });
 
 
@@ -127,7 +126,6 @@ app.get(["/why",
         "/whymail",
         "/whydirectmail"], 
                           function(req, res) {
-                                              res.set('X-Robots-Tag', 'noindex, nofollow');
                                               res.sendFile('/public/whydirectmail.html', {root: __dirname}); });
 
 
