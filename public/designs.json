@@ -1932,5 +1932,20 @@
             "contestId": 5,
             "type": "Recreation"
         }
+    },
+    {
+        "id": "93",
+        "active": 1,
+        "designType": "postcard",
+        "coins": [
+            "HEX"
+        ],
+        "images": [
+            "/designs/HEXpostcards_ThePowerOfHEX_6.5x9_SideA.jpg",
+            "/designs/HEXpostcards_ThePowerOfHEX_6.5x9_SideB.jpg"
+        ],
+        "pdf": "/designs/HEXpostcards_ThePowerOfHEX_6.5x9_BothSides.pdf",
+        "creator": "Falk & Fillup Banks",
+        "twitter": "https://x.com/thepowerofhex"
     }
 ]
