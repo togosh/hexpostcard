@@ -2,3 +2,7 @@ User-agent: *
 Disallow: /tutorial
 Disallow: /instructions
 Disallow: /guide
+Allow: /images/
+
+User-agent: Twitterbot
+Allow: /
