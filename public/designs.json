@@ -7,8 +7,8 @@
             "HEX"
         ],
         "images": [
-            "https://hexpostcards.com/designs/HEXpostcard_6.5x9_Fillup_SideA_03.png",
-            "https://hexpostcards.com/designs/HEXpostcard_6.5x9_Fillup_SideB_03.png"
+            "/designs/HEXpostcard_6.5x9_Fillup_SideA_03_optimized.png",
+            "/designs/HEXpostcard_6.5x9_Fillup_SideB_03_optimized.png"
         ],
         "pdf": "/designs/HEXpostcard_6.5x9_Fillup_SideA_03.pdf",
         "creator": "Fillup Banks",
