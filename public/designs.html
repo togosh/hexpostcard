@@ -335,74 +335,42 @@
 
       // Core Functions
       function createDesignCard(design) {
-        let winnerBadge = '';
-        let winnerClass = '';
-        
-        // Simplified winner display for now, can be enhanced later
-        if (design.contestWinner) {
-          winnerClass = 'border-2 border-yellow-400'; // Example styling for winner
-        }
+        // THIS IS CRUCIAL: Ensure 'score' from the design object is used for data-score
+        const score = design.score || 0; 
+        // console.log(`Creating card for ID ${design.id}, using score: ${score} for data-score`);
 
-        let pdfButton = design.pdf
-          ? `<a href="${design.pdf}" target="_blank" class="download-btn bg-blue-600 hover:bg-blue-700 px-4 py-2 rounded-lg inline-block text-sm sm:text-base sm:px-6 pdf-download">Download PDF</a>`
-          : '';
+        let winnerBadge = ''; // Keep your winner logic if any
+        let winnerClass = ''; //design.contestWinner ? 'border-2 border-yellow-400' : '';
 
-        let telegramLink = design.telegram
-          ? `<a href="${design.telegram}" target="_blank" class="text-blue-400 hover:underline text-sm">Telegram</a>`
-          : '';
-        let twitterLink = design.twitter
-          ? `<a href="${design.twitter}" target="_blank" class="text-blue-400 hover:underline text-sm">Twitter</a>`
-          : '';
-        let address = design.address
-          ? `<p class="text-gray-400 text-xs break-all">${design.address}</p>`
-          : '';
+        let pdfButton = design.pdf ? `<a href="${design.pdf}" target="_blank" class="download-btn bg-blue-600 hover:bg-blue-700 px-4 py-2 rounded-lg inline-block text-sm sm:text-base sm:px-6 pdf-download">Download PDF</a>` : '';
+        let telegramLink = design.telegram ? `<a href="${design.telegram}" target="_blank" class="text-blue-400 hover:underline text-sm">Telegram</a>` : '';
+        let twitterLink = design.twitter ? `<a href="${design.twitter}" target="_blank" class="text-blue-400 hover:underline text-sm">Twitter</a>` : '';
+        let address = design.address ? `<p class="text-gray-400 text-xs break-all">${design.address}</p>` : '';
 
-        let imagesHtml = design.images
-          .map(
-            (image, index) => `
+        let imagesHtml = design.images.map((image, index) => `
               <div class="relative overflow-hidden rounded-lg mb-4 group">
                 <a href="${image}" target="_blank" class="block">
-                  <img src="${image}" 
-                    alt="Design ${design.id} by ${design.creator} - Image ${index + 1}" 
-                    title="Right-click to save image. Click to view larger."
-                    class="design-image w-full h-auto object-cover cursor-pointer"
-                    style="user-select: auto; -webkit-user-drag: auto;" loading="lazy">
+                  <img src="${image}" alt="Design ${design.id} by ${design.creator} - Image ${index + 1}" title="Right-click to save image. Click to view larger." class="design-image w-full h-auto object-cover cursor-pointer" style="user-select: auto; -webkit-user-drag: auto;" loading="lazy">
                 </a>
                 <div class="absolute inset-0 bg-black bg-opacity-50 flex flex-col items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none">
-                  <div class="space-y-2 p-2 text-center pointer-events-auto">
-                    ${pdfButton}
-                    <a href="${image}" target="_blank" download
-                      class="download-btn bg-gray-600 hover:bg-gray-700 px-4 py-2 rounded-lg inline-block text-sm sm:text-base sm:px-6">
-                      Download Image
-                    </a>
-                  </div>
+                  <div class="space-y-2 p-2 text-center pointer-events-auto">${pdfButton}<a href="${image}" target="_blank" download class="download-btn bg-gray-600 hover:bg-gray-700 px-4 py-2 rounded-lg inline-block text-sm sm:text-base sm:px-6">Download Image</a></div>
                 </div>
-              </div>`
-          )
-          .join('');
-
-        // Use design.score if available, otherwise default to 0 for the data-score attribute
-        const score = design.score || 0;
+              </div>`).join('');
 
         return `
           <div class="design-card p-3 sm:p-4 relative overflow-hidden ${winnerClass}"
             data-design-type="${design.designType}"
-            data-coins="${design.coins.join(',')}"
+            data-coins="${design.coins ? design.coins.join(',') : ''}"
             data-has-pdf="${!!design.pdf}"
             data-design-id="${design.id}"
             data-contest-winner="${!!design.contestWinner}"
             data-score="${score}" 
           >
-            <div class="number absolute top-2 left-2 bg-blue-600 text-white font-bold text-lg sm:text-xl rounded-full px-2 sm:px-3 py-1 z-10">
-              ${design.id}
-            </div>
+            <div class="number absolute top-2 left-2 bg-blue-600 text-white font-bold text-lg sm:text-xl rounded-full px-2 sm:px-3 py-1 z-10">${design.id}</div>
             ${imagesHtml}
             <div class="space-y-1">
               <h3 class="text-base sm:text-lg font-semibold">${design.creator || 'Anonymous'}</h3>
-              <div class="flex gap-x-3 gap-y-1 flex-wrap">
-                ${telegramLink}
-                ${twitterLink}
-              </div>
+              <div class="flex gap-x-3 gap-y-1 flex-wrap">${telegramLink}${twitterLink}</div>
               ${address}
             </div>
           </div>`;
@@ -420,32 +388,31 @@
       }
 
       function applyAllFiltersAndSort(sortType = 'default') {
+        console.log(`applyAllFiltersAndSort called with sortType: ${sortType}`);
         let filteredDesigns = allDesignsData.filter(design => {
           const matchesType = currentTypeFilter === 'all' || design.designType === currentTypeFilter;
           const matchesCoin = currentCoinFilter === 'all' || (design.coins && design.coins.includes(currentCoinFilter));
           const matchesPDF = !showOnlyPDF || !!design.pdf;
-          // const matchesWinner = currentWinnerFilter === 'all' || (currentWinnerFilter === 'winners-only' && !!design.contestWinner); // If winner filter is re-enabled
           return matchesType && matchesCoin && matchesPDF;
         });
 
         if (sortType === 'random') {
+            // console.log("Sorting by random...");
             filteredDesigns.sort(() => Math.random() - 0.5);
         } else if (sortType === 'rank') {
-            // Scores are assumed to be on the design objects in allDesignsData (and thus filteredDesigns)
-            // Ensure score property exists, default to 0 if somehow missed
-            filteredDesigns.forEach(design => { design.score = design.score || 0; });
-            filteredDesigns.sort((a, b) => (b.score || 0) - (a.score || 0)); // Sort descending by score
-        } else if (sortType === 'default' || sortType === 'id') { // Default sort by ID
+            // console.log("Sorting by rank...");
+            // Scores should already be on the design objects from fetchAndApplyRankings
+            filteredDesigns.sort((a, b) => (b.score || 0) - (a.score || 0)); 
+        } else if (sortType === 'default' || sortType === 'id') { 
+            // console.log("Sorting by ID (default)...");
              filteredDesigns.sort((a, b) => {
-                // Simple numeric sort for purely numeric IDs, string for others
                 const idAIsNum = /^\d+$/.test(a.id);
                 const idBIsNum = /^\d+$/.test(b.id);
                 if (idAIsNum && idBIsNum) return parseInt(a.id) - parseInt(b.id);
                 return String(a.id).localeCompare(String(b.id), undefined, { numeric: true, sensitivity: 'base' });
             });
         }
-        // Other sort types can be added here
-
+        
         populateDesignGrid(filteredDesigns);
       }
       
@@ -560,41 +527,50 @@
       }
 
     async function fetchAndApplyRankings(isInitialLoad = false) {
+        console.log("fetchAndApplyRankings called. isInitialLoad:", isInitialLoad);
         try {
             const response = await fetch('/best-designs?t=' + new Date().getTime());
             if (!response.ok) {
                 const errorData = await response.json();
+                console.error("Error fetching best designs:", errorData.message);
                 throw new Error(errorData.message || 'Failed to fetch rankings');
             }
-            const bestDesigns = await response.json();
+            const bestDesignsFromServer = await response.json(); 
+            console.log("Fetched bestDesignsFromServer:", JSON.stringify(bestDesignsFromServer));
             
-            // Reset scores in allDesignsData
-            allDesignsData.forEach(design => design.score = 0); 
+            // Create a map of designId to score for quick lookup
+            const scoreMap = new Map();
+            bestDesignsFromServer.forEach(rankedDesign => {
+                scoreMap.set(String(rankedDesign.designId), rankedDesign.score);
+            });
+            console.log("ScoreMap created:", scoreMap);
 
-            // Apply new scores to allDesignsData objects
-            bestDesigns.forEach(rankedDesign => {
-                const designInData = allDesignsData.find(d => String(d.id) === String(rankedDesign.designId));
-                if (designInData) {
-                    designInData.score = rankedDesign.score;
+            // Apply scores to ALL design objects in allDesignsData
+            allDesignsData.forEach(designInArray => {
+                const designIdStr = String(designInArray.id);
+                if (scoreMap.has(designIdStr)) {
+                    designInArray.score = scoreMap.get(designIdStr);
+                    // console.log(`Updated score for allDesignsData ID ${designIdStr} to ${designInArray.score}`);
+                } else {
+                    designInArray.score = 0; // Reset score if not in current ranking
                 }
             });
-            
-            applyAllFiltersAndSort('rank'); // This will use the scores on allDesignsData
+
+            // Now call sort, which will use the updated scores on allDesignsData
+            applyAllFiltersAndSort('rank'); 
 
             if (isInitialLoad) {
                 $('#sortRankBtn').addClass('active');
                 $('#sortRandomBtn').removeClass('active'); 
-                // Any other sort buttons should also be .removeClass('active')
             } else {
                 showToast('Designs sorted by ranking!', 'success');
             }
 
         } catch (error) {
-            console.error('Error fetching or applying best designs:', error);
+            console.error('Catch block in fetchAndApplyRankings:', error);
             if (isInitialLoad) {
-                // Fallback to default sort (e.g., by ID) if initial ranking fetch fails
-                console.error('Initial ranking load failed, falling back to default sort:', error.message);
-                applyAllFiltersAndSort(); // This will sort by ID as per the modified applyAllFiltersAndSort
+                console.error('Initial ranking load failed, falling back to default sort.');
+                applyAllFiltersAndSort('default'); // Fallback to default sort
             } else {
                 showToast(error.message || 'Could not load rankings.', 'error');
             }
