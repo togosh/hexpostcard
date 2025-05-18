@@ -132,12 +132,12 @@ app.get(["/why", "/whymail", "/whydirectmail"],
 
 // VOTING FUNCTIONALITY
 function hashIp(ipAddress) {
-  console.log("ipAddress: ", ipAddress); // Debugging line
+  //console.log("ipAddress: ", ipAddress); // Debugging line
   if (!ipAddress) return null; // Handle undefined ipAddress
   const saltedIp = salt + ipAddress;
-  console.log("Salted IP: ", saltedIp); // Debugging line
+  //console.log("Salted IP: ", saltedIp); // Debugging line
   const hash = crypto.createHash('sha256').update(saltedIp).digest('hex');
-  console.log("Hashed IP: ", hash); // Debugging lineq
+  //console.log("Hashed IP: ", hash); // Debugging lineq
   return hash;
 }
 
