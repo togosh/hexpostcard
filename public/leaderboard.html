@@ -8,6 +8,7 @@
     <link href="/css/styles.css" rel="stylesheet"> <!-- Your main styles -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
     <script src="/socket.io/socket.io.js"></script>
+    <script src="/copyaddress.js"></script>
     <style>
         body { 
             background-color: #111827; 
@@ -39,11 +40,12 @@
         }
         .leaderboard-table tr:nth-child(even) { 
             background-color: rgba(31, 41, 55, 0.5); 
-        }
+        }        
         .leaderboard-table tr:hover { 
             background-color: rgba(55, 65, 81, 0.7); 
             transform: scale(1.01);
             transition: all 0.2s ease;
+            cursor: pointer;
         }
         .address-cell { 
             word-break: break-all; 
@@ -70,12 +72,67 @@
         }
         .top-3.rank-1 {
             background: linear-gradient(135deg, #FFD700 0%, #FFA500 100%);
+            color: #000;
         }
         .top-3.rank-2 {
-            background: linear-gradient(135deg, #C0C0C0 0%, #808080 100%);
+            background: linear-gradient(135deg, #E5E7EB 0%, #D1D5DB 100%);
+            color: #000;
         }
         .top-3.rank-3 {
             background: linear-gradient(135deg, #CD7F32 0%, #8B4513 100%);
+            color: #FFF;
+        }
+        /* Override address styling for top 3 ranks */
+        .top-3 .address-cell {
+            background-color: rgba(0, 0, 0, 0.2);
+            color: #000;
+            font-weight: 600;
+        }
+        .top-3 .address-full {
+            color: rgba(0, 0, 0, 0.7) !important;
+            font-weight: 500;
+        }
+        .top-3.rank-3 .address-cell {
+            color: #FFF;
+        }        .top-3.rank-3 .address-full {
+            color: rgba(255, 255, 255, 0.8) !important;
+        }
+        /* Ensure amount cell text is readable for top 3 ranks */
+        .top-3 .amount-cell {
+            color: #059669;
+            font-weight: bold;
+        }
+        .top-3.rank-3 .amount-cell {
+            color: #10B981;
+        }
+        .address-full {
+            font-size: 0.7em; 
+            color: #9CA3AF; 
+            margin-top: 2px;
+            transition: color 0.2s ease;
+        }
+        .copy-tooltip {
+            position: relative;
+        }
+        .copy-tooltip::after {
+            content: 'Click to copy address';
+            position: absolute;
+            top: -30px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: rgba(0, 0, 0, 0.8);
+            color: white;
+            padding: 4px 8px;
+            border-radius: 4px;
+            font-size: 0.7em;
+            white-space: nowrap;
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity 0.2s ease;
+            z-index: 1000;
+        }
+        .leaderboard-table tr:hover .copy-tooltip::after {
+            opacity: 1;
         }
         .donation-details {
             font-size: 0.9em;
@@ -112,17 +169,27 @@
             font-size: 2rem;
             font-weight: bold;
             color: #10B981;
-        }
-        .stat-label {
+        }        .stat-label {
             font-size: 0.9rem;
             color: #9CA3AF;
             text-transform: uppercase;
             letter-spacing: 0.5px;
         }
+        /* Copy notification animation */
+        .copy-notification {
+            transform: translateX(0) !important;
+        }
+        #copy-success {
+            transition: transform 0.3s ease;
+        }
     </style>
 </head>
-<body>
-    <div id="navbar"></div>
+<body>    <div id="navbar"></div>
+
+    <!-- Copy Success Notification -->
+    <div id="copy-success" class="fixed top-4 right-4 bg-green-500 text-white px-4 py-2 rounded-lg shadow-lg transform translate-x-full transition-transform duration-300 z-50">
+        Address copied to clipboard!
+    </div>
 
     <div class="container mx-auto px-4 py-8">
         <h1 class="text-5xl font-bold text-center mb-4 bg-gradient-to-r from-yellow-400 to-orange-500 bg-clip-text text-transparent">
@@ -157,11 +224,10 @@
             </div>
             
             <div id="leaderboard-content" class="hidden">
-                <table class="leaderboard-table">
-                    <thead>
+                <table class="leaderboard-table">                    <thead>
                         <tr>
                             <th style="width: 10%;">Rank</th>
-                            <th style="width: 50%;">Donator Address</th>
+                            <th style="width: 50%;">Donator Address <span style="font-size: 0.7em; font-weight: normal; opacity: 0.7;">(Click to copy)</span></th>
                             <th style="width: 25%;">Total Donated (USD)</th>
                             <th style="width: 15%;">Details</th>
                         </tr>
@@ -253,16 +319,14 @@
                     let rankClass = '';
                     if (item.rank === 1) rankClass = 'top-3 rank-1';
                     else if (item.rank === 2) rankClass = 'top-3 rank-2';
-                    else if (item.rank === 3) rankClass = 'top-3 rank-3';
-
-                    const currencies = item.currencies ? item.currencies.join(', ') : 'ETH';
+                    else if (item.rank === 3) rankClass = 'top-3 rank-3';                    const currencies = item.currencies ? item.currencies.join(', ') : 'ETH';
                     const firstDonationDate = item.firstDonation ? new Date(item.firstDonation * 1000).toLocaleDateString() : '';
                     
-                    const row = `<tr class="${rankClass}">
+                    const row = `<tr class="${rankClass}" data-address="${item.from}" onclick="copyAddress('${item.from}')">
                         <td class="rank-cell">${item.rank}</td>
-                        <td class="address-cell" title="${item.from}">
+                        <td class="address-cell copy-tooltip" title="Click to copy: ${item.from}">
                             <div>${formatAddress(item.from)}</div>
-                            <div style="font-size: 0.7em; color: #6B7280; margin-top: 2px;">
+                            <div class="address-full">
                                 ${item.from}
                             </div>
                         </td>
