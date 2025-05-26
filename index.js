@@ -10,7 +10,12 @@ const path = require('path');
 const fs = require('fs');
 const https = require('https');
 const crypto = require('crypto'); // Added for hashing
+const schedule = require('node-schedule'); // For scheduling leaderboard updates
 var mongoose = require('mongoose'); // Added for MongoDB
+
+// --- START: LEADERBOARD SERVICE INTEGRATION ---
+const leaderboardService = require('./leaderboard.js'); // Import the leaderboard service
+// --- END: LEADERBOARD SERVICE INTEGRATION ---
 
 // Mongoose Schema for Votes
 var Schema = mongoose.Schema;
@@ -30,11 +35,18 @@ var DesignVote = mongoose.model('VoteContest03', VoteSchema);
 
 // MongoDB Connection
 var mongoDB = CONFIG.mongodb.connectionString;
-mongoose.connect(mongoDB).then(() => {
+mongoose.connect(mongoDB).then(async () => {
     log("Mongo Connected!");
+    // Initialize the leaderboard service (loads price caches, sets up its schedules)
+    await leaderboardService.initializeLeaderboardService();
+    // Initial data grab for leaderboard on startup
+    grabAndEmitLeaderboardData(); 
 }).catch(err => {
     log("Mongo Connection Error: " + err);
 });
+
+// Global variable for leaderboard data, to be populated by the service
+var leaderboardData = undefined;
 
 const salt = CONFIG.salt; // Salt for IP hashing
 
@@ -129,6 +141,26 @@ app.get("/pictures",             function(req, res){ res.sendFile('/public/galle
 app.get(["/why", "/whymail", "/whydirectmail"], 
                                  function(req, res) {
                                               res.sendFile('/public/whydirectmail.html', {root: __dirname}); });
+
+// --- START: LEADERBOARD ROUTES ---
+app.get("/leaderboard", function(req, res){ res.sendFile('/public/leaderboard.html', {root: __dirname}); });
+
+// NEW: Leaderboard API endpoint (uses the service)
+app.get("/api/leaderboard", async (req, res) => {
+  if (leaderboardData) { // leaderboardData is the global var updated by grabAndEmitLeaderboardData
+    res.json(leaderboardData);
+  } else {
+    log("Leaderboard data not ready for API call, attempting to fetch now.");
+    const freshData = await leaderboardService.getLeaderboardData(); // Call the service
+    if (freshData && Array.isArray(freshData) && freshData.length > 0) { // Check it's not placeholder
+        leaderboardData = freshData;
+        res.json(leaderboardData);
+    } else {
+        res.status(503).json({ message: "Leaderboard data is currently being generated. Please try again shortly." });
+    }
+  }
+});
+// --- END: LEADERBOARD ROUTES ---
 
 // VOTING FUNCTIONALITY
 function hashIp(ipAddress) {
@@ -226,12 +258,65 @@ async function calculateBestDesigns() {
 }
 // END VOTING FUNCTIONALITY
 
+// --- START: LEADERBOARD DATA GRABBING AND SOCKET.IO ---
+async function grabAndEmitLeaderboardData() {
+    log("grabAndEmitLeaderboardData triggered...");
+    try {
+        const freshLeaderboardData = await leaderboardService.getLeaderboardData();
+        if (freshLeaderboardData && Array.isArray(freshLeaderboardData)) {
+            leaderboardData = freshLeaderboardData; // Update global cache
+            if (io) { // Check if io is initialized
+                io.emit("leaderboardData", leaderboardData);
+                log(`Leaderboard data updated and emitted via Socket.io. ${leaderboardData.length} entries.`);
+            } else {
+                log("Socket.io not initialized, cannot emit leaderboard data.");
+            }
+        } else {
+            log("Failed to fetch fresh leaderboard data from service.");
+        }
+    } catch (error) {
+        log("Error in grabAndEmitLeaderboardData: " + error.message);
+        console.error(error);
+    }
+}
+
+// Schedule for grabbing leaderboard data (every 15 minutes)
+schedule.scheduleJob("*/15 * * * *", grabAndEmitLeaderboardData);
+// --- END: LEADERBOARD DATA GRABBING AND SOCKET.IO ---
+
 httpServer.listen(httpPort, hostname, () => { log(`Server running at http://${hostname}:${httpPort}/`);});
 if(!DEBUG){ httpsServer.listen(httpsPort, hostname, () => { 
     log('listening on *:' + httpsPort); 
   });
 }
 
+// Socket.io Setup
+var io = undefined;
+if(DEBUG){ 
+  io = require('socket.io')(httpServer);
+} else { 
+  if (httpsServer) {
+    io = require('socket.io')(httpsServer, {secure: true});
+  } else {
+    log("ERROR: HTTPS server not initialized for Socket.io in non-debug mode.");
+  }
+}
+
+if (io) {
+    io.on('connection', (socket) => {
+        log('SOCKET -- Client connected: ' + socket.id);
+        if (leaderboardData) {
+            socket.emit("leaderboardData", leaderboardData);
+        }
+        socket.on('disconnect', () => {
+            log('SOCKET -- Client disconnected: ' + socket.id);
+        });
+    });
+} else {
+    log("Socket.io server could not be initialized.");
+}
+
+// Helper for logging
 const log = (message) => {
-    console.log(new Date().toISOString() + ", " + message);
+    console.log(`${new Date().toISOString()} [MainServer] --- ${message}`);
 }

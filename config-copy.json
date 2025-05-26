@@ -5,5 +5,16 @@
 		"cert": "./ssl/AAA.crt",
 		"ca": "./ssl/BBB.ca-bundle",
 		"key": "./ssl/CCC.key"
+	},
+	"mongodb": {
+		"connectionString": "mongodb+srv://DDDD:EEEEEEE@cluster0.FFFFF.mongodb.net/hexpostcards?retryWrites=true&w=majority"
+	},
+	"salt": "GGGGG",
+	"etherscan": {
+		"apikey": "HHHHH"
+	},
+	"donationAddresses": {
+		"eth_main": "0x25D4CCeba035AabB7aC79C4F2fEaD5bC74E6B9d8",
+		"eth_historical": "0x716b1E629b0d3aBd14bD1E9E6557cdfaee839668"
 	}
 }
