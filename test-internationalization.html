@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>International Number Format Test</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            padding: 20px;
+            background-color: #f5f5f5;
+        }
+        .test-container {
+            background: white;
+            padding: 20px;
+            border-radius: 8px;
+            margin-bottom: 20px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+        .locale-test {
+            margin: 10px 0;
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+        }
+        .number {
+            font-weight: bold;
+            color: #2c5282;
+        }
+    </style>
+</head>
+<body>
+    <h1>International Number Format Test</h1>
+    <p>This page demonstrates how numbers will appear to users in different locales using the same formatting functions as the leaderboard.</p>
+    
+    <div class="test-container">
+        <h2>Test Numbers</h2>
+        <p>Test Value: $98,040.50 USD</p>
+        <p>Donation Count: 1,234 donations</p>
+        <p>Token Amount: 1,234.567890 HEX</p>
+    </div>
+
+    <div id="results"></div>
+
+    <script>
+        // Copy the same formatting functions from leaderboard.html
+        function formatCurrency(amount, locale = null) {
+            const userLocale = locale || navigator.language || navigator.languages[0] || 'en-US';
+            
+            return new Intl.NumberFormat(userLocale, {
+                style: 'currency',
+                currency: 'USD',
+                minimumFractionDigits: 2,
+                maximumFractionDigits: 2
+            }).format(amount);
+        }
+
+        function formatNumber(number, locale = null) {
+            const userLocale = locale || navigator.language || navigator.languages[0] || 'en-US';
+            
+            return new Intl.NumberFormat(userLocale, {
+                minimumFractionDigits: 0,
+                maximumFractionDigits: 8
+            }).format(number);
+        }
+
+        function formatInteger(number, locale = null) {
+            const userLocale = locale || navigator.language || navigator.languages[0] || 'en-US';
+            
+            return new Intl.NumberFormat(userLocale, {
+                minimumFractionDigits: 0,
+                maximumFractionDigits: 0
+            }).format(number);
+        }
+
+        // Test data
+        const testCurrency = 98040.50;
+        const testCount = 1234;
+        const testTokenAmount = 1234.567890;
+
+        // Different locales to test
+        const locales = [
+            { code: 'en-US', name: 'English (US)', desc: 'Period for decimal, comma for thousands' },
+            { code: 'de-DE', name: 'German (Germany)', desc: 'Comma for decimal, period for thousands' },
+            { code: 'fr-FR', name: 'French (France)', desc: 'Comma for decimal, space for thousands' },
+            { code: 'en-GB', name: 'English (UK)', desc: 'Period for decimal, comma for thousands' },
+            { code: 'es-ES', name: 'Spanish (Spain)', desc: 'Comma for decimal, period for thousands' },
+            { code: 'it-IT', name: 'Italian (Italy)', desc: 'Comma for decimal, period for thousands' },
+            { code: 'pt-BR', name: 'Portuguese (Brazil)', desc: 'Comma for decimal, period for thousands' },
+            { code: 'nl-NL', name: 'Dutch (Netherlands)', desc: 'Comma for decimal, period for thousands' }
+        ];
+
+        const resultsDiv = document.getElementById('results');
+
+        // Show current browser locale first
+        const currentLocale = navigator.language || navigator.languages[0] || 'en-US';
+        resultsDiv.innerHTML += `
+            <div class="test-container">
+                <h2>Your Current Browser Locale: ${currentLocale}</h2>
+                <div class="locale-test">
+                    <strong>How numbers appear for you:</strong><br>
+                    Currency: <span class="number">${formatCurrency(testCurrency)}</span><br>
+                    Donation Count: <span class="number">${formatInteger(testCount)}</span><br>
+                    Token Amount: <span class="number">${formatNumber(testTokenAmount)}</span>
+                </div>
+            </div>
+        `;
+
+        // Test different locales
+        resultsDiv.innerHTML += '<div class="test-container"><h2>How Numbers Appear in Different Locales</h2>';
+        
+        locales.forEach(locale => {
+            resultsDiv.innerHTML += `
+                <div class="locale-test">
+                    <strong>${locale.name} (${locale.code})</strong><br>
+                    <em>${locale.desc}</em><br>
+                    Currency: <span class="number">${formatCurrency(testCurrency, locale.code)}</span><br>
+                    Donation Count: <span class="number">${formatInteger(testCount, locale.code)}</span><br>
+                    Token Amount: <span class="number">${formatNumber(testTokenAmount, locale.code)}</span>
+                </div>
+            `;
+        });
+
+        resultsDiv.innerHTML += '</div>';
+    </script>
+</body>
+</html>

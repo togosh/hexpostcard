@@ -387,20 +387,40 @@
                 }
                 return address;
             }
-
             function formatCurrency(amount) {
-                return new Intl.NumberFormat('en-US', {
+                // Get user's locale from browser
+                const userLocale = navigator.language || navigator.languages[0] || 'en-US';
+                
+                return new Intl.NumberFormat(userLocale, {
                     style: 'currency',
                     currency: 'USD',
                     minimumFractionDigits: 2,
                     maximumFractionDigits: 2
                 }).format(amount);
-            }            function updateStats(data) {
+            }
+            function formatNumber(number) {
+                // Get user's locale from browser
+                const userLocale = navigator.language || navigator.languages[0] || 'en-US';
+                
+                return new Intl.NumberFormat(userLocale, {
+                    minimumFractionDigits: 0,
+                    maximumFractionDigits: 8 // Allow more precision for crypto amounts
+                }).format(number);
+            }
+
+            function formatInteger(number) {
+                // Get user's locale from browser  
+                const userLocale = navigator.language || navigator.languages[0] || 'en-US';
+                
+                return new Intl.NumberFormat(userLocale, {
+                    minimumFractionDigits: 0,
+                    maximumFractionDigits: 0 // No decimal places for integers
+                }).format(number);            }function updateStats(data) {
                 if (!data || !Array.isArray(data) || data.length === 0) {
-                    $('#total-donations').text('$0');
-                    $('#total-donors').text('0');
-                    $('#total-transactions').text('0');
-                    $('#tax-estimate').text('$0');
+                    $('#total-donations').text(formatCurrency(0));
+                    $('#total-donors').text(formatInteger(0));
+                    $('#total-transactions').text(formatInteger(0));
+                    $('#tax-estimate').text(formatCurrency(0));
                     return;
                 }
 
@@ -409,16 +429,15 @@
                 const totalTransactions = data.reduce((sum, item) => sum + (item.donationCount || 0), 0);
 
                 // Calculate estimated tax liability (15% short-term capital gains)
-                const taxLiability = totalDonations * 0.15;
-
-                // Update main stats
+                const taxLiability = totalDonations * 0.15;                // Update main stats
                 $('#total-donations').text(formatCurrency(totalDonations));
-                $('#total-donors').text(totalDonors.toLocaleString());
-                $('#total-transactions').text(totalTransactions.toLocaleString());
+                $('#total-donors').text(formatInteger(totalDonors));
+                $('#total-transactions').text(formatInteger(totalTransactions));
                 
                 // Update tax estimate in the tax section
                 $('#tax-estimate').text(formatCurrency(taxLiability));
-            }function populateLeaderboard(data) {
+            }
+            function populateLeaderboard(data) {
                 console.log("Received leaderboard data:", data);
                 leaderboardTbody.empty(); // Clear previous data
                 
@@ -466,9 +485,8 @@
                                 ${item.from}
                             </div>
                         </td>
-                        <td class="amount-cell">${formatCurrency(item.totalUsdValue)}</td>
-                        <td class="donation-details">
-                            <div><strong>${item.donationCount}</strong> donation${item.donationCount !== 1 ? 's' : ''}</div>
+                        <td class="amount-cell">${formatCurrency(item.totalUsdValue)}</td>                        <td class="donation-details">
+                            <div><strong>${formatInteger(item.donationCount)}</strong> donation${item.donationCount !== 1 ? 's' : ''}</div>
                             <div>${currencies}</div>
                             ${dateInfo}
                         </td>
@@ -593,8 +611,8 @@
                         const row = `
                             <tr class="border-b border-gray-700 hover:bg-gray-700">
                                 <td class="py-2 text-sm">${tx.date}</td>
-                                <td class="py-2">${tx.value} ${tx.currency}</td>
-                                <td class="py-2">$${tx.usdValue}</td>
+                                <td class="py-2">${formatNumber(tx.value)} ${tx.currency}</td>
+                                <td class="py-2">${formatCurrency(tx.usdValue)}</td>
                                 <td class="py-2">${tx.chain}</td>
                                 <td class="py-2">
                                     <a href="${getExplorerUrl(tx.txHash, tx.chain)}" target="_blank" 
