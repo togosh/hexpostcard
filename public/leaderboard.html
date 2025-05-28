@@ -159,36 +159,36 @@
         @keyframes spin {
             0% { transform: rotate(0deg); }
             100% { transform: rotate(360deg); }
-        }
-        .stats-grid {
+        }        .stats-grid {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-            gap: 1rem;
-            margin-bottom: 2rem;
-        }
-        .stat-card {
-            background: linear-gradient(135deg, #1f2937 0%, #111827 100%);
-            border: 1px solid #374151;
-            border-radius: 8px;
-            padding: 1.5rem;
+            gap: 20px;
+            margin-bottom: 30px;
+        }        .stat-card {
+            background: #374151;
+            border: 1px solid #4B5563;
+            border-radius: 12px;
+            padding: 20px;
             text-align: center;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.3);
+            transition: transform 0.2s ease;
         }
+
+        .stat-card:hover {
+            transform: translateY(-2px);
+            background: #4B5563;
+        }
+
         .stat-value {
-            font-size: 2rem;
+            font-size: 24px;
             font-weight: bold;
             color: #10B981;
+            margin-bottom: 8px;
         }        .stat-label {
-            font-size: 0.9rem;
-            color: #9CA3AF;
+            color: #D1D5DB;
+            font-size: 14px;
             text-transform: uppercase;
             letter-spacing: 0.5px;
-        }
-        /* Copy notification animation */
-        .copy-notification {
-            transform: translateX(0) !important;
-        }
-        #copy-success {
-            transition: transform 0.3s ease;
         }
     </style>
 </head>
@@ -245,9 +245,7 @@
         </h1>
         <p class="text-center text-gray-300 mb-12 text-lg">
             Track the top contributors to the HEXpostcards project
-        </p>
-        
-        <!-- Statistics Summary -->
+        </p>          <!-- Statistics Summary -->
         <div id="stats-container" class="stats-grid">
             <div class="stat-card">
                 <div id="total-donations" class="stat-value">-</div>
@@ -296,24 +294,70 @@
             </div>
         </div>    </div>
 
-    <!-- Call to Action -->
-    <section class="py-16 bg-blue-900/20">
-      <div class="container mx-auto px-4 text-center">
-        <h2 class="text-3xl font-bold mb-8">Ready to Get Started?</h2>
-        <div class="flex flex-col sm:flex-row gap-4 justify-center">
-          <a
-            href="/designs.html"
-            class="bg-gray-700 hover:bg-gray-600 px-8 py-4 rounded-lg font-medium text-lg transition"
-          >
-            Browse Designs
-          </a>          <a
-            href="/donate"
-            class="bg-blue-600 hover:bg-blue-700 px-8 py-4 rounded-lg font-medium text-lg transition"
-          >
-            Donate
-          </a>
+    <!-- Disclaimer Section -->
+    <section class="py-12 bg-gray-900/50">
+        <div class="container mx-auto px-4">
+            <div class="max-w-4xl mx-auto">
+                <h2 class="text-2xl font-bold text-center mb-8 text-yellow-400">Important Disclaimers</h2>
+                
+                <div class="grid md:grid-cols-2 gap-6">
+                    <!-- USD Valuation Disclaimer -->
+                    <div class="bg-gray-800 rounded-lg p-6 border border-gray-700">
+                        <h3 class="text-lg font-semibold mb-4 text-blue-400">💰 USD Valuations</h3>
+                        <p class="text-gray-300 text-sm leading-relaxed">
+                            All USD values shown are calculated based on the cryptocurrency prices <strong>at the time of donation receipt</strong>, not when funds are sold or converted. 
+                            The actual USD value realized may differ significantly due to market volatility. Historical prices are sourced from Etherscan and PulseX.
+                        </p>
+                    </div>
+                    
+                    <!-- Tax Disclaimer -->
+                    <div class="bg-gray-800 rounded-lg p-6 border border-gray-700">
+                        <h3 class="text-lg font-semibold mb-4 text-red-400">🏛️ Tax Obligations (USA)</h3>
+                        <p class="text-gray-300 text-sm leading-relaxed mb-3">
+                            Short-term capital gains tax (10-37%) applies to cryptocurrency donations in the USA. 
+                            This creates a tax liability on the donated amounts, reducing the net value available for the project.
+                        </p>
+                        <div class="bg-red-900/20 rounded p-3 border border-red-500/30">
+                            <div class="text-red-300 text-xs font-semibold">Estimated Tax Liability:</div>
+                            <div id="tax-estimate" class="text-red-400 font-bold text-lg">Calculating...</div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Additional Notes -->
+                <div class="mt-6 bg-gray-800 rounded-lg p-6 border border-gray-700">
+                    <h3 class="text-lg font-semibold mb-4 text-green-400">📊 Transparency Notes</h3>
+                    <div class="grid md:grid-cols-3 gap-4 text-sm text-gray-300">
+                        <div>
+                            <strong class="text-green-300">Real-Time Tracking:</strong> 
+                            Donations are processed every 5 minutes via blockchain APIs
+                        </div>                        <div>
+                            <strong class="text-blue-300">Multi-Chain Support:</strong> 
+                            Ethereum (ETH, USDC, USDT, DAI) and PulseChain (PLS) networks
+                        </div><div>
+                            <strong class="text-yellow-300">Historical Data:</strong> 
+                            Price data cached for accurate historical valuations
+                        </div>
+                    </div>                </div>
+            </div>
         </div>
-      </div>
+    </section>
+
+    <!-- Call to Action Section -->
+    <section class="py-20 bg-gray-900">
+        <div class="container mx-auto px-4 text-center">
+            <h2 class="text-3xl font-bold mb-8">Ready to Take Action?</h2>
+            <div class="flex flex-col md:flex-row gap-4 justify-center">
+                <a href="/designs" 
+                   class="bg-gray-700 hover:bg-gray-600 px-8 py-4 rounded-lg font-medium text-lg transition">
+                    View Designs
+                </a>
+                <a href="/#donate"
+                   class="bg-blue-600 hover:bg-blue-700 px-8 py-4 rounded-lg font-medium text-lg transition">
+                    Donate
+                </a>
+            </div>
+        </div>
     </section>
 
     <div id="footer"></div>
@@ -351,13 +395,12 @@
                     minimumFractionDigits: 2,
                     maximumFractionDigits: 2
                 }).format(amount);
-            }
-
-            function updateStats(data) {
+            }            function updateStats(data) {
                 if (!data || !Array.isArray(data) || data.length === 0) {
                     $('#total-donations').text('$0');
                     $('#total-donors').text('0');
                     $('#total-transactions').text('0');
+                    $('#tax-estimate').text('$0');
                     return;
                 }
 
@@ -365,12 +408,17 @@
                 const totalDonors = data.length;
                 const totalTransactions = data.reduce((sum, item) => sum + (item.donationCount || 0), 0);
 
+                // Calculate estimated tax liability (15% short-term capital gains)
+                const taxLiability = totalDonations * 0.15;
+
+                // Update main stats
                 $('#total-donations').text(formatCurrency(totalDonations));
                 $('#total-donors').text(totalDonors.toLocaleString());
                 $('#total-transactions').text(totalTransactions.toLocaleString());
-            }
-
-            function populateLeaderboard(data) {
+                
+                // Update tax estimate in the tax section
+                $('#tax-estimate').text(formatCurrency(taxLiability));
+            }function populateLeaderboard(data) {
                 console.log("Received leaderboard data:", data);
                 leaderboardTbody.empty(); // Clear previous data
                 
@@ -570,15 +618,14 @@
         
         function closeTransactionModal() {
             $('#transaction-modal').addClass('hidden');
-        }
-        
-        function getExplorerUrl(txHash, chain) {
+        }        function getExplorerUrl(txHash, chain) {
             if (chain === 'PulseChain') {
                 return `https://scan.pulsechain.com/tx/${txHash}`;
             } else {
                 return `https://etherscan.io/tx/${txHash}`;
-            }
-        }
+            }        }
     </script>
+
+    <div id="footer"></div>
 </body>
 </html>
