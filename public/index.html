@@ -163,22 +163,21 @@
 
     <!-- Stats Bar -->
     <div class="stats-bar">
-        <div class="container mx-auto px-4 py-12">
-            <div class="grid grid-cols-1 md:grid-cols-3 gap-8 text-center">
+        <div class="container mx-auto px-4 py-12">            <div class="grid grid-cols-1 md:grid-cols-3 gap-8 text-center">
                 <div>
-                    <div class="text-3xl font-bold text-blue-400 mb-2">
+                    <div class="text-3xl font-bold text-blue-400 mb-2" data-stat="postcards">
                         536,000+
                     </div>
                     <div class="text-gray-400">Postcards Delivered</div>
                 </div>
                 <div>
-                    <div class="text-3xl font-bold text-blue-400 mb-2">
+                    <div class="text-3xl font-bold text-blue-400 mb-2" data-stat="members">
                         900+
                     </div>
                     <div class="text-gray-400">Community Members</div>
                 </div>
                 <div>
-                    <div class="text-3xl font-bold text-blue-400 mb-2">
+                    <div class="text-3xl font-bold text-blue-400 mb-2" data-stat="cost">
                         $0.35-0.45
                     </div>
                     <div class="text-gray-400">Cost Per Mailbox</div>
@@ -316,18 +315,63 @@
                 </a>
             </div>
         </div>
-    </section>
-
-    <!-- Footer -->
+    </section>    <!-- Footer -->
 	<div id="footer"></div>
 	
 	<script>
+        // International formatting functions
+        function formatCurrency(amount) {
+            const userLocale = navigator.language || navigator.languages[0] || 'en-US';
+            
+            return new Intl.NumberFormat(userLocale, {
+                style: 'currency',
+                currency: 'USD',
+                minimumFractionDigits: 2,
+                maximumFractionDigits: 2
+            }).format(amount);
+        }
+
+        function formatNumber(number) {
+            const userLocale = navigator.language || navigator.languages[0] || 'en-US';
+            
+            return new Intl.NumberFormat(userLocale, {
+                minimumFractionDigits: 0,
+                maximumFractionDigits: 2
+            }).format(number);
+        }
+
+        function formatInteger(number) {
+            const userLocale = navigator.language || navigator.languages[0] || 'en-US';
+            
+            return new Intl.NumberFormat(userLocale, {
+                minimumFractionDigits: 0,
+                maximumFractionDigits: 0
+            }).format(number);
+        }
+
+        // Update stats with international formatting
+        function updateStats() {
+            // Format postcards delivered
+            document.querySelector('[data-stat="postcards"]').textContent = formatInteger(536000) + '+';
+            
+            // Format community members
+            document.querySelector('[data-stat="members"]').textContent = formatInteger(900) + '+';
+            
+            // Format cost range (keeping as range for now, but could format each number)
+            const minCost = formatCurrency(0.35).replace('$', '');
+            const maxCost = formatCurrency(0.45).replace('$', '');
+            document.querySelector('[data-stat="cost"]').textContent = `${minCost}-${maxCost}`;
+        }
+
          $(document).ready(function() {
             $('#navbar').load('/navbar.html', function() {
                 initMobileMenu();
             });
 
             $('#footer').load('/footer.html');
+            
+            // Update stats after page loads
+            updateStats();
         });
 
         // Smooth scroll for anchor links

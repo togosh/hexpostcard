@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>International Formatting Test - HEXpostcards</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/tailwindcss/2.2.19/tailwind.min.css" rel="stylesheet" />
+    <style>
+        body {
+            background-color: #111827;
+            color: #f9fafb;
+            font-family: Arial, sans-serif;
+        }
+        .test-container {
+            max-width: 800px;
+            margin: 2rem auto;
+            padding: 2rem;
+            background-color: #1f2937;
+            border-radius: 0.5rem;
+        }
+        .locale-test {
+            margin: 1rem 0;
+            padding: 1rem;
+            background-color: #374151;
+            border-radius: 0.25rem;
+        }
+        .price-display {
+            font-size: 1.2rem;
+            color: #10b981;
+            margin: 0.5rem 0;
+        }
+    </style>
+</head>
+<body>
+    <div class="test-container">
+        <h1 class="text-3xl font-bold mb-6">International Number Formatting Test</h1>
+        
+        <div class="mb-6">
+            <h2 class="text-xl font-semibold mb-4">Your Current Locale: <span id="current-locale"></span></h2>
+            <div class="price-display">
+                Sample prices with your locale formatting:
+                <div id="user-locale-prices"></div>
+            </div>
+        </div>
+
+        <div class="locale-test">
+            <h3 class="text-lg font-semibold">US English (en-US)</h3>
+            <div class="price-display" id="us-prices"></div>
+        </div>
+
+        <div class="locale-test">
+            <h3 class="text-lg font-semibold">German (de-DE)</h3>
+            <div class="price-display" id="de-prices"></div>
+        </div>
+
+        <div class="locale-test">
+            <h3 class="text-lg font-semibold">French (fr-FR)</h3>
+            <div class="price-display" id="fr-prices"></div>
+        </div>
+
+        <div class="locale-test">
+            <h3 class="text-lg font-semibold">Spanish (es-ES)</h3>
+            <div class="price-display" id="es-prices"></div>
+        </div>
+
+        <div class="locale-test">
+            <h3 class="text-lg font-semibold">Japanese (ja-JP)</h3>
+            <div class="price-display" id="jp-prices"></div>
+        </div>
+
+        <div class="locale-test">
+            <h3 class="text-lg font-semibold">British English (en-GB)</h3>
+            <div class="price-display" id="gb-prices"></div>
+        </div>
+    </div>
+
+    <script>
+        function formatCurrencyForLocale(amount, locale, currency = 'USD') {
+            return new Intl.NumberFormat(locale, {
+                style: 'currency',
+                currency: currency,
+                minimumFractionDigits: 2,
+                maximumFractionDigits: 2
+            }).format(amount);
+        }
+
+        function formatIntegerForLocale(number, locale) {
+            return new Intl.NumberFormat(locale, {
+                minimumFractionDigits: 0,
+                maximumFractionDigits: 0
+            }).format(number);
+        }
+
+        function runTests() {
+            const testPrices = [0.10, 0.35, 9.00, 40.00, 300.00, 2000000];
+            const userLocale = navigator.language || navigator.languages[0] || 'en-US';
+            
+            document.getElementById('current-locale').textContent = userLocale;
+
+            // Test with user's locale
+            const userPrices = testPrices.map(price => formatCurrencyForLocale(price, userLocale)).join(', ');
+            document.getElementById('user-locale-prices').innerHTML = userPrices;
+
+            // Test various locales
+            const locales = [
+                { id: 'us-prices', locale: 'en-US', currency: 'USD' },
+                { id: 'de-prices', locale: 'de-DE', currency: 'EUR' },
+                { id: 'fr-prices', locale: 'fr-FR', currency: 'EUR' },
+                { id: 'es-prices', locale: 'es-ES', currency: 'EUR' },
+                { id: 'jp-prices', locale: 'ja-JP', currency: 'JPY' },
+                { id: 'gb-prices', locale: 'en-GB', currency: 'GBP' }
+            ];
+
+            locales.forEach(({ id, locale, currency }) => {
+                let prices;
+                if (currency === 'JPY') {
+                    // Japanese Yen doesn't use decimal places
+                    prices = testPrices.map(price => formatIntegerForLocale(price * 110, locale) + ' ¥').join(', ');
+                } else {
+                    prices = testPrices.map(price => formatCurrencyForLocale(price, locale, currency)).join(', ');
+                }
+                document.getElementById(id).innerHTML = prices;
+            });
+        }
+
+        document.addEventListener('DOMContentLoaded', runTests);
+    </script>
+</body>
+</html>

@@ -220,7 +220,7 @@
                         PrintingForLess (USA)
                       </h3>
                     </a>
-                    <p class="text-xl text-blue-400">
+                    <p class="text-xl text-blue-400 price-printing-for-less">
                       $0.45 per postcard
                     </p>
                   </div>
@@ -264,7 +264,7 @@
                     <a href="https://hex.fillupbanks.com/product/direct-mail/" target="_blank">
                       <h3 class="text-xl font-semibold">Fillup Banks (USA)</h3>
                     </a>
-                    <p class="text-xl text-blue-400">
+                    <p class="text-xl text-blue-400 price-fillup-banks">
                       $0.35 per postcard
                     </p>
                   </div>
@@ -307,7 +307,7 @@
                     <a href="https://twitter.com/TogameRosecraft/status/1781442244492284150" target="_blank">
                       <h3 class="text-xl font-semibold">Togame Rosecraft (USA)</h3>
                     </a>
-                    <p class="text-xl text-blue-400">
+                    <p class="text-xl text-blue-400 price-togame-rosecraft">
                       $0.29 per postcard
                     </p>
                   </div>
@@ -354,7 +354,7 @@
                     <a href="https://www.newprint.com/postcards-with-direct-mail-canada-post" target="_blank">
                       <h3 class="text-xl font-semibold">Newprint (Canada)</h3>
                     </a>
-                    <p class="text-xl text-blue-400">
+                    <p class="text-xl text-blue-400 price-hexican-girl">
                       $0.29 per postcard
                     </p>
                   </div>
@@ -398,7 +398,7 @@
                       <a href="https://www.stannp.com/uk/direct-mail-pricing" target="_blank">
                         <h3 class="text-xl font-semibold">Stannp (United Kingdom)</h3>
                       </a>
-                      <p class="text-xl text-blue-400">
+                      <p class="text-xl text-blue-400 price-stannp-uk">
                         $0.47 per postcard
                       </p>
                     </div>
@@ -433,7 +433,7 @@
                       <a href="https://alphamail.net.au/" target="_blank">
                         <h3 class="text-xl font-semibold">Alpha Mail (Australia)</h3>
                       </a>
-                      <p class="text-xl text-blue-400">
+                      <p class="text-xl text-blue-400 price-alpha-mail-au">
                         $0.46 per postcard
                       </p>
                     </div>
@@ -467,8 +467,7 @@
                     <div>
                       <a href="https://print-mailing.deutschepost.de/planen/" target="_blank">
                         <h3 class="text-xl font-semibold">Deutsche Post (Germany)</h3>
-                      </a>
-                      <p class="text-xl text-blue-400">
+                      </a>                      <p class="text-xl text-blue-400 price-range-diy">
                         $0.13 - $0.40 per postcard
                       </p>
                     </div>
@@ -885,12 +884,56 @@
     <div id="footer"></div>
 
     <script>
-      $(document).ready(function() {
-          $('#navbar').load('/navbar.html', function() {
-              initMobileMenu();
-          });
+      // International formatting functions
+      function formatCurrency(amount) {
+        const userLocale = navigator.language || navigator.languages[0] || 'en-US';
+        
+        return new Intl.NumberFormat(userLocale, {
+          style: 'currency',
+          currency: 'USD',
+          minimumFractionDigits: 2,
+          maximumFractionDigits: 2
+        }).format(amount);
+      }
 
-          $('#footer').load('/footer.html');
+      // Update price displays with international formatting
+      function updatePriceDisplays() {
+        // Define all price amounts with their selectors
+        const priceMapping = [
+          { selector: '.price-printing-for-less', amount: 0.45 },
+          { selector: '.price-fillup-banks', amount: 0.35 },
+          { selector: '.price-togame-rosecraft', amount: 0.29 },
+          { selector: '.price-hexican-girl', amount: 0.29 },
+          { selector: '.price-stannp-uk', amount: 0.47 },
+          { selector: '.price-alpha-mail-au', amount: 0.46 }
+        ];
+
+        priceMapping.forEach(item => {
+          const element = document.querySelector(item.selector);
+          if (element) {
+            const formattedPrice = formatCurrency(item.amount);
+            element.textContent = formattedPrice + ' per postcard';
+          }
+        });
+
+        // Handle range price display (DIY section)
+        const rangeElement = document.querySelector('.price-range-diy');
+        if (rangeElement) {
+          const minPrice = formatCurrency(0.13);
+          const maxPrice = formatCurrency(0.40);
+          rangeElement.textContent = `${minPrice} - ${maxPrice} per postcard`;
+        }
+      }
+
+      $(document).ready(function() {
+        $('#navbar').load('/navbar.html', function() {
+          initMobileMenu();
+        });
+
+        $('#footer').load('/footer.html');
+        
+        // Update prices with international formatting
+        updatePriceDisplays();
       });
 
       document.getElementById('toggle-vendors').addEventListener('click', function() {

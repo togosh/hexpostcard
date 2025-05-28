@@ -190,9 +190,8 @@
                 <div class="bg-gray-800 p-8 rounded-lg">
                     <h3 class="text-xl font-semibold mb-6">Targeting Benefits</h3>
                     <ul class="space-y-4 text-gray-300">
-                        <ul class="space-y-4 text-gray-300">
-                            <li>• $0.35-0.45 per verified wealthy recipient</li>
-                            <li>• Targets zip codes with $2M+ average net worth</li>
+                        <ul class="space-y-4 text-gray-300">                            <li>• <span class="cost-range">$0.35-0.45 per verified wealthy recipient</span></li>
+                            <li>• <span class="net-worth-amount">Targets zip codes with $2M+ average net worth</span></li>
                             <li>• Reaches beyond crypto social media bubble</li>
                             <li>• Zero waste on bots/fake accounts</li>
                             <li>• Only physical crypto ad they'll see that day</li>
@@ -256,15 +255,53 @@
         </div>
       </section>
 
-    <div id="footer"></div>
-
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <div id="footer"></div>    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
     <script>
+        // International formatting functions
+        function formatCurrency(amount) {
+          const userLocale = navigator.language || navigator.languages[0] || 'en-US';
+          
+          return new Intl.NumberFormat(userLocale, {
+            style: 'currency',
+            currency: 'USD',
+            minimumFractionDigits: 2,
+            maximumFractionDigits: 2
+          }).format(amount);
+        }
+
+        function formatInteger(number) {
+          const userLocale = navigator.language || navigator.languages[0] || 'en-US';
+          
+          return new Intl.NumberFormat(userLocale, {
+            minimumFractionDigits: 0,
+            maximumFractionDigits: 0
+          }).format(number);
+        }
+
+        // Update price ranges with international formatting
+        function updatePriceDisplays() {
+          const priceRangeElement = document.querySelector('.cost-range');
+          if (priceRangeElement) {
+            const minPrice = formatCurrency(0.35);
+            const maxPrice = formatCurrency(0.45);
+            priceRangeElement.textContent = `${minPrice}-${maxPrice} per verified wealthy recipient`;
+          }
+
+          const netWorthElement = document.querySelector('.net-worth-amount');
+          if (netWorthElement) {
+            const amount = formatCurrency(2000000);
+            netWorthElement.textContent = `Targets zip codes with ${amount}+ average net worth`;
+          }
+        }
+
         $(document).ready(function() {
             $('#navbar').load('/navbar.html', function() {
                 initMobileMenu();
             });
             $('#footer').load('/footer.html');
+            
+            // Update prices with international formatting
+            updatePriceDisplays();
         });
     </script>
 </body>
