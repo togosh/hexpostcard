@@ -63,7 +63,7 @@ async function getEthTransactions(address, startBlock = 0) {
         const data = await response.json();
         
         if (data.status === "1" && data.result) {
-            logService(`Found ${data.result.length} ETH transactions for ${address}`);
+            logService(`Found ${data.result.length} regular ETH transactions for ${address}`);
             return data.result.filter(tx => 
                 tx.to && tx.to.toLowerCase() === address.toLowerCase() && 
                 tx.value !== "0"
@@ -74,6 +74,29 @@ async function getEthTransactions(address, startBlock = 0) {
         }
     } catch (error) {
         logService(`Exception in getEthTransactions: ${error.message}`);
+        return [];
+    }
+}
+
+async function getInternalEthTransactions(address, startBlock = 0) {
+    logService(`Fetching internal ETH transactions for address ${address}...`);
+    try {
+        const url = `${ETHERSCAN_API_BASE}?module=account&action=txlistinternal&address=${address}&startblock=${startBlock}&endblock=99999999&sort=asc&apikey=${ETHERSCAN_API_KEY}`;
+        const response = await fetch(url);
+        const data = await response.json();
+        
+        if (data.status === "1" && data.result) {
+            logService(`Found ${data.result.length} internal ETH transactions for ${address}`);
+            return data.result.filter(tx => 
+                tx.to && tx.to.toLowerCase() === address.toLowerCase() && 
+                tx.value !== "0" && tx.isError === "0"
+            );
+        } else {
+            logService(`Error fetching internal ETH transactions: ${data.message || 'Unknown error'}`);
+            return [];
+        }
+    } catch (error) {
+        logService(`Exception in getInternalEthTransactions: ${error.message}`);
         return [];
     }
 }
@@ -202,9 +225,15 @@ async function processEthDonations(startBlock) {
     const donationAddressesLower = addresses.map(addr => addr.toLowerCase());
     
     for (const address of addresses) {
-        const transactions = await getEthTransactions(address, startBlock);
+        // Get both regular and internal transactions
+        const regularTransactions = await getEthTransactions(address, startBlock);
+        const internalTransactions = await getInternalEthTransactions(address, startBlock);
         
-        for (const tx of transactions) {
+        // Combine both types of transactions
+        const allTransactions = [...regularTransactions, ...internalTransactions];
+        logService(`Total ETH transactions to process for ${address}: ${allTransactions.length} (${regularTransactions.length} regular + ${internalTransactions.length} internal)`);
+        
+        for (const tx of allTransactions) {
             try {
                 const existing = await Donation.findOne({ txHash: tx.hash });
                 if (existing) continue;
