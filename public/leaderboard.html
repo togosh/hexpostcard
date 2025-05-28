@@ -397,8 +397,7 @@
                     minimumFractionDigits: 2,
                     maximumFractionDigits: 2
                 }).format(amount);
-            }
-            function formatNumber(number) {
+            }            function formatNumber(number) {
                 // Get user's locale from browser
                 const userLocale = navigator.language || navigator.languages[0] || 'en-US';
                 
@@ -407,7 +406,7 @@
                     maximumFractionDigits: 8 // Allow more precision for crypto amounts
                 }).format(number);
             }
-
+            
             function formatInteger(number) {
                 // Get user's locale from browser  
                 const userLocale = navigator.language || navigator.languages[0] || 'en-US';
@@ -415,7 +414,10 @@
                 return new Intl.NumberFormat(userLocale, {
                     minimumFractionDigits: 0,
                     maximumFractionDigits: 0 // No decimal places for integers
-                }).format(number);            }function updateStats(data) {
+                }).format(number);
+            }
+            
+            function updateStats(data) {
                 if (!data || !Array.isArray(data) || data.length === 0) {
                     $('#total-donations').text(formatCurrency(0));
                     $('#total-donors').text(formatInteger(0));
@@ -633,15 +635,17 @@
                     error.removeClass('hidden');
                 });
         }
-        
-        function closeTransactionModal() {
+          function closeTransactionModal() {
             $('#transaction-modal').addClass('hidden');
-        }        function getExplorerUrl(txHash, chain) {
+        }
+        
+        function getExplorerUrl(txHash, chain) {
             if (chain === 'PulseChain') {
                 return `https://scan.pulsechain.com/tx/${txHash}`;
             } else {
                 return `https://etherscan.io/tx/${txHash}`;
-            }        }
+            }
+        }
     </script>
 
     <div id="footer"></div>
