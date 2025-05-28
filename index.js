@@ -162,6 +162,39 @@ app.get("/api/leaderboard", async (req, res) => {
 });
 // --- END: LEADERBOARD ROUTES ---
 
+// NEW: Transaction details API endpoint for a specific address
+app.get("/api/transactions/:address", async (req, res) => {
+  try {
+    const address = req.params.address;
+    
+    // Get all donations for this address, sorted by timestamp (newest first)
+    const { Donation } = require('./leaderboard.js');
+    const transactions = await Donation.find({ 
+      from: { $regex: new RegExp(`^${address}$`, 'i') } // Case insensitive match
+    }).sort({ timestamp: -1 }); // Sort by timestamp descending (newest first)
+    
+    // Format the transactions for display
+    const formattedTransactions = transactions.map(tx => ({
+      txHash: tx.txHash,
+      currency: tx.currency,
+      chain: tx.chain,
+      value: tx.currency === 'ETH' || tx.currency === 'PLS' ? 
+        (parseFloat(tx.value) / Math.pow(10, 18)).toFixed(6) : 
+        (parseFloat(tx.value) / Math.pow(10, tx.currency === 'DAI' ? 18 : 6)).toFixed(2),
+      usdValue: tx.usdValue.toFixed(2),
+      timestamp: tx.timestamp,
+      date: new Date(tx.timestamp * 1000).toLocaleString(),
+      blockNumber: tx.blockNumber,
+      priceAtTime: tx.priceAtTime
+    }));
+    
+    res.json(formattedTransactions);
+  } catch (error) {
+    console.error(`Error fetching transactions for ${req.params.address}:`, error);
+    res.status(500).json({ error: 'Failed to fetch transaction details' });
+  }
+});
+
 // VOTING FUNCTIONALITY
 function hashIp(ipAddress) {
   //console.log("ipAddress: ", ipAddress); // Debugging line

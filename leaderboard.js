@@ -556,9 +556,7 @@ async function getLeaderboardData() {
         } catch (error) {
             logService(`Skipping donation processing due to error: ${error.message}`);
             logService("Generating leaderboard from existing donations only.");
-        }
-        
-        // Aggregate donations by sender address
+        }        // Aggregate donations by sender address
         const aggregatedDonations = await Donation.aggregate([
             {
                 $group: {
@@ -568,15 +566,14 @@ async function getLeaderboardData() {
                     currencies: { $addToSet: "$currency" },
                     chains: { $addToSet: "$chain" },
                     firstDonation: { $min: "$timestamp" },
-                    lastDonation: { $max: "$timestamp" }
+                    lastDonation: { $max: "$timestamp" },
+                    recentActivity: { $sum: { $cond: [{ $gte: ["$timestamp", Math.floor(Date.now() / 1000) - 86400] }, 1, 0] } } // Count donations in last 24 hours
                 }
             },
             {
                 $sort: { totalUsdValue: -1 }
             }
-        ]);
-        
-        // Add rank and format the data
+        ]);        // Add rank and format the data
         const leaderboardData = aggregatedDonations.map((item, index) => ({
             rank: index + 1,
             from: item._id,
@@ -585,7 +582,9 @@ async function getLeaderboardData() {
             currencies: item.currencies,
             chains: item.chains,
             firstDonation: item.firstDonation,
-            lastDonation: item.lastDonation
+            lastDonation: item.lastDonation,
+            recentActivity: item.recentActivity || 0,
+            hasRecentActivity: (item.recentActivity || 0) > 0
         }));
         
         logService(`Generated leaderboard with ${leaderboardData.length} entries. Top donor: ${leaderboardData[0]?.totalUsdValue || 0} USD`);

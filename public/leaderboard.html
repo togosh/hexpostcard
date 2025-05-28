@@ -130,34 +130,22 @@
             color: #9CA3AF; 
             margin-top: 2px;
             transition: color 0.2s ease;
-        }
-        .copy-tooltip {
-            position: relative;
-        }
-        .copy-tooltip::after {
-            content: 'Click to copy address';
-            position: absolute;
-            top: -30px;
-            left: 50%;
-            transform: translateX(-50%);
-            background: rgba(0, 0, 0, 0.8);
-            color: white;
-            padding: 4px 8px;
-            border-radius: 4px;
-            font-size: 0.7em;
-            white-space: nowrap;
-            opacity: 0;
-            pointer-events: none;
-            transition: opacity 0.2s ease;
-            z-index: 1000;
-        }
-        .leaderboard-table tr:hover .copy-tooltip::after {
-            opacity: 1;
-        }
-        .donation-details {
+        }        .donation-details {
             font-size: 0.9em;
             color: #9CA3AF;
             margin-top: 4px;
+        }
+        .recent-activity-badge {
+            margin-left: 8px;
+            font-size: 0.8em;
+            opacity: 0.8;
+        }
+        .donation-row {
+            cursor: pointer;
+            transition: background-color 0.2s ease;
+        }
+        .donation-row:hover {
+            background-color: rgba(59, 130, 246, 0.1);
         }
         .loading-spinner {
             border: 4px solid #374151;
@@ -205,11 +193,50 @@
     </style>
 </head>
 <body>
-    <div id="navbar"></div>
-
-    <!-- Copy Success Notification -->
+    <div id="navbar"></div>    <!-- Copy Success Notification -->
     <div id="copy-success" class="fixed top-4 right-4 bg-green-500 text-white px-4 py-2 rounded-lg shadow-lg transform translate-x-full transition-transform duration-300 z-50">
         Address copied to clipboard!
+    </div>
+
+    <!-- Transaction Details Modal -->
+    <div id="transaction-modal" class="fixed inset-0 bg-black bg-opacity-50 hidden z-50 flex items-center justify-center p-4">
+        <div class="bg-gray-800 rounded-lg max-w-4xl w-full max-h-90vh overflow-hidden">
+            <div class="flex justify-between items-center p-6 border-b border-gray-700">
+                <h3 class="text-xl font-bold">Transaction History</h3>
+                <button onclick="closeTransactionModal()" class="text-gray-400 hover:text-white text-2xl">&times;</button>
+            </div>
+            <div class="p-6 overflow-y-auto max-h-96">
+                <div id="transaction-loading" class="text-center py-8">
+                    <div class="loading-spinner mx-auto"></div>
+                    <p class="mt-4">Loading transactions...</p>
+                </div>
+                <div id="transaction-content" class="hidden">
+                    <div class="mb-4">
+                        <strong>Address:</strong> <span id="modal-address" class="font-mono text-sm"></span>
+                        <button onclick="copyAddress(document.getElementById('modal-address').textContent)" class="ml-2 text-blue-400 hover:text-blue-300 text-xs">Copy</button>
+                    </div>
+                    <div class="overflow-x-auto">
+                        <table class="w-full">
+                            <thead>
+                                <tr class="border-b border-gray-700">
+                                    <th class="text-left py-2">Date</th>
+                                    <th class="text-left py-2">Amount</th>
+                                    <th class="text-left py-2">USD Value</th>
+                                    <th class="text-left py-2">Chain</th>
+                                    <th class="text-left py-2">Transaction</th>
+                                </tr>
+                            </thead>
+                            <tbody id="transaction-table">
+                                <!-- Transaction rows will be populated here -->
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+                <div id="transaction-error" class="hidden text-center py-8">
+                    <p class="text-red-400">Failed to load transaction details</p>
+                </div>
+            </div>
+        </div>
     </div>
 
     <div class="container mx-auto px-4 py-8 pt-24">
@@ -245,10 +272,9 @@
             </div>
             
             <div id="leaderboard-content" class="hidden">
-                <table class="leaderboard-table">                    <thead>
-                        <tr>
+                <table class="leaderboard-table">                    <thead>                        <tr>
                             <th style="width: 10%;">Rank</th>
-                            <th style="width: 50%;">Donator Address <span style="font-size: 0.7em; font-weight: normal; opacity: 0.7;">(Click to copy)</span></th>
+                            <th style="width: 50%;">Donator Address <span style="font-size: 0.7em; font-weight: normal; opacity: 0.7;">(Click row for details)</span></th>
                             <th style="width: 25%;">Total Donated (USD)</th>
                             <th style="width: 15%;">Details</th>
                         </tr>
@@ -361,11 +387,33 @@
                     else if (item.rank === 2) rankClass = 'top-3 rank-2';
                     else if (item.rank === 3) rankClass = 'top-3 rank-3';                    const currencies = item.currencies ? item.currencies.join(', ') : 'ETH';
                     const firstDonationDate = item.firstDonation ? new Date(item.firstDonation * 1000).toLocaleDateString() : '';
+                    const lastDonationDate = item.lastDonation ? new Date(item.lastDonation * 1000).toLocaleDateString() : '';
                     
-                    const row = `<tr class="${rankClass}" data-address="${item.from}" onclick="copyAddress('${item.from}')">
+                    // Determine what date info to show - improved logic
+                    let dateInfo = '';
+                    if (item.donationCount === 1) {
+                        // Single donation - show the date
+                        dateInfo = firstDonationDate ? `<div>Donated: ${firstDonationDate}</div>` : '';
+                    } else {
+                        // Multiple donations - always show first and latest dates clearly
+                        if (firstDonationDate && lastDonationDate) {
+                            if (firstDonationDate !== lastDonationDate) {
+                                dateInfo = `<div>First: ${firstDonationDate}</div><div>Latest: ${lastDonationDate}</div>`;
+                            } else {
+                                dateInfo = `<div>All on: ${lastDonationDate}</div>`;
+                            }
+                        } else if (lastDonationDate) {
+                            dateInfo = `<div>Since: ${lastDonationDate}</div>`;
+                        }
+                    }
+                    
+                    // Add recent activity indicator
+                    const recentBadge = item.hasRecentActivity ? 
+                        '<span class="recent-activity-badge" title="Recent donation activity (last 24 hours)">🔥</span>' : '';
+                      const row = `<tr class="${rankClass} donation-row" data-address="${item.from}" onclick="showTransactionDetails('${item.from}')" title="Click to view transaction details">
                         <td class="rank-cell">${item.rank}</td>
-                        <td class="address-cell copy-tooltip" title="Click to copy: ${item.from}">
-                            <div>${formatAddress(item.from)}</div>
+                        <td class="address-cell" title="Click to view transaction details">
+                            <div>${formatAddress(item.from)} ${recentBadge}</div>
                             <div class="address-full">
                                 ${item.from}
                             </div>
@@ -374,7 +422,7 @@
                         <td class="donation-details">
                             <div><strong>${item.donationCount}</strong> donation${item.donationCount !== 1 ? 's' : ''}</div>
                             <div>${currencies}</div>
-                            ${firstDonationDate ? `<div>Since: ${firstDonationDate}</div>` : ''}
+                            ${dateInfo}
                         </td>
                     </tr>`;
                     leaderboardTbody.append(row);
@@ -422,9 +470,7 @@
             socket.on('connect_error', function(error) {
                 console.error('Connection error:', error);
                 showError();
-            });
-
-            // Fallback: Try to fetch data via API if socket doesn't work
+            });            // Fallback: Try to fetch data via API if socket doesn't work
             setTimeout(function() {
                 if (leaderboardTbody.children().length === 0 && !errorMessage.is(':visible') && !emptyMessage.is(':visible')) {
                     console.log('No data received via socket, trying API...');
@@ -446,6 +492,93 @@
                 }
             }, 3000); // Wait 3 seconds for socket data before trying API
         });
+        
+        // Address copy functionality
+        function copyAddress(address) {
+            navigator.clipboard.writeText(address).then(() => {
+                showCopySuccess();
+            }).catch(err => {
+                console.error('Failed to copy address:', err);
+            });
+        }
+        
+        function showCopySuccess() {
+            const copySuccess = $('#copy-success');
+            copySuccess.removeClass('translate-x-full');
+            setTimeout(() => {
+                copySuccess.addClass('translate-x-full');
+            }, 2000);
+        }
+        
+        // Transaction details modal functionality
+        function showTransactionDetails(address) {
+            const modal = $('#transaction-modal');
+            const loading = $('#transaction-loading');
+            const content = $('#transaction-content');
+            const error = $('#transaction-error');
+            const modalAddress = $('#modal-address');
+            const tableBody = $('#transaction-table');
+            
+            // Show modal and loading state
+            modal.removeClass('hidden');
+            loading.removeClass('hidden');
+            content.addClass('hidden');
+            error.addClass('hidden');
+            
+            // Set address in modal
+            modalAddress.text(address);
+            
+            // Fetch transaction details
+            fetch(`/api/transactions/${address}`)
+                .then(response => response.json())
+                .then(transactions => {
+                    loading.addClass('hidden');
+                    
+                    if (transactions.length === 0) {
+                        error.removeClass('hidden');
+                        return;
+                    }
+                    
+                    // Populate transaction table
+                    tableBody.empty();
+                    transactions.forEach(tx => {
+                        const row = `
+                            <tr class="border-b border-gray-700 hover:bg-gray-700">
+                                <td class="py-2 text-sm">${tx.date}</td>
+                                <td class="py-2">${tx.value} ${tx.currency}</td>
+                                <td class="py-2">$${tx.usdValue}</td>
+                                <td class="py-2">${tx.chain}</td>
+                                <td class="py-2">
+                                    <a href="${getExplorerUrl(tx.txHash, tx.chain)}" target="_blank" 
+                                       class="text-blue-400 hover:text-blue-300 text-xs font-mono">
+                                        ${tx.txHash.substring(0, 10)}...
+                                    </a>
+                                </td>
+                            </tr>
+                        `;
+                        tableBody.append(row);
+                    });
+                    
+                    content.removeClass('hidden');
+                })
+                .catch(err => {
+                    console.error('Error fetching transaction details:', err);
+                    loading.addClass('hidden');
+                    error.removeClass('hidden');
+                });
+        }
+        
+        function closeTransactionModal() {
+            $('#transaction-modal').addClass('hidden');
+        }
+        
+        function getExplorerUrl(txHash, chain) {
+            if (chain === 'PulseChain') {
+                return `https://scan.pulsechain.com/tx/${txHash}`;
+            } else {
+                return `https://etherscan.io/tx/${txHash}`;
+            }
+        }
     </script>
 </body>
 </html>
