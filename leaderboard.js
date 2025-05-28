@@ -9,9 +9,15 @@ const CONFIG = require('./config.json'); // To access API keys, etc.
 const ETHERSCAN_API_KEY = CONFIG.etherscan.apikey;
 const ETHERSCAN_API_BASE = "https://api.etherscan.io/api";
 
+// PulseChain configuration
+const PULSESCAN_API_BASE = "https://api.scan.pulsechain.com/api";
+const PULSEX_SUBGRAPH_URL = "https://graph.pulsechain.com/subgraphs/name/pulsechain/pulsex";
+const WPLS_CONTRACT_ADDRESS_ON_PLS = "0xA1077a294dDE1B09bB078844df40758a5D0f9a27"; // Wrapped PLS for price lookup
+
 // Donation addresses
 const ETH_MAIN_DONATION_ADDRESS = CONFIG.donationAddresses.eth_main;
 const ETH_HISTORICAL_DONATION_ADDRESS = CONFIG.donationAddresses.eth_historical;
+const PLS_MAIN_DONATION_ADDRESS = CONFIG.donationAddresses.pls_main;
 
 // Stablecoin contract addresses on Ethereum
 const STABLECOIN_CONTRACTS = {
@@ -40,11 +46,12 @@ const DonationSchema = new Schema({
     from: { type: String, required: true, index: true },
     to: { type: String, required: true },
     value: { type: String, required: true }, // String to handle big numbers
-    currency: { type: String, required: true }, // 'ETH', 'USDC', 'USDT', 'DAI'
+    currency: { type: String, required: true }, // 'ETH', 'USDC', 'USDT', 'DAI', 'PLS'
+    chain: { type: String, required: true, default: 'Ethereum' }, // 'Ethereum', 'PulseChain'
     timestamp: { type: Number, required: true },
     blockNumber: { type: Number, required: true },
     usdValue: { type: Number, required: true }, // USD value at time of transaction
-    priceAtTime: { type: Number, required: true } // ETH price used for calculation (1.0 for stablecoins)
+    priceAtTime: { type: Number, required: true } // ETH/PLS price used for calculation (1.0 for stablecoins)
 }, { collection: "donations" });
 const Donation = mongoose.model('Donation', DonationSchema);
 // --- END: MONGODB SCHEMAS FOR PRICES AND DONATIONS ---
@@ -55,6 +62,41 @@ let plsPricesCache = []; // For PLS prices later
 // --- END: PRICE CACHING ---
 
 // --- START: TRANSACTION FETCHING FUNCTIONS ---
+// Generic function for fetching native transactions (ETH or PLS)
+async function getNativeTransactions(address, apiBaseUrl, apiKey, chainName, startBlock = 0) {
+    logService(`Fetching ${chainName} transactions for address ${address}...`);
+    try {
+        let url;
+        
+        if (chainName === 'PulseChain') {
+            // PulseScan uses Etherscan-like API format
+            url = `${apiBaseUrl}?module=account&action=txlist&address=${address}&startblock=${startBlock}&endblock=99999999&sort=asc`;
+            if (apiKey) url += `&apikey=${apiKey}`;
+        } else {
+            // Etherscan format
+            url = `${apiBaseUrl}?module=account&action=txlist&address=${address}&startblock=${startBlock}&endblock=99999999&sort=asc&apikey=${apiKey}`;
+        }
+        
+        const response = await fetch(url);
+        const data = await response.json();
+        
+        if (data.status === "1" && data.result) {
+            logService(`Found ${data.result.length} ${chainName} transactions for ${address}`);
+            return data.result.filter(tx => 
+                tx.to && tx.to.toLowerCase() === address.toLowerCase() && 
+                tx.value !== "0" && 
+                parseInt(tx.blockNumber) >= startBlock
+            );
+        } else {
+            logService(`Error fetching ${chainName} transactions: ${data.message || 'Unknown error'}`);
+            return [];
+        }
+    } catch (error) {
+        logService(`Exception in getNativeTransactions for ${chainName}: ${error.message}`);
+        return [];
+    }
+}
+
 async function getEthTransactions(address, startBlock = 0) {
     logService(`Fetching ETH transactions for address ${address}...`);
     try {
@@ -125,7 +167,7 @@ async function getTokenTransfers(tokenAddress, toAddress, startBlock = 0) {
 }
 
 function getHistoricalPrice(timestamp, currency = 'ETH') {
-    if (currency !== 'ETH') {
+    if (currency === 'USDC' || currency === 'USDT' || currency === 'DAI') {
         return 1.0; // Stablecoins are always $1
     }
     
@@ -133,13 +175,20 @@ function getHistoricalPrice(timestamp, currency = 'ETH') {
     dayStart.setUTCHours(0, 0, 0, 0);
     const dayTimestamp = Math.floor(dayStart.getTime() / 1000);
     
-    const priceEntry = ethPricesCache.find(entry => entry.timestamp === dayTimestamp);
+    let priceCache;
+    if (currency === 'PLS') {
+        priceCache = plsPricesCache;
+    } else {
+        priceCache = ethPricesCache;
+    }
+    
+    const priceEntry = priceCache.find(entry => entry.timestamp === dayTimestamp);
     if (priceEntry) {
         return priceEntry.price;
     }
     
     // Fallback: find closest price
-    const sortedPrices = ethPricesCache.sort((a, b) => Math.abs(a.timestamp - dayTimestamp) - Math.abs(b.timestamp - dayTimestamp));
+    const sortedPrices = priceCache.sort((a, b) => Math.abs(a.timestamp - dayTimestamp) - Math.abs(b.timestamp - dayTimestamp));
     return sortedPrices.length > 0 ? sortedPrices[0].price : 0;
 }
 // --- END: TRANSACTION FETCHING FUNCTIONS ---
@@ -185,32 +234,241 @@ async function refreshEthPricesCache() {
         logService(`Error refreshing ETH prices cache: ${error}`);
     }
 }
-// --- END: ETH PRICE FETCHING AND STORAGE LOGIC ---
+
+// --- START: PLS PRICE FETCHING AND STORAGE LOGIC ---
+async function fetchWithRetry(url, options, serviceName, maxRetries = 3) {
+    for (let attempt = 1; attempt <= maxRetries; attempt++) {
+        try {
+            const response = await fetch(url, options);
+            if (!response.ok) {
+                throw new Error(`HTTP ${response.status}: ${response.statusText}`);
+            }
+            return await response.json();
+        } catch (error) {
+            logService(`${serviceName} attempt ${attempt}/${maxRetries} failed: ${error.message}`);
+            if (attempt === maxRetries) {
+                throw error;
+            }
+            // Wait before retrying (exponential backoff)
+            await new Promise(resolve => setTimeout(resolve, 1000 * attempt));
+        }
+    }
+}
+
+async function getAndSet_currentPlsPrice() {
+    logService("Attempting to get and set current PLS price...");
+    try {
+        // GraphQL query for PulseX Subgraph to get latest WPLS price
+        const query = `
+        {
+            tokenDayDatas(
+                where: { token: "${WPLS_CONTRACT_ADDRESS_ON_PLS.toLowerCase()}" }
+                orderBy: date
+                orderDirection: desc
+                first: 1
+            ) {
+                date
+                priceUSD
+            }
+        }`;
+
+        const result = await fetchWithRetry(
+            PULSEX_SUBGRAPH_URL,
+            {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({ query })
+            },
+            "PulseX Subgraph PLS Price"
+        );
+        
+        if (result.data && result.data.tokenDayDatas && result.data.tokenDayDatas.length > 0) {
+            const latestData = result.data.tokenDayDatas[0];
+            const price = parseFloat(latestData.priceUSD);
+            const timestamp = parseInt(latestData.date);
+            
+            if (price > 0) {
+                const existingPrice = await PlsPrice.findOne({ timestamp: timestamp });
+                if (!existingPrice) {
+                    await PlsPrice.create({ timestamp: timestamp, price: price });
+                    logService(`Stored new PLS price for timestamp ${timestamp}: $${price}`);
+                    await refreshPlsPricesCache(); // Update cache after new price
+                } else {
+                    logService(`PLS price for timestamp ${timestamp} already exists: $${existingPrice.price}`);
+                }
+            } else {
+                logService(`Invalid PLS price received: ${price}`);
+            }
+        } else {
+            logService(`Error fetching PLS price from PulseX Subgraph: ${JSON.stringify(result)}`);
+        }
+    } catch (error) {
+        logService(`Exception in getAndSet_currentPlsPrice: ${error.message}`);
+        console.error(error); // Log the full error for debugging
+    }
+}
+
+async function refreshPlsPricesCache() {
+    try {
+        plsPricesCache = await PlsPrice.find().sort({ timestamp: 1 }).lean();
+        logService(`PLS prices cache refreshed. ${plsPricesCache.length} entries.`);
+    } catch (error) {
+        logService(`Error refreshing PLS prices cache: ${error}`);
+    }
+}
+// --- END: PLS PRICE FETCHING AND STORAGE LOGIC ---
+
+// --- END: PLS PRICE FETCHING AND STORAGE LOGIC ---
 
 // --- START: DONATION PROCESSING ---
+// Helper function to process and store a single donation
+async function processAndStoreDonation(tx, donationAddress, currency, chain, rawValue, formattedValue, priceAtTime, usdValue) {
+    try {
+        const txHash = tx.hash || tx.transaction_hash;
+        const existing = await Donation.findOne({ txHash: txHash });
+        if (existing) return false;
+
+        await Donation.create({
+            txHash: txHash,
+            from: tx.from,
+            to: tx.to,
+            value: rawValue,
+            currency: currency,
+            chain: chain,
+            timestamp: parseInt(tx.timeStamp || tx.timestamp),
+            blockNumber: parseInt(tx.blockNumber || tx.block_number),
+            usdValue: usdValue,
+            priceAtTime: priceAtTime
+        });
+
+        logService(`Processed ${currency} donation: ${formattedValue} ${currency} ($${usdValue.toFixed(2)}) from ${tx.from} on ${chain}`);
+        return true;
+    } catch (error) {
+        logService(`Error processing ${currency} transaction ${tx.hash || tx.transaction_hash}: ${error.message}`);
+        return false;
+    }
+}
+
+// Generic function to process donations for a specific address and chain
+async function processDonationsForAddress(donationAddress, chain) {
+    logService(`Processing donations for ${donationAddress} on ${chain}...`);
+    
+    // Get the last processed block number for this chain
+    const lastDonation = await Donation.findOne({ chain: chain }).sort({ blockNumber: -1 });
+    const startBlock = lastDonation ? lastDonation.blockNumber + 1 : 0;
+    
+    let newDonationsFound = false;
+    
+    if (chain === 'Ethereum') {
+        // Process ETH donations (existing logic)
+        const donationAddressesLower = [ETH_MAIN_DONATION_ADDRESS, ETH_HISTORICAL_DONATION_ADDRESS].map(addr => addr.toLowerCase());
+        
+        // Get both regular and internal transactions
+        const regularTransactions = await getEthTransactions(donationAddress, startBlock);
+        const internalTransactions = await getInternalEthTransactions(donationAddress, startBlock);
+        
+        // Combine both types of transactions
+        const allTransactions = [...regularTransactions, ...internalTransactions];
+        logService(`Total ETH transactions to process for ${donationAddress}: ${allTransactions.length} (${regularTransactions.length} regular + ${internalTransactions.length} internal)`);
+        
+        for (const tx of allTransactions) {
+            // Filter out internal transactions and self-transactions
+            const fromLower = tx.from.toLowerCase();
+            const toLower = tx.to.toLowerCase();
+            
+            // Skip if the transaction is FROM a donation address (internal transfer or withdrawal)
+            if (donationAddressesLower.includes(fromLower)) {
+                logService(`Skipping internal/outgoing ETH transaction: ${tx.hash} from ${tx.from} to ${tx.to}`);
+                continue;
+            }
+            
+            // Skip if the transaction is TO an address that's not a donation address
+            if (!donationAddressesLower.includes(toLower)) {
+                logService(`Skipping ETH transaction not to donation address: ${tx.hash} to ${tx.to}`);
+                continue;
+            }
+            
+            const ethAmount = parseFloat(tx.value) / Math.pow(10, 18); // Convert from wei
+            const priceAtTime = getHistoricalPrice(parseInt(tx.timeStamp), 'ETH');
+            
+            if (priceAtTime > 0) {
+                const usdValue = ethAmount * priceAtTime;
+                const success = await processAndStoreDonation(tx, donationAddress, 'ETH', 'Ethereum', tx.value, ethAmount, priceAtTime, usdValue);
+                if (success) newDonationsFound = true;
+            } else {
+                logService(`Skipping ETH transaction due to missing historical price: ${tx.hash}`);
+            }
+        }    } else if (chain === 'PulseChain') {
+        // Process PLS donations
+        const transactions = await getNativeTransactions(donationAddress, PULSESCAN_API_BASE, "", "PulseChain", startBlock);
+        
+        for (const tx of transactions) {
+            // Check if transaction is valid and successful (using standard Etherscan-like format)
+            if (tx.to && tx.to.toLowerCase() === donationAddress.toLowerCase() && 
+                tx.value !== "0" && 
+                parseInt(tx.blockNumber) >= startBlock) {
+                
+                const valueFormatted = parseFloat(tx.value) / Math.pow(10, 18); // PLS has 18 decimals
+                
+                // Use timestamp from the transaction
+                const unixTimestamp = parseInt(tx.timeStamp);
+                const priceAtTime = getHistoricalPrice(unixTimestamp, "PLS");
+                
+                if (priceAtTime > 0) {
+                    const usdValue = valueFormatted * priceAtTime;
+                    const success = await processAndStoreDonation(tx, donationAddress, "PLS", "PulseChain", tx.value, valueFormatted, priceAtTime, usdValue);
+                    if (success) newDonationsFound = true;
+                } else {
+                    logService(`Skipping PLS transaction due to missing historical price: ${tx.hash}`);
+                }
+            }
+        }// Add rate limit delay for PulseScan
+        await new Promise(r => setTimeout(r, 2000));
+    }
+    
+    return newDonationsFound;
+}
+
 async function processDonations() {
     logService("Processing donations...");
     
-    try {
-        // Check if we have a valid API key
-        if (!CONFIG.etherscan || !CONFIG.etherscan.apikey || CONFIG.etherscan.apikey === 'YOUR_ETHERSCAN_API_KEY_HERE') {
-            logService("No valid Etherscan API key configured. Skipping new donation processing.");
-            return;
+    try {        // Check if we have valid API keys
+        const hasEtherscanKey = CONFIG.etherscan && CONFIG.etherscan.apikey && CONFIG.etherscan.apikey !== 'YOUR_ETHERSCAN_API_KEY_HERE';
+        
+        if (!hasEtherscanKey) {
+            logService("No valid Etherscan API key configured. Skipping ETH donation processing, but will still process PLS donations.");
         }
         
         // First, clean up any existing invalid donations
         await cleanupInvalidDonations();
         
-        // Get the last processed block number
-        const lastDonation = await Donation.findOne().sort({ blockNumber: -1 });
-        const startBlock = lastDonation ? lastDonation.blockNumber + 1 : 0;
+        let newDonationsFound = false;
         
-        // Process ETH donations
-        await processEthDonations(startBlock);
+        // Process ETH donations if Etherscan key is available
+        if (hasEtherscanKey) {
+            const addresses = [ETH_MAIN_DONATION_ADDRESS, ETH_HISTORICAL_DONATION_ADDRESS];
+            for (const address of addresses) {
+                const found = await processDonationsForAddress(address, 'Ethereum');
+                if (found) newDonationsFound = true;
+            }
+            
+            // Process stablecoin donations
+            for (const [symbol, contractAddress] of Object.entries(STABLECOIN_CONTRACTS)) {
+                await processTokenDonations(contractAddress, symbol);
+            }
+        }
+          // Process PLS donations if PLS address is configured
+        if (PLS_MAIN_DONATION_ADDRESS) {
+            const found = await processDonationsForAddress(PLS_MAIN_DONATION_ADDRESS, 'PulseChain');
+            if (found) newDonationsFound = true;
+        }
         
-        // Process stablecoin donations
-        for (const [symbol, contractAddress] of Object.entries(STABLECOIN_CONTRACTS)) {
-            await processTokenDonations(contractAddress, symbol, startBlock);
+        if (newDonationsFound) {
+            logService("New donations found and processed.");
+        } else {
+            logService("No new donations found.");
         }
         
         logService("Donation processing completed.");
@@ -220,67 +478,13 @@ async function processDonations() {
     }
 }
 
-async function processEthDonations(startBlock) {
+async function processTokenDonations(tokenAddress, symbol) {
     const addresses = [ETH_MAIN_DONATION_ADDRESS, ETH_HISTORICAL_DONATION_ADDRESS];
     const donationAddressesLower = addresses.map(addr => addr.toLowerCase());
     
-    for (const address of addresses) {
-        // Get both regular and internal transactions
-        const regularTransactions = await getEthTransactions(address, startBlock);
-        const internalTransactions = await getInternalEthTransactions(address, startBlock);
-        
-        // Combine both types of transactions
-        const allTransactions = [...regularTransactions, ...internalTransactions];
-        logService(`Total ETH transactions to process for ${address}: ${allTransactions.length} (${regularTransactions.length} regular + ${internalTransactions.length} internal)`);
-        
-        for (const tx of allTransactions) {
-            try {
-                const existing = await Donation.findOne({ txHash: tx.hash });
-                if (existing) continue;
-                
-                // Filter out internal transactions and self-transactions
-                const fromLower = tx.from.toLowerCase();
-                const toLower = tx.to.toLowerCase();
-                
-                // Skip if the transaction is FROM a donation address (internal transfer or withdrawal)
-                if (donationAddressesLower.includes(fromLower)) {
-                    logService(`Skipping internal/outgoing ETH transaction: ${tx.hash} from ${tx.from} to ${tx.to}`);
-                    continue;
-                }
-                
-                // Skip if the transaction is TO an address that's not a donation address
-                if (!donationAddressesLower.includes(toLower)) {
-                    logService(`Skipping ETH transaction not to donation address: ${tx.hash} to ${tx.to}`);
-                    continue;
-                }
-                
-                const ethAmount = parseFloat(tx.value) / Math.pow(10, 18); // Convert from wei
-                const priceAtTime = getHistoricalPrice(parseInt(tx.timeStamp));
-                const usdValue = ethAmount * priceAtTime;
-                
-                await Donation.create({
-                    txHash: tx.hash,
-                    from: tx.from,
-                    to: tx.to,
-                    value: tx.value,
-                    currency: 'ETH',
-                    timestamp: parseInt(tx.timeStamp),
-                    blockNumber: parseInt(tx.blockNumber),
-                    usdValue: usdValue,
-                    priceAtTime: priceAtTime
-                });
-                
-                logService(`Processed ETH donation: ${ethAmount} ETH ($${usdValue.toFixed(2)}) from ${tx.from}`);
-            } catch (error) {
-                logService(`Error processing ETH transaction ${tx.hash}: ${error.message}`);
-            }
-        }
-    }
-}
-
-async function processTokenDonations(tokenAddress, symbol, startBlock) {
-    const addresses = [ETH_MAIN_DONATION_ADDRESS, ETH_HISTORICAL_DONATION_ADDRESS];
-    const donationAddressesLower = addresses.map(addr => addr.toLowerCase());
+    // Get the last processed block number for this token
+    const lastDonation = await Donation.findOne({ currency: symbol }).sort({ blockNumber: -1 });
+    const startBlock = lastDonation ? lastDonation.blockNumber + 1 : 0;
     
     for (const address of addresses) {
         const transfers = await getTokenTransfers(tokenAddress, address, startBlock);
@@ -321,6 +525,7 @@ async function processTokenDonations(tokenAddress, symbol, startBlock) {
                     to: transfer.to,
                     value: transfer.value,
                     currency: symbol,
+                    chain: 'Ethereum',
                     timestamp: parseInt(transfer.timeStamp),
                     blockNumber: parseInt(transfer.blockNumber),
                     usdValue: usdValue,
@@ -340,8 +545,10 @@ async function processTokenDonations(tokenAddress, symbol, startBlock) {
 async function getLeaderboardData() {
     logService("getLeaderboardData called - generating actual leaderboard data.");
     
-    try {        // Ensure price caches are loaded
+    try {        
+        // Ensure price caches are loaded
         if (ethPricesCache.length === 0) await refreshEthPricesCache();
+        if (plsPricesCache.length === 0) await refreshPlsPricesCache();
         
         // Try to process any new donations first (skip if API unavailable)
         try {
@@ -359,6 +566,7 @@ async function getLeaderboardData() {
                     totalUsdValue: { $sum: "$usdValue" },
                     donationCount: { $sum: 1 },
                     currencies: { $addToSet: "$currency" },
+                    chains: { $addToSet: "$chain" },
                     firstDonation: { $min: "$timestamp" },
                     lastDonation: { $max: "$timestamp" }
                 }
@@ -375,6 +583,7 @@ async function getLeaderboardData() {
             totalUsdValue: Math.round(item.totalUsdValue * 100) / 100, // Round to 2 decimal places
             donationCount: item.donationCount,
             currencies: item.currencies,
+            chains: item.chains,
             firstDonation: item.firstDonation,
             lastDonation: item.lastDonation
         }));
@@ -400,17 +609,18 @@ function schedulePriceUpdates() {
         await getAndSet_currentEthPrice();
     });
 
-    // Schedule donation processing every hour
-    schedule.scheduleJob({ rule: "0 * * * *", tz: "Etc/UTC" }, async () => {
+    // UTC 3 minutes past midnight for PLS price (after ETH price)
+    schedule.scheduleJob({ rule: "3 0 * * *", tz: "Etc/UTC" }, async () => {
+        logService("Scheduled job: Fetching daily PLS price.");
+        await getAndSet_currentPlsPrice();
+    });
+
+    // Schedule donation processing every 5 minutes
+    schedule.scheduleJob({ rule: "*/5 * * * *", tz: "Etc/UTC" }, async () => {
         logService("Scheduled job: Processing new donations.");
         await processDonations();
     });
 
-    // Placeholder for PLS price scheduling - will activate in Phase 2
-    // schedule.scheduleJob({ rule: "5 0 * * *", tz: "Etc/UTC" }, async () => {
-    //     logService("Scheduled job: Fetching daily PLS price.");
-    //     // await getAndSet_currentPlsPrice(); // Implement in Phase 2
-    // });
     logService("Price update and donation processing schedules configured.");
 }
 
@@ -419,17 +629,25 @@ async function initializeLeaderboardService() {
     await mongoose.connection.once('open', async () => { // Ensure DB is connected before initial cache load
         logService("MongoDB connection confirmed for Leaderboard Service initialization.");
         await refreshEthPricesCache(); // Load initial ETH prices into cache
-        // await refreshPlsPricesCache(); // Load initial PLS prices - for Phase 2
+        await refreshPlsPricesCache(); // Load initial PLS prices into cache
     });
     schedulePriceUpdates(); // Set up daily fetching schedules
     
     // Fetch current prices on startup if it's been a while or cache is empty
     // This ensures that if the server restarts, it tries to get the latest price soon after.
-    if (ethPricesCache.length === 0) { // Or check last updated timestamp
-        logService("ETH price cache is empty on init, attempting initial fetch.");
+    const today = new Date();
+    today.setUTCHours(0, 0, 0, 0);
+    const todayTs = Math.floor(today.getTime() / 1000);
+    
+    if (ethPricesCache.length === 0 || !ethPricesCache.find(p => p.timestamp === todayTs)) {
+        logService("ETH price cache is empty or missing today's price on init, attempting initial fetch.");
         await getAndSet_currentEthPrice();
     }
-    // Add similar for PLS in Phase 2
+    
+    if (plsPricesCache.length === 0 || !plsPricesCache.find(p => p.timestamp === todayTs)) {
+        logService("PLS price cache is empty or missing today's price on init, attempting initial fetch.");
+        await getAndSet_currentPlsPrice();
+    }
 
     logService("Leaderboard Service initialized.");
 }
@@ -441,27 +659,34 @@ module.exports = {
     getLeaderboardData,
     processDonations, // Export for manual triggering if needed
     cleanupInvalidDonations, // Export for manual cleanup if needed
-    // We can export getAndSet_currentEthPrice if we need to trigger it manually for tests,
-    // but generally, it'll be handled by the scheduler and initialization.
-    // getAndSet_currentEthPrice
+    getAndSet_currentEthPrice, // Export for manual ETH price fetching
+    getAndSet_currentPlsPrice, // Export for manual PLS price fetching
+    refreshEthPricesCache, // Export for manual cache refresh
+    refreshPlsPricesCache, // Export for manual cache refresh
+    // Export models for scripts
+    EthPrice,
+    PlsPrice,
+    Donation,
 };
 
 // Function to clean up invalid donations (internal transfers, self-transactions, etc.)
 async function cleanupInvalidDonations() {
-    const donationAddresses = [ETH_MAIN_DONATION_ADDRESS, ETH_HISTORICAL_DONATION_ADDRESS];
-    const donationAddressesLower = donationAddresses.map(addr => addr.toLowerCase());
+    const ethDonationAddresses = [ETH_MAIN_DONATION_ADDRESS, ETH_HISTORICAL_DONATION_ADDRESS];
+    const plsDonationAddresses = PLS_MAIN_DONATION_ADDRESS ? [PLS_MAIN_DONATION_ADDRESS] : [];
+    const allDonationAddresses = [...ethDonationAddresses, ...plsDonationAddresses];
+    const allDonationAddressesLower = allDonationAddresses.map(addr => addr.toLowerCase());
     
     logService("Cleaning up invalid donations...");
     
     try {
         // Find donations FROM donation addresses (these are withdrawals/internal transfers, not donations)
         const invalidFromDonations = await Donation.find({
-            from: { $in: donationAddresses.concat(donationAddressesLower) }
+            from: { $in: allDonationAddresses.concat(allDonationAddressesLower) }
         });
         
         // Find donations TO addresses that are not donation addresses
         const invalidToDonations = await Donation.find({
-            to: { $nin: donationAddresses.concat(donationAddressesLower) }
+            to: { $nin: allDonationAddresses.concat(allDonationAddressesLower) }
         });
         
         const totalInvalid = invalidFromDonations.length + invalidToDonations.length;
@@ -474,8 +699,8 @@ async function cleanupInvalidDonations() {
             // Remove invalid donations
             await Donation.deleteMany({
                 $or: [
-                    { from: { $in: donationAddresses.concat(donationAddressesLower) } },
-                    { to: { $nin: donationAddresses.concat(donationAddressesLower) } }
+                    { from: { $in: allDonationAddresses.concat(allDonationAddressesLower) } },
+                    { to: { $nin: allDonationAddresses.concat(allDonationAddressesLower) } }
                 ]
             });
             
