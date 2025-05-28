@@ -391,13 +391,14 @@
                 // Get user's locale from browser
                 const userLocale = navigator.language || navigator.languages[0] || 'en-US';
                 
-                return new Intl.NumberFormat(userLocale, {
-                    style: 'currency',
+                return new Intl.NumberFormat(userLocale, {                    style: 'currency',
                     currency: 'USD',
                     minimumFractionDigits: 2,
                     maximumFractionDigits: 2
                 }).format(amount);
-            }            function formatNumber(number) {
+            }
+            
+            function formatNumber(number) {
                 // Get user's locale from browser
                 const userLocale = navigator.language || navigator.languages[0] || 'en-US';
                 
@@ -533,12 +534,12 @@
 
             socket.on('disconnect', function() {
                 console.log('Disconnected from server');
-            });
-
-            socket.on('connect_error', function(error) {
+            });            socket.on('connect_error', function(error) {
                 console.error('Connection error:', error);
                 showError();
-            });            // Fallback: Try to fetch data via API if socket doesn't work
+            });
+            
+            // Fallback: Try to fetch data via API if socket doesn't work
             setTimeout(function() {
                 if (leaderboardTbody.children().length === 0 && !errorMessage.is(':visible') && !emptyMessage.is(':visible')) {
                     console.log('No data received via socket, trying API...');
@@ -577,9 +578,10 @@
                 copySuccess.addClass('translate-x-full');
             }, 2000);
         }
-        
-        // Transaction details modal functionality
+          // Transaction details modal functionality
         function showTransactionDetails(address) {
+            console.log('showTransactionDetails called, formatNumber available:', typeof formatNumber);
+            
             const modal = $('#transaction-modal');
             const loading = $('#transaction-loading');
             const content = $('#transaction-content');
@@ -608,23 +610,46 @@
                     }
                     
                     // Populate transaction table
-                    tableBody.empty();
-                    transactions.forEach(tx => {
-                        const row = `
-                            <tr class="border-b border-gray-700 hover:bg-gray-700">
-                                <td class="py-2 text-sm">${tx.date}</td>
-                                <td class="py-2">${formatNumber(tx.value)} ${tx.currency}</td>
-                                <td class="py-2">${formatCurrency(tx.usdValue)}</td>
-                                <td class="py-2">${tx.chain}</td>
-                                <td class="py-2">
-                                    <a href="${getExplorerUrl(tx.txHash, tx.chain)}" target="_blank" 
-                                       class="text-blue-400 hover:text-blue-300 text-xs font-mono">
-                                        ${tx.txHash.substring(0, 10)}...
-                                    </a>
-                                </td>
-                            </tr>
-                        `;
-                        tableBody.append(row);
+                    tableBody.empty();                    transactions.forEach(tx => {
+                        try {
+                            const formattedValue = formatNumber(tx.value);
+                            const formattedUSD = formatCurrency(tx.usdValue);
+                            const explorerUrl = getExplorerUrl(tx.txHash, tx.chain);
+                            
+                            const row = `
+                                <tr class="border-b border-gray-700 hover:bg-gray-700">
+                                    <td class="py-2 text-sm">${tx.date}</td>
+                                    <td class="py-2">${formattedValue} ${tx.currency}</td>
+                                    <td class="py-2">${formattedUSD}</td>
+                                    <td class="py-2">${tx.chain}</td>
+                                    <td class="py-2">
+                                        <a href="${explorerUrl}" target="_blank" 
+                                           class="text-blue-400 hover:text-blue-300 text-xs font-mono">
+                                            ${tx.txHash.substring(0, 10)}...
+                                        </a>
+                                    </td>
+                                </tr>
+                            `;
+                            tableBody.append(row);
+                        } catch (error) {
+                            console.error('Error formatting transaction row:', error, tx);
+                            // Fallback row without formatting
+                            const row = `
+                                <tr class="border-b border-gray-700 hover:bg-gray-700">
+                                    <td class="py-2 text-sm">${tx.date}</td>
+                                    <td class="py-2">${tx.value} ${tx.currency}</td>
+                                    <td class="py-2">$${tx.usdValue}</td>
+                                    <td class="py-2">${tx.chain}</td>
+                                    <td class="py-2">
+                                        <a href="#" target="_blank" 
+                                           class="text-blue-400 hover:text-blue-300 text-xs font-mono">
+                                            ${tx.txHash.substring(0, 10)}...
+                                        </a>
+                                    </td>
+                                </tr>
+                            `;
+                            tableBody.append(row);
+                        }
                     });
                     
                     content.removeClass('hidden');
