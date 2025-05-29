@@ -1,4 +1,15 @@
 {
+  "name": "hexpostcard",
+  "version": "1.0.0",
+  "description": "HEXpostcard server with leaderboard",
+  "main": "index.js",  "scripts": {
+    "start": "node index.js",
+    "production": "node start-production.js",
+    "monitor": "node memory-monitor.js",
+    "health-check": "node verify-system.js",
+    "dev": "NODE_ENV=development node index.js",
+    "test": "node test-leaderboard.js"
+  },
   "dependencies": {
     "axios": "^1.9.0",
     "cors": "^2.8.5",
@@ -10,7 +21,7 @@
     "jquery": "^3.6.0",
     "jsdom": "^19.0.0",
     "mongoose": "^8.15.0",
-    "node-fetch": "^3.3.2",
+    "node-fetch": "^2.7.0",
     "node-schedule": "^2.1.0",
     "socket.io": "^4.5.1"
   }

@@ -1,9 +1,78 @@
 const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
-const fetch = (...args) => import('node-fetch').then(({default: fetch}) => fetch(...args));
+const fetch = require('node-fetch'); // Direct require instead of dynamic import
 const schedule = require('node-schedule');
 
 const CONFIG = require('./config.json'); // To access API keys, etc.
+
+// --- START: MEMORY AND ERROR HANDLING ---
+let scheduledJobs = []; // Keep track of scheduled jobs to prevent duplicates
+let isProcessingDonations = false; // Prevent concurrent donation processing
+let lastSuccessfulSync = Date.now();
+
+function logMemoryForService() {
+    const used = process.memoryUsage();
+    const memoryMB = Math.round(used.rss / 1024 / 1024);
+    const heapMB = Math.round(used.heapUsed / 1024 / 1024);
+    logService(`Memory usage: RSS=${memoryMB}MB, Heap=${heapMB}MB`);
+    
+    // Warning at 512MB, critical at 800MB
+    if (memoryMB > 800) {
+        logService(`⚠️  CRITICAL MEMORY WARNING: ${memoryMB}MB`);
+        if (global.gc) {
+            logService('Forcing garbage collection...');
+            global.gc();
+        }
+    } else if (memoryMB > 512) {
+        logService(`⚠️  High memory warning: ${memoryMB}MB`);
+    }
+    
+    return memoryMB;
+}
+
+function cleanupScheduledJobs() {
+    scheduledJobs.forEach(job => {
+        if (job && job.cancel) {
+            job.cancel();
+        }
+    });
+    scheduledJobs = [];
+    logService("Cleaned up scheduled jobs");
+}
+
+// Enhanced request timeout and retry logic with circuit breaker
+async function fetchWithTimeout(url, options = {}, timeoutMs = 15000, maxRetries = 2) {
+    const controller = new AbortController();
+    const timeoutId = setTimeout(() => controller.abort(), timeoutMs);
+    
+    for (let attempt = 1; attempt <= maxRetries; attempt++) {
+        try {
+            const response = await fetch(url, {
+                ...options,
+                signal: controller.signal,
+                timeout: timeoutMs
+            });
+            clearTimeout(timeoutId);
+            
+            if (!response.ok) {
+                throw new Error(`HTTP ${response.status}: ${response.statusText}`);
+            }
+            
+            return response;
+        } catch (error) {
+            clearTimeout(timeoutId);
+            logService(`Fetch attempt ${attempt}/${maxRetries} failed: ${error.message}`);
+            
+            if (attempt === maxRetries) {
+                throw error;
+            }
+            
+            // Exponential backoff
+            await new Promise(resolve => setTimeout(resolve, 1000 * attempt));
+        }
+    }
+}
+// --- END: MEMORY AND ERROR HANDLING ---
 
 // --- START: LEADERBOARD CONFIGURATION CONSTANTS ---
 const ETHERSCAN_API_KEY = CONFIG.etherscan.apikey;
@@ -59,6 +128,33 @@ const Donation = mongoose.model('Donation', DonationSchema);
 // --- START: PRICE CACHING ---
 let ethPricesCache = [];
 let plsPricesCache = []; // For PLS prices later
+
+// Reduced cache size to prevent memory issues
+const MAX_CACHE_SIZE = 1000; // About 2.7 years of daily prices (reduced from 2000)
+
+function limitCacheSize(cache) {
+    if (cache.length > MAX_CACHE_SIZE) {
+        // Keep most recent prices, remove oldest
+        cache.sort((a, b) => b.timestamp - a.timestamp);
+        cache.splice(MAX_CACHE_SIZE);
+        logService(`Cache trimmed to ${MAX_CACHE_SIZE} entries`);
+    }
+}
+
+// Clear old cache entries periodically
+function cleanupOldCacheEntries() {
+    const oneYearAgo = Math.floor((Date.now() - (365 * 24 * 60 * 60 * 1000)) / 1000);
+    
+    const ethOriginalSize = ethPricesCache.length;
+    ethPricesCache = ethPricesCache.filter(price => price.timestamp > oneYearAgo);
+    
+    const plsOriginalSize = plsPricesCache.length;
+    plsPricesCache = plsPricesCache.filter(price => price.timestamp > oneYearAgo);
+    
+    if (ethOriginalSize !== ethPricesCache.length || plsOriginalSize !== plsPricesCache.length) {
+        logService(`Cleaned old cache entries: ETH ${ethOriginalSize} -> ${ethPricesCache.length}, PLS ${plsOriginalSize} -> ${plsPricesCache.length}`);
+    }
+}
 // --- END: PRICE CACHING ---
 
 // --- START: TRANSACTION FETCHING FUNCTIONS ---
@@ -101,7 +197,7 @@ async function getEthTransactions(address, startBlock = 0) {
     logService(`Fetching ETH transactions for address ${address}...`);
     try {
         const url = `${ETHERSCAN_API_BASE}?module=account&action=txlist&address=${address}&startblock=${startBlock}&endblock=99999999&sort=asc&apikey=${ETHERSCAN_API_KEY}`;
-        const response = await fetch(url);
+        const response = await fetchWithTimeout(url);
         const data = await response.json();
         
         if (data.status === "1" && data.result) {
@@ -124,7 +220,7 @@ async function getInternalEthTransactions(address, startBlock = 0) {
     logService(`Fetching internal ETH transactions for address ${address}...`);
     try {
         const url = `${ETHERSCAN_API_BASE}?module=account&action=txlistinternal&address=${address}&startblock=${startBlock}&endblock=99999999&sort=asc&apikey=${ETHERSCAN_API_KEY}`;
-        const response = await fetch(url);
+        const response = await fetchWithTimeout(url);
         const data = await response.json();
         
         if (data.status === "1" && data.result) {
@@ -147,7 +243,7 @@ async function getTokenTransfers(tokenAddress, toAddress, startBlock = 0) {
     logService(`Fetching token transfers for ${tokenAddress} to ${toAddress}...`);
     try {
         const url = `${ETHERSCAN_API_BASE}?module=account&action=tokentx&contractaddress=${tokenAddress}&address=${toAddress}&startblock=${startBlock}&endblock=99999999&sort=asc&apikey=${ETHERSCAN_API_KEY}`;
-        const response = await fetch(url);
+        const response = await fetchWithTimeout(url);
         const data = await response.json();
         
         if (data.status === "1" && data.result) {
@@ -209,7 +305,7 @@ async function getAndSet_currentEthPrice() {
             today.setUTCHours(0, 0, 0, 0);
             const timestamp = Math.floor(today.getTime() / 1000);
 
-            const existingPrice = await EthPrice.findOne({ timestamp: timestamp });
+            const existingPrice = await EthPrice.findOne({ timestamp: timestamp }).maxTimeMS(10000);
             if (!existingPrice) {
                 await EthPrice.create({ timestamp: timestamp, price: price });
                 logService(`Stored new ETH price for ${today.toDateString()}: $${price}`);
@@ -228,7 +324,7 @@ async function getAndSet_currentEthPrice() {
 
 async function refreshEthPricesCache() {
     try {
-        ethPricesCache = await EthPrice.find().sort({ timestamp: 1 }).lean();
+        ethPricesCache = await EthPrice.find().sort({ timestamp: 1 }).lean().maxTimeMS(30000);
         logService(`ETH prices cache refreshed. ${ethPricesCache.length} entries.`);
     } catch (error) {
         logService(`Error refreshing ETH prices cache: ${error}`);
@@ -290,7 +386,7 @@ async function getAndSet_currentPlsPrice() {
             const timestamp = parseInt(latestData.date);
             
             if (price > 0) {
-                const existingPrice = await PlsPrice.findOne({ timestamp: timestamp });
+                const existingPrice = await PlsPrice.findOne({ timestamp: timestamp }).maxTimeMS(10000);
                 if (!existingPrice) {
                     await PlsPrice.create({ timestamp: timestamp, price: price });
                     logService(`Stored new PLS price for timestamp ${timestamp}: $${price}`);
@@ -312,7 +408,7 @@ async function getAndSet_currentPlsPrice() {
 
 async function refreshPlsPricesCache() {
     try {
-        plsPricesCache = await PlsPrice.find().sort({ timestamp: 1 }).lean();
+        plsPricesCache = await PlsPrice.find().sort({ timestamp: 1 }).lean().maxTimeMS(30000);
         logService(`PLS prices cache refreshed. ${plsPricesCache.length} entries.`);
     } catch (error) {
         logService(`Error refreshing PLS prices cache: ${error}`);
@@ -327,7 +423,7 @@ async function refreshPlsPricesCache() {
 async function processAndStoreDonation(tx, donationAddress, currency, chain, rawValue, formattedValue, priceAtTime, usdValue) {
     try {
         const txHash = tx.hash || tx.transaction_hash;
-        const existing = await Donation.findOne({ txHash: txHash });
+        const existing = await Donation.findOne({ txHash: txHash }).maxTimeMS(10000);
         if (existing) return false;
 
         await Donation.create({
@@ -356,7 +452,7 @@ async function processDonationsForAddress(donationAddress, chain) {
     logService(`Processing donations for ${donationAddress} on ${chain}...`);
     
     // Get the last processed block number for this chain
-    const lastDonation = await Donation.findOne({ chain: chain }).sort({ blockNumber: -1 });
+    const lastDonation = await Donation.findOne({ chain: chain }).sort({ blockNumber: -1 }).maxTimeMS(10000);
     const startBlock = lastDonation ? lastDonation.blockNumber + 1 : 0;
     
     let newDonationsFound = false;
@@ -432,9 +528,19 @@ async function processDonationsForAddress(donationAddress, chain) {
 }
 
 async function processDonations() {
-    logService("Processing donations...");
+    // Prevent concurrent execution
+    if (isProcessingDonations) {
+        logService("Donation processing already in progress, skipping...");
+        return;
+    }
     
-    try {        // Check if we have valid API keys
+    isProcessingDonations = true;
+    const startTime = Date.now();
+    logService("Processing donations...");
+    logMemoryForService();
+    
+    try {        
+        // Check if we have valid API keys
         const hasEtherscanKey = CONFIG.etherscan && CONFIG.etherscan.apikey && CONFIG.etherscan.apikey !== 'YOUR_ETHERSCAN_API_KEY_HERE';
         
         if (!hasEtherscanKey) {
@@ -450,20 +556,39 @@ async function processDonations() {
         if (hasEtherscanKey) {
             const addresses = [ETH_MAIN_DONATION_ADDRESS, ETH_HISTORICAL_DONATION_ADDRESS];
             for (const address of addresses) {
-                const found = await processDonationsForAddress(address, 'Ethereum');
-                if (found) newDonationsFound = true;
+                try {
+                    const found = await processDonationsForAddress(address, 'Ethereum');
+                    if (found) newDonationsFound = true;
+                    
+                    // Rate limiting for Etherscan
+                    await new Promise(r => setTimeout(r, 1000));
+                } catch (error) {
+                    logService(`Error processing ETH donations for ${address}: ${error.message}`);
+                }
             }
             
-            // Process stablecoin donations
+            // Process stablecoin donations with rate limiting
             for (const [symbol, contractAddress] of Object.entries(STABLECOIN_CONTRACTS)) {
-                await processTokenDonations(contractAddress, symbol);
+                try {
+                    await processTokenDonations(contractAddress, symbol);
+                    await new Promise(r => setTimeout(r, 1000)); // Rate limiting
+                } catch (error) {
+                    logService(`Error processing ${symbol} donations: ${error.message}`);
+                }
             }
         }
-          // Process PLS donations if PLS address is configured
+          
+        // Process PLS donations if PLS address is configured
         if (PLS_MAIN_DONATION_ADDRESS) {
-            const found = await processDonationsForAddress(PLS_MAIN_DONATION_ADDRESS, 'PulseChain');
-            if (found) newDonationsFound = true;
+            try {
+                const found = await processDonationsForAddress(PLS_MAIN_DONATION_ADDRESS, 'PulseChain');
+                if (found) newDonationsFound = true;
+            } catch (error) {
+                logService(`Error processing PLS donations: ${error.message}`);
+            }
         }
+        
+        lastSuccessfulSync = Date.now();
         
         if (newDonationsFound) {
             logService("New donations found and processed.");
@@ -471,10 +596,14 @@ async function processDonations() {
             logService("No new donations found.");
         }
         
-        logService("Donation processing completed.");
+        logService(`Donation processing completed in ${Date.now() - startTime}ms`);
+        logMemoryForService();
+        
     } catch (error) {
         logService(`Error in processDonations: ${error.message}`);
-        // Don't throw the error, just log it and continue
+        console.error(error);
+    } finally {
+        isProcessingDonations = false;
     }
 }
 
@@ -483,7 +612,7 @@ async function processTokenDonations(tokenAddress, symbol) {
     const donationAddressesLower = addresses.map(addr => addr.toLowerCase());
     
     // Get the last processed block number for this token
-    const lastDonation = await Donation.findOne({ currency: symbol }).sort({ blockNumber: -1 });
+    const lastDonation = await Donation.findOne({ currency: symbol }).sort({ blockNumber: -1 }).maxTimeMS(10000);
     const startBlock = lastDonation ? lastDonation.blockNumber + 1 : 0;
     
     for (const address of addresses) {
@@ -491,7 +620,7 @@ async function processTokenDonations(tokenAddress, symbol) {
         
         for (const transfer of transfers) {
             try {
-                const existing = await Donation.findOne({ txHash: transfer.hash });
+                const existing = await Donation.findOne({ txHash: transfer.hash }).maxTimeMS(10000);
                 if (existing) continue;
                 
                 // Filter out internal transactions and self-transactions
@@ -602,34 +731,96 @@ async function getLeaderboardData() {
 // --- START: INITIALIZATION AND SCHEDULING ---
 function schedulePriceUpdates() {
     logService("Scheduling price updates...");
+    
+    // Clean up any existing jobs first
+    cleanupScheduledJobs();
+    
     // UTC midnight for ETH price (Etherscan updates around then)
-    schedule.scheduleJob({ rule: "0 0 * * *", tz: "Etc/UTC" }, async () => {
+    const ethPriceJob = schedule.scheduleJob({ rule: "0 0 * * *", tz: "Etc/UTC" }, async () => {
         logService("Scheduled job: Fetching daily ETH price.");
-        await getAndSet_currentEthPrice();
+        try {
+            await getAndSet_currentEthPrice();
+        } catch (error) {
+            logService(`ETH price fetch failed: ${error.message}`);
+        }
     });
+    scheduledJobs.push(ethPriceJob);
 
     // UTC 3 minutes past midnight for PLS price (after ETH price)
-    schedule.scheduleJob({ rule: "3 0 * * *", tz: "Etc/UTC" }, async () => {
+    const plsPriceJob = schedule.scheduleJob({ rule: "3 0 * * *", tz: "Etc/UTC" }, async () => {
         logService("Scheduled job: Fetching daily PLS price.");
-        await getAndSet_currentPlsPrice();
+        try {
+            await getAndSet_currentPlsPrice();
+        } catch (error) {
+            logService(`PLS price fetch failed: ${error.message}`);
+        }
     });
+    scheduledJobs.push(plsPriceJob);
 
-    // Schedule donation processing every 5 minutes
-    schedule.scheduleJob({ rule: "*/5 * * * *", tz: "Etc/UTC" }, async () => {
+    // Schedule donation processing every 10 minutes (reduced from 5 to reduce load)
+    const donationJob = schedule.scheduleJob({ rule: "*/10 * * * *", tz: "Etc/UTC" }, async () => {
         logService("Scheduled job: Processing new donations.");
-        await processDonations();
+        try {
+            await processDonations();
+        } catch (error) {
+            logService(`Donation processing failed: ${error.message}`);
+        }
     });
+    scheduledJobs.push(donationJob);
+    
+    // Schedule cleanup every 6 hours
+    const cleanupJob = schedule.scheduleJob({ rule: "0 */6 * * *", tz: "Etc/UTC" }, async () => {
+        logService("Scheduled job: Running cache cleanup.");
+        try {
+            cleanupOldCacheEntries();
+            logMemoryForService();
+            if (global.gc) {
+                global.gc();
+                logService("Forced garbage collection completed.");
+            }
+        } catch (error) {
+            logService(`Cache cleanup failed: ${error.message}`);
+        }
+    });
+    scheduledJobs.push(cleanupJob);
 
-    logService("Price update and donation processing schedules configured.");
+    logService(`Price update and donation processing schedules configured. Total jobs: ${scheduledJobs.length}`);
 }
 
 async function initializeLeaderboardService() {
     logService("Initializing Leaderboard Service...");
-    await mongoose.connection.once('open', async () => { // Ensure DB is connected before initial cache load
-        logService("MongoDB connection confirmed for Leaderboard Service initialization.");
+    
+    // Wait for MongoDB connection to be ready
+    if (mongoose.connection.readyState !== 1) {
+        logService("Waiting for MongoDB connection...");
+        await new Promise((resolve, reject) => {
+            if (mongoose.connection.readyState === 1) {
+                resolve();
+            } else {
+                mongoose.connection.once('connected', resolve);
+                mongoose.connection.once('error', reject);
+                // Timeout after 15 seconds
+                setTimeout(() => reject(new Error('MongoDB connection timeout')), 15000);
+            }
+        });
+    }
+    
+    logService("MongoDB connection confirmed for Leaderboard Service initialization.");
+    
+    try {
         await refreshEthPricesCache(); // Load initial ETH prices into cache
-        await refreshPlsPricesCache(); // Load initial PLS prices into cache
-    });
+        logService("ETH prices cache loaded");
+    } catch (error) {
+        logService("Warning: Could not load ETH prices cache: " + error.message);
+    }
+    
+    try {
+        await refreshPlsPricesCache(); // Load initial PLS prices into cache  
+        logService("PLS prices cache loaded");
+    } catch (error) {
+        logService("Warning: Could not load PLS prices cache: " + error.message);
+    }
+    
     schedulePriceUpdates(); // Set up daily fetching schedules
     
     // Fetch current prices on startup if it's been a while or cache is empty
@@ -677,16 +868,15 @@ async function cleanupInvalidDonations() {
     
     logService("Cleaning up invalid donations...");
     
-    try {
-        // Find donations FROM donation addresses (these are withdrawals/internal transfers, not donations)
+    try {        // Find donations FROM donation addresses (these are withdrawals/internal transfers, not donations)
         const invalidFromDonations = await Donation.find({
             from: { $in: allDonationAddresses.concat(allDonationAddressesLower) }
-        });
+        }).maxTimeMS(15000);
         
         // Find donations TO addresses that are not donation addresses
         const invalidToDonations = await Donation.find({
             to: { $nin: allDonationAddresses.concat(allDonationAddressesLower) }
-        });
+        }).maxTimeMS(15000);
         
         const totalInvalid = invalidFromDonations.length + invalidToDonations.length;
         

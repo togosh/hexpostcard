@@ -1,9 +1,100 @@
+const mongoose = require('mongoose');
+
+// Disable mongoose buffering globally for better error handling
+mongoose.set('bufferCommands', false);
+
 var CONFIG = require('./config.json');
 var DEBUG = CONFIG.debug;
 console.log(DEBUG);
 
+// Helper for logging
+const log = (message) => {
+    console.log(`${new Date().toISOString()} [MainServer] --- ${message}`);
+}
+
 const http = require('http');
 require('es6-promise').polyfill();
+
+// --- START: MEMORY MONITORING AND CRASH PREVENTION ---
+// Updated for 1GB server: Leave ~300MB for system, use ~700MB max for Node.js
+const MEMORY_LIMIT_MB = 600; // Reduced from 800MB to 600MB for 1GB server
+const MEMORY_CHECK_INTERVAL = 20000; // Check every 20 seconds (more frequent)
+const MEMORY_CRITICAL_MB = 500; // Critical threshold at 500MB
+const MEMORY_WARNING_MB = 400; // Warning threshold at 400MB
+
+let lastMemoryWarning = 0;
+let highMemoryCount = 0;
+
+function logMemoryUsage() {
+    const used = process.memoryUsage();
+    const memoryMB = Math.round(used.rss / 1024 / 1024);
+    const heapMB = Math.round(used.heapUsed / 1024 / 1024);
+    
+    console.log(`[MEMORY] RSS: ${memoryMB}MB, Heap: ${heapMB}MB, External: ${Math.round(used.external / 1024 / 1024)}MB`);
+    
+    if (memoryMB > MEMORY_WARNING_MB) {
+        console.log(`[MEMORY WARNING] Memory usage: ${memoryMB}MB (Warning threshold: ${MEMORY_WARNING_MB}MB)`);
+    }
+    
+    if (memoryMB > MEMORY_CRITICAL_MB) {
+        highMemoryCount++;
+        const now = Date.now();
+        
+        if (now - lastMemoryWarning > 60000) { // Only warn once per minute
+            console.error(`[MEMORY CRITICAL] Memory usage ${memoryMB}MB exceeds critical limit ${MEMORY_CRITICAL_MB}MB! Count: ${highMemoryCount}`);
+            lastMemoryWarning = now;
+            
+            // Force garbage collection if available
+            if (global.gc) {
+                console.log('[MEMORY] Forcing garbage collection...');
+                global.gc();
+                const afterGC = process.memoryUsage();
+                const afterMB = Math.round(afterGC.rss / 1024 / 1024);
+                console.log(`[MEMORY] After GC: ${afterMB}MB (freed ${memoryMB - afterMB}MB)`);
+            }
+        }
+        
+        // If memory stays high for too long, we may need to restart
+        if (highMemoryCount > 10) {
+            console.error('[MEMORY CRITICAL] Memory has been high for too long. Consider restarting.');
+        }
+    } else {
+        highMemoryCount = Math.max(0, highMemoryCount - 1); // Gradually reduce count
+    }
+    
+    if (memoryMB > MEMORY_LIMIT_MB) {
+        console.error(`[MEMORY WARNING] Memory usage ${memoryMB}MB exceeds limit ${MEMORY_LIMIT_MB}MB!`);
+    }
+    
+    return memoryMB;
+}
+
+// Monitor memory usage
+setInterval(logMemoryUsage, MEMORY_CHECK_INTERVAL);
+
+// Handle uncaught exceptions and promise rejections
+process.on('uncaughtException', (error) => {
+    console.error('[CRASH PREVENTION] Uncaught Exception:', error);
+    logMemoryUsage();
+    // Don't exit immediately, log for debugging
+});
+
+process.on('unhandledRejection', (reason, promise) => {
+    console.error('[CRASH PREVENTION] Unhandled Rejection at:', promise, 'reason:', reason);
+    logMemoryUsage();
+});
+
+// Log memory on exit signals
+process.on('SIGTERM', () => {
+    console.log('[SHUTDOWN] SIGTERM received');
+    logMemoryUsage();
+});
+
+process.on('SIGINT', () => {
+    console.log('[SHUTDOWN] SIGINT received');
+    logMemoryUsage();
+});
+// --- END: MEMORY MONITORING AND CRASH PREVENTION ---
  
 const express = require('express');
 const path = require('path');
@@ -11,7 +102,6 @@ const fs = require('fs');
 const https = require('https');
 const crypto = require('crypto'); // Added for hashing
 const schedule = require('node-schedule'); // For scheduling leaderboard updates
-var mongoose = require('mongoose'); // Added for MongoDB
 
 // --- START: LEADERBOARD SERVICE INTEGRATION ---
 const leaderboardService = require('./leaderboard.js'); // Import the leaderboard service
@@ -35,12 +125,36 @@ var DesignVote = mongoose.model('VoteContest03', VoteSchema);
 
 // MongoDB Connection
 var mongoDB = CONFIG.mongodb.connectionString;
-mongoose.connect(mongoDB).then(async () => {
+mongoose.connect(mongoDB, {
+    maxPoolSize: 10, // Increase connection pool for better performance
+    serverSelectionTimeoutMS: 10000, // Increase timeout
+    socketTimeoutMS: 60000, // Increase socket timeout
+    maxIdleTimeMS: 30000, // Close connections after 30 seconds of inactivity
+    heartbeatFrequencyMS: 10000, // Check connection health every 10 seconds
+    connectTimeoutMS: 10000, // Add connection timeout
+    family: 4 // Use IPv4, skip trying IPv6
+}).then(async () => {
     log("Mongo Connected!");
+    logMemoryUsage();
+    
     // Initialize the leaderboard service (loads price caches, sets up its schedules)
-    await leaderboardService.initializeLeaderboardService();
-    // Initial data grab for leaderboard on startup
-    grabAndEmitLeaderboardData(); 
+    try {
+        await leaderboardService.initializeLeaderboardService();
+        log("Leaderboard service initialized successfully");
+    } catch (error) {
+        log("Error initializing leaderboard service: " + error.message);
+        console.error(error);
+    }
+    
+    // Initial data grab for leaderboard on startup with timeout
+    try {
+        await Promise.race([
+            grabAndEmitLeaderboardData(),
+            new Promise((_, reject) => setTimeout(() => reject(new Error('Timeout')), 30000))
+        ]);
+    } catch (error) {
+        log("Error or timeout during initial leaderboard data grab: " + error.message);
+    }
 }).catch(err => {
     log("Mongo Connection Error: " + err);
 });
@@ -293,28 +407,96 @@ async function calculateBestDesigns() {
 
 // --- START: LEADERBOARD DATA GRABBING AND SOCKET.IO ---
 async function grabAndEmitLeaderboardData() {
+    const startTime = Date.now();
     log("grabAndEmitLeaderboardData triggered...");
+    logMemoryUsage();
+    
     try {
-        const freshLeaderboardData = await leaderboardService.getLeaderboardData();
+        // Add timeout to prevent hanging
+        const freshLeaderboardData = await Promise.race([
+            leaderboardService.getLeaderboardData(),
+            new Promise((_, reject) => 
+                setTimeout(() => reject(new Error('Leaderboard data fetch timeout')), 60000)
+            )
+        ]);
+        
         if (freshLeaderboardData && Array.isArray(freshLeaderboardData)) {
             leaderboardData = freshLeaderboardData; // Update global cache
             if (io) { // Check if io is initialized
                 io.emit("leaderboardData", leaderboardData);
-                log(`Leaderboard data updated and emitted via Socket.io. ${leaderboardData.length} entries.`);
+                log(`Leaderboard data updated and emitted via Socket.io. ${leaderboardData.length} entries. Took ${Date.now() - startTime}ms`);
             } else {
                 log("Socket.io not initialized, cannot emit leaderboard data.");
             }
+            logMemoryUsage();
         } else {
             log("Failed to fetch fresh leaderboard data from service.");
         }
     } catch (error) {
         log("Error in grabAndEmitLeaderboardData: " + error.message);
         console.error(error);
+        logMemoryUsage();
+        
+        // Force garbage collection on error
+        if (global.gc) {
+            global.gc();
+        }
     }
 }
 
-// Schedule for grabbing leaderboard data (every 15 minutes)
-schedule.scheduleJob("*/15 * * * *", grabAndEmitLeaderboardData);
+// Schedule for grabbing leaderboard data (every 20 minutes instead of 15) with error handling
+let scheduleJob = schedule.scheduleJob("*/20 * * * *", async () => {
+    try {
+        const memoryMB = logMemoryUsage();
+        if (memoryMB < MEMORY_CRITICAL_MB) { // Only run if memory is not critical
+            await grabAndEmitLeaderboardData();
+        } else {
+            log(`Skipping scheduled leaderboard update due to high memory usage: ${memoryMB}MB`);
+        }
+    } catch (error) {
+        log("Scheduled leaderboard update failed: " + error.message);
+        console.error(error);
+        logMemoryUsage();
+    }
+});
+
+// Log scheduled job creation
+log("Scheduled leaderboard updates every 20 minutes");
+
+// Add graceful shutdown handling
+process.on('SIGTERM', async () => {
+    console.log('[SHUTDOWN] SIGTERM received, starting graceful shutdown...');
+    if (scheduleJob) {
+        scheduleJob.cancel();
+        console.log('[SHUTDOWN] Cancelled scheduled jobs');
+    }
+    
+    try {
+        await mongoose.connection.close();
+        console.log('[SHUTDOWN] MongoDB connection closed');
+    } catch (error) {
+        console.error('[SHUTDOWN] Error closing MongoDB:', error);
+    }
+    
+    process.exit(0);
+});
+
+process.on('SIGINT', async () => {
+    console.log('[SHUTDOWN] SIGINT received, starting graceful shutdown...');
+    if (scheduleJob) {
+        scheduleJob.cancel();
+        console.log('[SHUTDOWN] Cancelled scheduled jobs');
+    }
+    
+    try {
+        await mongoose.connection.close();
+        console.log('[SHUTDOWN] MongoDB connection closed');
+    } catch (error) {
+        console.error('[SHUTDOWN] Error closing MongoDB:', error);
+    }
+    
+    process.exit(0);
+});
 // --- END: LEADERBOARD DATA GRABBING AND SOCKET.IO ---
 
 httpServer.listen(httpPort, hostname, () => { log(`Server running at http://${hostname}:${httpPort}/`);});
@@ -338,18 +520,27 @@ if(DEBUG){
 if (io) {
     io.on('connection', (socket) => {
         log('SOCKET -- Client connected: ' + socket.id);
+        logMemoryUsage();
+        
         if (leaderboardData) {
             socket.emit("leaderboardData", leaderboardData);
         }
+        
         socket.on('disconnect', () => {
             log('SOCKET -- Client disconnected: ' + socket.id);
         });
+        
+        // Add error handling for socket errors
+        socket.on('error', (error) => {
+            log('SOCKET -- Error for client ' + socket.id + ': ' + error.message);
+        });
+    });
+    
+    // Handle io errors
+    io.on('error', (error) => {
+        log('SOCKET.IO -- Server error: ' + error.message);
+        console.error(error);
     });
 } else {
     log("Socket.io server could not be initialized.");
-}
-
-// Helper for logging
-const log = (message) => {
-    console.log(`${new Date().toISOString()} [MainServer] --- ${message}`);
 }
