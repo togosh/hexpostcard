@@ -8,7 +8,13 @@
     "monitor": "node memory-monitor.js",
     "health-check": "node verify-system.js",
     "dev": "NODE_ENV=development node index.js",
-    "test": "node test-leaderboard.js"
+    "test": "node test-leaderboard.js",
+    "setup-email": "node setup-email.js",
+    "setup-oauth2": "node setup-oauth2.js",
+    "setup-less-secure": "node setup-less-secure.js",
+    "setup-alternatives": "node setup-alternatives.js",
+    "test-email": "node setup-email.js test",
+    "test-feedback": "node test-feedback.js"
   },
   "dependencies": {
     "axios": "^1.9.0",
@@ -23,6 +29,7 @@
     "mongoose": "^8.15.0",
     "node-fetch": "^2.7.0",
     "node-schedule": "^2.1.0",
+    "nodemailer": "^7.0.3",
     "socket.io": "^4.5.1"
   }
 }

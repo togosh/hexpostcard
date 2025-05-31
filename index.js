@@ -102,6 +102,7 @@ const fs = require('fs');
 const https = require('https');
 const crypto = require('crypto'); // Added for hashing
 const schedule = require('node-schedule'); // For scheduling leaderboard updates
+const nodemailer = require('nodemailer'); // For sending emails
 
 // --- START: LEADERBOARD SERVICE INTEGRATION ---
 const leaderboardService = require('./leaderboard.js'); // Import the leaderboard service
@@ -241,6 +242,7 @@ app.get(["/tutorial", "/instructions", "/guide"],
                                             res.sendFile('/public/tutorial.html',     {root: __dirname});});
 
 app.get("/faq",                  function(req, res){ res.sendFile('/public/faq.html',              {root: __dirname}); });
+app.get(["/contact", "/feedback"], function(req, res){ res.sendFile('/public/contact.html',         {root: __dirname}); });
 
 app.get(["/team", "/about"], 
                                 function(req, res) {
@@ -404,6 +406,105 @@ async function calculateBestDesigns() {
   return sortedScores;
 }
 // END VOTING FUNCTIONALITY
+
+// --- START: EMAIL CONTACT FORM FUNCTIONALITY ---
+// Configure nodemailer transporter
+const emailTransporter = nodemailer.createTransport({
+  service: CONFIG.email.service,
+  auth: {
+    user: CONFIG.email.auth.user,
+    pass: CONFIG.email.auth.pass
+  }
+});
+
+// Verify email configuration on startup
+emailTransporter.verify((error, success) => {
+  if (error) {
+    console.log('[EMAIL] Configuration error:', error);
+  } else {
+    console.log('[EMAIL] Server is ready to send emails');
+  }
+});
+
+// Contact form endpoint
+app.post('/api/contact', async (req, res) => {
+  try {
+    console.log('[EMAIL] Received contact form submission:', req.body);
+    
+    const { name, email, subject, message, source } = req.body;
+      // Basic validation
+    if (!name || !email || !message) {
+      console.log('[EMAIL] Validation failed - missing required fields');
+      return res.status(400).json({ 
+        error: 'Please fill in all required fields (name, email, and message).' 
+      });
+    }
+    
+    // Email validation
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    if (!emailRegex.test(email)) {
+      console.log('[EMAIL] Validation failed - invalid email format');
+      return res.status(400).json({ 
+        error: 'Please enter a valid email address.' 
+      });    }
+    
+    console.log('[EMAIL] Validation passed, proceeding with email setup...');
+    
+    // Create email content
+    const emailSubject = subject || 'General Feedback';
+    const emailContent = `
+New feedback received from HEXpostcards website:
+
+Name: ${name}
+Email: ${email}
+Subject: ${emailSubject}
+Time: ${new Date().toISOString()}
+
+Message:
+${message}
+
+---
+This message was sent from the HEXpostcards feedback form.
+    `.trim();
+    
+    // Email options
+    const mailOptions = {
+      from: CONFIG.email.auth.user,
+      to: CONFIG.email.to,
+      subject: `HEXpostcards Feedback: ${emailSubject}`,
+      text: emailContent,
+      replyTo: email
+    };
+      // Send email
+    console.log('[EMAIL] Attempting to send email with options:', {
+      from: mailOptions.from,
+      to: mailOptions.to,
+      subject: mailOptions.subject,
+      replyTo: mailOptions.replyTo
+    });
+    
+    await emailTransporter.sendMail(mailOptions);
+    
+    console.log(`[EMAIL] Feedback sent successfully from ${email} (${name}) - Subject: ${emailSubject}`);
+    
+    res.status(200).json({ 
+      message: 'Thank you for your feedback! We\'ll get back to you soon.' 
+    });
+    
+  } catch (error) {
+    console.error('[EMAIL] Error sending feedback email:', error);
+    console.error('[EMAIL] Error details:', {
+      message: error.message,
+      code: error.code,
+      command: error.command,
+      response: error.response
+    });
+    res.status(500).json({ 
+      error: 'Sorry, there was an error sending your message. Please try again later.' 
+    });
+  }
+});
+// --- END: EMAIL CONTACT FORM FUNCTIONALITY ---
 
 // --- START: LEADERBOARD DATA GRABBING AND SOCKET.IO ---
 async function grabAndEmitLeaderboardData() {

@@ -1,0 +1,299 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Send Feedback - HEXpostcards</title>
+    
+    <!-- Meta tags -->
+    <meta name="description" content="Send feedback to HEXpostcards - Share your thoughts, suggestions, or questions about our direct mail marketing service">
+    
+    <!-- Styles -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/tailwindcss/2.2.19/tailwind.min.css" rel="stylesheet">
+    <link href="/css/styles.css" rel="stylesheet">
+    
+    <!-- Scripts -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <script src="navbar.js"></script>
+
+    <!-- ICONS -->
+    <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16.png">
+    <link rel="manifest" href="/site.webmanifest">
+    <link rel="mask-icon" href="/images/safari-pinned-tab.svg" color="#5bbad5">
+    <meta name="msapplication-TileColor" content="#da532c">
+    <meta name="theme-color" content="#ffffff">
+
+    <style>
+        .feedback-form {
+            background: linear-gradient(135deg, #1f2937 0%, #111827 100%);
+        }
+        .form-field:focus {
+            border-color: #3b82f6;
+            box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1);
+        }
+        .submit-btn {
+            background: linear-gradient(135deg, #3b82f6 0%, #1d4ed8 100%);
+            transition: all 0.3s ease;
+        }
+        .submit-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 25px rgba(59, 130, 246, 0.3);
+        }
+        .success-message {
+            background: linear-gradient(135deg, #10b981 0%, #059669 100%);
+        }
+        .error-message {
+            background: linear-gradient(135deg, #ef4444 0%, #dc2626 100%);
+        }
+    </style>
+</head>
+<body class="bg-gray-900 text-white">
+    <!-- Navigation -->
+    <div id="navbar-placeholder"></div>
+
+    <main class="pt-24 pb-16">
+        <div class="container mx-auto px-4 max-w-4xl">
+            <!-- Header -->
+            <div class="text-center mb-12">                <h1 class="text-4xl md:text-5xl font-bold mb-6">
+                    Send <span class="text-blue-400">Feedback</span>
+                </h1>
+                <p class="text-xl text-gray-300 max-w-2xl mx-auto">
+                    We'd love to hear from you! Share your feedback, questions, or suggestions about our direct mail marketing service.
+                </p>
+            </div>
+
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-12">
+                <!-- Contact Form -->
+                <div class="feedback-form rounded-2xl p-8 shadow-2xl border border-gray-700">
+                    <h2 class="text-2xl font-bold mb-6 text-center">Send Us Feedback</h2>
+                    
+                    <!-- Success/Error Messages -->
+                    <div id="success-message" class="hidden success-message text-white p-4 rounded-lg mb-6">
+                        <div class="flex items-center">
+                            <svg class="w-5 h-5 mr-2" fill="currentColor" viewBox="0 0 20 20">
+                                <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"></path>
+                            </svg>
+                            Thank you for your feedback! We'll get back to you soon.
+                        </div>
+                    </div>
+
+                    <div id="error-message" class="hidden error-message text-white p-4 rounded-lg mb-6">
+                        <div class="flex items-center">
+                            <svg class="w-5 h-5 mr-2" fill="currentColor" viewBox="0 0 20 20">
+                                <path fill-rule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7 4a1 1 0 11-2 0 1 1 0 012 0zm-1-9a1 1 0 00-1 1v4a1 1 0 102 0V6a1 1 0 00-1-1z" clip-rule="evenodd"></path>
+                            </svg>
+                            <span id="error-text">There was an error sending your message. Please try again.</span>
+                        </div>
+                    </div>
+
+                    <form id="feedback-form" class="space-y-6">
+                        <!-- Name -->
+                        <div>
+                            <label for="name" class="block text-sm font-medium text-gray-300 mb-2">
+                                Name *
+                            </label>
+                            <input 
+                                type="text" 
+                                id="name" 
+                                name="name" 
+                                required
+                                class="form-field w-full px-4 py-3 bg-gray-800 border border-gray-600 rounded-lg text-white placeholder-gray-400 focus:outline-none transition-all duration-200"
+                                placeholder="Your name"
+                            >
+                        </div>
+
+                        <!-- Email -->
+                        <div>
+                            <label for="email" class="block text-sm font-medium text-gray-300 mb-2">
+                                Email *
+                            </label>
+                            <input 
+                                type="email" 
+                                id="email" 
+                                name="email" 
+                                required
+                                class="form-field w-full px-4 py-3 bg-gray-800 border border-gray-600 rounded-lg text-white placeholder-gray-400 focus:outline-none transition-all duration-200"
+                                placeholder="your.email@example.com"
+                            >
+                        </div>                        <!-- Subject -->
+                        <div>
+                            <label for="subject" class="block text-sm font-medium text-gray-300 mb-2">
+                                Subject
+                            </label>
+                            <select 
+                                id="subject" 
+                                name="subject"
+                                class="form-field w-full px-4 py-3 bg-gray-800 border border-gray-600 rounded-lg text-white focus:outline-none transition-all duration-200"
+                            >
+                                <option value="">Select a topic...</option>
+                                <option value="General Feedback">General Feedback</option>
+                                <option value="Design Suggestions">Design Suggestions</option>
+                                <option value="Feature Request">Feature Request</option>
+                                <option value="Bug Report">Bug Report</option>
+                                <option value="Partnership Inquiry">Partnership Inquiry</option>
+                                <option value="Technical Support">Technical Support</option>
+                                <option value="Other">Other</option>
+                            </select>
+                        </div>
+
+                        <!-- Message -->
+                        <div>
+                            <label for="message" class="block text-sm font-medium text-gray-300 mb-2">
+                                Message *
+                            </label>
+                            <textarea 
+                                id="message" 
+                                name="message" 
+                                required
+                                rows="6"
+                                class="form-field w-full px-4 py-3 bg-gray-800 border border-gray-600 rounded-lg text-white placeholder-gray-400 focus:outline-none transition-all duration-200 resize-vertical"
+                                placeholder="Tell us about your experience, suggestions, or any questions you have..."
+                            ></textarea>                        </div>
+
+                        <!-- Submit Button -->
+                        <button 
+                            type="submit" 
+                            id="submit-btn"
+                            class="submit-btn w-full py-4 px-6 text-white font-semibold rounded-lg focus:outline-none focus:ring-4 focus:ring-blue-300"
+                        >
+                            <span id="submit-text">Send Feedback</span>
+                            <span id="submit-loading" class="hidden">Sending...</span>
+                        </button>
+                    </form>
+                </div>
+
+                <!-- Contact Info & FAQ -->
+                <div class="space-y-8">
+                    <!-- Quick Contact Info -->
+                    <div class="bg-gray-800 rounded-2xl p-8 border border-gray-700">
+                        <h3 class="text-xl font-bold mb-4">Quick Info</h3>
+                        <div class="space-y-4">
+                            <div class="flex items-start space-x-3">
+                                <svg class="w-5 h-5 text-blue-400 mt-1" fill="currentColor" viewBox="0 0 20 20">
+                                    <path d="M2.003 5.884L10 9.882l7.997-3.998A2 2 0 0016 4H4a2 2 0 00-1.997 1.884z"></path>
+                                    <path d="M18 8.118l-8 4-8-4V14a2 2 0 002 2h12a2 2 0 002-2V8.118z"></path>
+                                </svg>
+                                <div>
+                                    <p class="font-medium">Email Response</p>
+                                    <p class="text-gray-400 text-sm">We typically respond within 24-72 hours</p>
+                                </div>
+                            </div>                            
+                            <div class="flex items-start space-x-3">
+                                
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Common Questions -->
+                    <div class="bg-gray-800 rounded-2xl p-8 border border-gray-700">
+                        <h3 class="text-xl font-bold mb-4">Common Questions</h3>
+                        <div class="space-y-4 text-sm">
+                            <div>
+                                <p class="font-medium text-blue-400">Design Issues?</p>
+                                <p class="text-gray-400">Let us know if you found any bugs or have design suggestions</p>
+                            </div>
+                            <div>
+                                <p class="font-medium text-blue-400">New Feature Ideas?</p>
+                                <p class="text-gray-400">We love hearing about features that would make HEXpostcards better</p>
+                            </div>
+                            <div>
+                                <p class="font-medium text-blue-400">Partnership Opportunities?</p>
+                                <p class="text-gray-400">Interested in collaborating? We'd love to hear from you</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Links to other pages -->
+                    <div class="bg-gray-800 rounded-2xl p-8 border border-gray-700">
+                        <h3 class="text-xl font-bold mb-4">More Resources</h3>
+                        <div class="space-y-2">
+                            <a href="/faq" class="block text-blue-400 hover:text-blue-300 transition-colors">
+                                📋 Frequently Asked Questions
+                            </a>
+                            <a href="/tutorial" class="block text-blue-400 hover:text-blue-300 transition-colors">
+                                📖 How to Get Started
+                            </a>
+                            <a href="/leaderboard" class="block text-blue-400 hover:text-blue-300 transition-colors">
+                                🏆 Donation Leaderboard
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <div id="footer-placeholder"></div>
+
+    <script>
+        $(document).ready(function() {
+            // Load navbar and footer
+            $("#navbar-placeholder").load("navbar.html");
+            $("#footer-placeholder").load("footer.html");
+
+            // Form submission
+            $('#feedback-form').on('submit', function(e) {
+                e.preventDefault();
+                
+                const submitBtn = $('#submit-btn');
+                const submitText = $('#submit-text');
+                const submitLoading = $('#submit-loading');
+                const successMessage = $('#success-message');
+                const errorMessage = $('#error-message');
+                
+                // Hide previous messages
+                successMessage.addClass('hidden');
+                errorMessage.addClass('hidden');
+                
+                // Show loading state
+                submitBtn.prop('disabled', true);
+                submitText.addClass('hidden');
+                submitLoading.removeClass('hidden');
+                  // Collect form data
+                const formData = {
+                    name: $('#name').val(),
+                    email: $('#email').val(),
+                    subject: $('#subject').val(),
+                    message: $('#message').val()
+                };
+                
+                // Send to server
+                $.ajax({
+                    url: '/api/contact',
+                    method: 'POST',
+                    contentType: 'application/json',
+                    data: JSON.stringify(formData),
+                    success: function(response) {
+                        // Show success message
+                        successMessage.removeClass('hidden');
+                        // Reset form
+                        $('#feedback-form')[0].reset();
+                        // Scroll to top to show message
+                        $('html, body').animate({scrollTop: successMessage.offset().top - 100}, 500);
+                    },
+                    error: function(xhr, status, error) {
+                        // Show error message
+                        let errorText = 'There was an error sending your message. Please try again.';
+                        if (xhr.responseJSON && xhr.responseJSON.error) {
+                            errorText = xhr.responseJSON.error;
+                        }
+                        $('#error-text').text(errorText);
+                        errorMessage.removeClass('hidden');
+                        // Scroll to top to show message
+                        $('html, body').animate({scrollTop: errorMessage.offset().top - 100}, 500);
+                    },
+                    complete: function() {
+                        // Reset button state
+                        submitBtn.prop('disabled', false);
+                        submitText.removeClass('hidden');
+                        submitLoading.addClass('hidden');
+                    }
+                });
+            });
+        });
+    </script>
+</body>
+</html>
