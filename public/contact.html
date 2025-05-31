@@ -149,8 +149,12 @@
                                 required
                                 rows="6"
                                 class="form-field w-full px-4 py-3 bg-gray-800 border border-gray-600 rounded-lg text-white placeholder-gray-400 focus:outline-none transition-all duration-200 resize-vertical"
-                                placeholder="Tell us about your experience, suggestions, or any questions you have..."
-                            ></textarea>                        </div>
+                                placeholder="Tell us about your experience, suggestions, or any questions you have..."                            ></textarea>                        </div>
+
+                        <!-- Honeypot field (hidden from users, visible to bots) -->
+                        <div style="position: absolute; left: -9999px; visibility: hidden;">
+                            <input type="text" name="website" id="website" placeholder="Leave this empty" tabindex="-1" autocomplete="off">
+                        </div>
 
                         <!-- Submit Button -->
                         <button 
@@ -251,13 +255,13 @@
                 // Show loading state
                 submitBtn.prop('disabled', true);
                 submitText.addClass('hidden');
-                submitLoading.removeClass('hidden');
-                  // Collect form data
+                submitLoading.removeClass('hidden');                // Collect form data
                 const formData = {
                     name: $('#name').val(),
                     email: $('#email').val(),
                     subject: $('#subject').val(),
-                    message: $('#message').val()
+                    message: $('#message').val(),
+                    website: $('#website').val() // Honeypot field
                 };
                 
                 // Send to server

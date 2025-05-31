@@ -103,6 +103,7 @@ const https = require('https');
 const crypto = require('crypto'); // Added for hashing
 const schedule = require('node-schedule'); // For scheduling leaderboard updates
 const nodemailer = require('nodemailer'); // For sending emails
+const rateLimit = require('express-rate-limit'); // For rate limiting
 
 // --- START: LEADERBOARD SERVICE INTEGRATION ---
 const leaderboardService = require('./leaderboard.js'); // Import the leaderboard service
@@ -426,13 +427,32 @@ emailTransporter.verify((error, success) => {
   }
 });
 
+// Rate limiter for contact form (max 3 submissions per hour per IP)
+const contactRateLimit = rateLimit({
+  windowMs: 60 * 60 * 1000, // 1 hour
+  max: 3, // limit each IP to 3 requests per windowMs
+  message: {
+    error: 'Too many feedback submissions. Please try again later.'
+  },
+  standardHeaders: true, // Return rate limit info in the `RateLimit-*` headers
+  legacyHeaders: false, // Disable the `X-RateLimit-*` headers
+});
+
 // Contact form endpoint
-app.post('/api/contact', async (req, res) => {
-  try {
+app.post('/api/contact', contactRateLimit, async (req, res) => {try {
     console.log('[EMAIL] Received contact form submission:', req.body);
     
-    const { name, email, subject, message, source } = req.body;
-      // Basic validation
+    const { name, email, subject, message, source, website } = req.body;
+    
+    // Honeypot check - if this field is filled, it's likely a bot
+    if (website && website.trim() !== '') {
+      console.log('[EMAIL] Honeypot triggered - likely bot submission blocked');
+      return res.status(400).json({ 
+        error: 'Invalid form submission.' 
+      });
+    }
+    
+    // Basic validation
     if (!name || !email || !message) {
       console.log('[EMAIL] Validation failed - missing required fields');
       return res.status(400).json({ 
