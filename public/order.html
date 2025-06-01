@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes, maximum-scale=3.0, minimum-scale=0.5">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes, maximum-scale=3.0, minimum-scale=0.1">
     <title>Order EDDM Postcards - HEXpostcards</title>
     
     <!-- Meta tags -->
@@ -68,11 +68,11 @@
             }
             
             .iframe-container iframe {
-                min-width: 1000px; /* Increased width to show full content */
-                width: 1000px;
-                height: 100%;
-                /* Allow iframe content to be zoomable */
-                transform-origin: 0 0;
+                min-width: 1000px; /* Ensures the iframe content is initially wider than the viewport */
+                width: 1000px;     /* Adjust as needed, e.g., 1200px if content is very wide */
+                height: 100%;    /* Or a percentage like 120% if content also needs to be taller */
+                /* Remove transform-origin as it can interfere with native pinch-zoom */
+                /* transform-origin: 0 0; */ 
             }
         }
 
@@ -419,7 +419,8 @@
     </div>
 
     <!-- Footer -->
-    <div id="footer"></div>    <script>
+    <div id="footer"></div>
+    <script>
         function hideLoading() {
             const loadingOverlay = document.getElementById('loading-overlay');
             if (loadingOverlay) {
