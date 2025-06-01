@@ -2,6 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
+    <!-- CRITICAL: Ensure this viewport meta tag is present and configured correctly -->
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes, maximum-scale=3.0, minimum-scale=0.1">
     <title>Order EDDM Postcards - HEXpostcards</title>
     
@@ -40,14 +41,16 @@
     <meta name="msapplication-TileColor" content="#da532c">
     <meta name="theme-color" content="#ffffff">
 
-    <style>          .iframe-container {
+    <style>
+        .iframe-container {
             position: relative;
             width: 100%;
-            height: 80vh;
+            /* Default height for desktop, will be overridden for mobile */
+            height: 80vh; 
             min-height: 600px;
             background: #1f2937;
             border-radius: 0.5rem;
-            overflow: visible;
+            /* overflow: visible; -- Let media query handle overflow for mobile */
             box-shadow: 0 10px 25px rgba(0, 0, 0, 0.3);
         }
 
@@ -55,24 +58,26 @@
             width: 100%;
             height: 100%;
             border: none;
-            min-width: 320px; /* Ensure minimum width for mobile */
-        }        /* Mobile-specific iframe handling */
+            /* min-width: 320px; -- Let media query handle specific min-width for mobile iframe content */
+        }
+        
+        /* Mobile-specific iframe handling */
         @media (max-width: 768px) {
             .iframe-container {
-                overflow: auto;
-                -webkit-overflow-scrolling: touch;
-                height: 70vh;
-                min-height: 500px;
-                /* Enable touch gestures for zooming */
-                touch-action: pan-x pan-y pinch-zoom;
+                overflow: auto; /* Essential for scrolling zoomed content */
+                -webkit-overflow-scrolling: touch; /* Smooth scrolling on iOS */
+                height: 70vh; /* Adjust as needed for mobile */
+                min-height: 500px; /* Adjust as needed for mobile */
+                /* touch-action: pan-x pan-y pinch-zoom; -- This can be helpful but sometimes browsers handle it well without it if viewport is correct */
             }
             
             .iframe-container iframe {
-                min-width: 1000px; /* Ensures the iframe content is initially wider than the viewport */
-                width: 1000px;     /* Adjust as needed, e.g., 1200px if content is very wide */
-                height: 100%;    /* Or a percentage like 120% if content also needs to be taller */
-                /* Remove transform-origin as it can interfere with native pinch-zoom */
-                /* transform-origin: 0 0; */ 
+                /* Make the iframe content significantly wider than the screen to force zoomability */
+                width: 1200px; /* Or even larger if the content requires it */
+                min-width: 1000px; 
+                /* Make the iframe content taller if needed, or use 100% of container */
+                height: 120%; /* Or 100% if container height is sufficient */
+                /* Ensure no transform or transform-origin is applied here */
             }
         }
 
