@@ -237,6 +237,10 @@ app.get("/takeaction",      function(req, res){ res.sendFile('/public/action.htm
 app.get("/advertise",      function(req, res){ res.sendFile('/public/action.html',       {root: __dirname}); });
 app.get("/list",                 function(req, res){ res.sendFile('/public/action.html',       {root: __dirname}); });
 
+app.get("/order",                function(req, res){ res.sendFile('/public/order.html',        {root: __dirname}); });
+app.get(["/pfl", "/cards", "/printing"], 
+                                function(req, res){ res.sendFile('/public/order.html',        {root: __dirname}); });
+
 app.get(["/tutorial", "/instructions", "/guide"], 
                                 function(req, res) {
                                             res.set('X-Robots-Tag', 'noindex, nofollow');

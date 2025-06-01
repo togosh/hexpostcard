@@ -1,0 +1,439 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Order EDDM Postcards - HEXpostcards</title>
+    
+    <!-- Meta tags -->
+    <meta name="description" content="Order EDDM postcards directly from our printing partner in the USA. Get your HEX and PulseChain postcards delivered to every mailbox in your target area.">
+    
+    <!-- Facebook -->
+    <meta property="og:url" content="https://HEXpostcards.com/order">
+    <meta property="og:type" content="website">
+    <meta property="og:title" content="Order EDDM Postcards - HEXpostcards">
+    <meta property="og:description" content="Order EDDM postcards directly from our printing partner in the USA.">
+    <meta property="og:image" content="https://HEXpostcards.com/images/HEXpostcards_DirectMail_Banner_05c3.png">
+
+    <!-- Twitter -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta property="twitter:domain" content="HEXpostcards.com">
+    <meta property="twitter:url" content="https://HEXpostcards.com/order">
+    <meta name="twitter:title" content="Order EDDM Postcards - HEXpostcards">
+    <meta name="twitter:description" content="Order EDDM postcards directly from our printing partner in the USA.">
+    <meta name="twitter:image" content="https://HEXpostcards.com/images/HEXpostcards_DirectMail_Banner_05c3.png">
+
+    <!-- Styles -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/tailwindcss/2.2.19/tailwind.min.css" rel="stylesheet">
+    <link href="/css/styles.css" rel="stylesheet">
+    
+    <!-- Scripts -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <script src="navbar.js"></script>
+
+    <!-- ICONS -->
+    <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16.png">
+    <link rel="manifest" href="/site.webmanifest">
+    <link rel="mask-icon" href="/images/safari-pinned-tab.svg" color="#5bbad5">
+    <meta name="msapplication-TileColor" content="#da532c">
+    <meta name="theme-color" content="#ffffff">
+
+    <style>
+        .iframe-container {
+            position: relative;
+            width: 100%;
+            height: 80vh;
+            min-height: 600px;
+            background: #1f2937;
+            border-radius: 0.5rem;
+            overflow: hidden;
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.3);
+        }
+
+        .iframe-container iframe {
+            width: 100%;
+            height: 100%;
+            border: none;
+        }
+
+        .loading-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: #1f2937;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 10;
+        }
+
+        .loading-spinner {
+            width: 40px;
+            height: 40px;
+            border: 4px solid #374151;
+            border-top: 4px solid #3b82f6;
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        .info-card {
+            background: #1f2937;
+            border-radius: 0.5rem;
+            padding: 1.5rem;
+            margin-bottom: 1.5rem;
+            border: 1px solid #374151;
+        }
+
+        .step-number {
+            background: #3b82f6;
+            color: white;
+            width: 2rem;
+            height: 2rem;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            margin-right: 1rem;
+            flex-shrink: 0;
+        }
+    </style>
+</head>
+<body class="bg-gray-900 text-white">
+    <!-- Navigation -->
+    <div id="navbar"></div>
+
+    <!-- Main Content -->
+    <div class="pt-24 pb-16">
+        <div class="container mx-auto px-4">
+            <!-- Header Section -->
+            <div class="text-center mb-12">
+                <h1 class="text-4xl md:text-5xl font-bold mb-6">
+                    Order <span class="text-blue-400">EDDM Postcards</span>
+                </h1>
+                <p class="text-xl text-gray-300 max-w-3xl mx-auto">
+                    Order high-quality EDDM (Every Door Direct Mail) postcards directly from our trusted printing partner PrintingForLess. 
+                    Perfect for reaching every household in your target area with HEX and PulseChain messaging.
+                </p>
+            </div>            <!-- Information Cards -->
+            <div class="grid md:grid-cols-3 gap-6 mb-8">
+                <div class="info-card">
+                    <h3 class="text-xl font-bold text-blue-400 mb-3">🚀 Why EDDM?</h3>
+                    <ul class="text-gray-300 space-y-2">
+                        <li>• Reach every household in selected zip codes</li>
+                        <li>• No mailing list required</li>
+                        <li>• Cost-effective mass distribution</li>
+                        <li>• High visibility and local impact</li>
+                    </ul>
+                </div>
+                
+                <div class="info-card">
+                    <h3 class="text-xl font-bold text-blue-400 mb-3">📋 What You'll Need</h3>
+                    <ul class="text-gray-300 space-y-2">
+                        <li>• Choose your postcard design</li>
+                        <li>• Select target zip codes</li>
+                        <li>• Review pricing and place order</li>
+                    </ul>
+                </div>
+
+                <div class="info-card">
+                    <h3 class="text-xl font-bold text-blue-400 mb-3">🌍 International Campaigns?</h3>
+                    <p class="text-gray-300 mb-3">
+                        This service is for USA only. For more options and campaigns outside the USA, check our tutorial.
+                    </p>
+                    <a href="/tutorial" class="inline-block bg-purple-600 hover:bg-purple-700 px-4 py-2 rounded-lg text-sm transition">
+                        View Tutorial →
+                    </a>
+                </div>
+            </div><!-- Steps Guide -->
+            <div class="info-card mb-8">
+                <h3 class="text-xl font-bold text-blue-400 mb-4">📝 How to Order</h3>                <div class="space-y-4">
+                    <div class="flex items-start">
+                        <div class="step-number">2</div>
+                        <div>
+                            <h4 class="font-semibold">Select Size 6x9, Ink Hi Gloss UV Coating, Paper 120# Gloss Cover 14pt</h4>
+                            <p class="text-gray-300">Click Select your Routes "Start Here" button and enter in your zip codes</p>
+                        </div>
+                    </div>
+                    <div class="flex items-start">
+                        <div class="step-number">3</div>
+                        <div>
+                            <h4 class="font-semibold">Upload design file</h4>
+                            <p class="text-gray-300">Use one of our <a href="/designs" target="_blank" class="text-blue-400 hover:underline">postcard designs</a> or upload your own</p>
+                        </div>
+                    </div>
+                    <div class="flex items-start">
+                        <div class="step-number">4</div>
+                        <div>
+                            <h4 class="font-semibold">Enter billing information and submit order</h4>
+                            <p class="text-gray-300">Complete your payment and order details</p>
+                        </div>
+                    </div>
+                </div>            </div>
+
+            <!-- Recommended Zip Codes Section -->
+            <div class="info-card mb-8">
+                <h3 class="text-xl font-bold text-blue-400 mb-4">🎯 Recommended High-Value Zip Codes</h3>
+                <p class="text-gray-300 mb-4">
+                    Target these high median home value areas for maximum impact. View our full 
+                    <a href="https://docs.google.com/spreadsheets/d/1WN1dFyRtjxu8Ai-k3E1LQVIuNLSdWb4vncuSLiHU3QE/" target="_blank" class="text-blue-400 hover:underline">recommended zip codes spreadsheet</a> 
+                    for more details.
+                </p>                <div class="bg-gray-800 rounded-lg p-4 overflow-x-auto">
+                    <!-- Table Header -->
+                    <div class="grid grid-cols-3 gap-4 mb-4 pb-3 border-b-2 border-blue-400">
+                        <div class="font-bold text-blue-400 text-sm uppercase tracking-wide">ZIP Code</div>
+                        <div class="font-bold text-blue-400 text-sm uppercase tracking-wide">City, State</div>
+                        <div class="font-bold text-blue-400 text-sm uppercase tracking-wide text-right">Median Home Value</div>
+                    </div>
+                    
+                    <!-- Top 5 Zip Codes (Always Visible) -->
+                    <div class="space-y-2 text-sm" id="top-zip-codes">
+                        <div class="grid grid-cols-3 gap-4 py-2 border-b border-gray-600 hover:bg-gray-700 transition">
+                            <div class="font-mono text-yellow-400 font-semibold">94027</div>
+                            <div class="text-gray-300">Atherton, CA</div>
+                            <div class="text-green-400 font-semibold text-right">$7.4M</div>
+                        </div>
+                        <div class="grid grid-cols-3 gap-4 py-2 border-b border-gray-600 hover:bg-gray-700 transition">
+                            <div class="font-mono text-yellow-400 font-semibold">33109</div>
+                            <div class="text-gray-300">Miami Beach, FL</div>
+                            <div class="text-green-400 font-semibold text-right">$5.9M</div>
+                        </div>
+                        <div class="grid grid-cols-3 gap-4 py-2 border-b border-gray-600 hover:bg-gray-700 transition">
+                            <div class="font-mono text-yellow-400 font-semibold">11962</div>
+                            <div class="text-gray-300">Sagaponack, NY</div>
+                            <div class="text-green-400 font-semibold text-right">$5.8M</div>
+                        </div>
+                        <div class="grid grid-cols-3 gap-4 py-2 border-b border-gray-600 hover:bg-gray-700 transition">
+                            <div class="font-mono text-yellow-400 font-semibold">81656</div>
+                            <div class="text-gray-300">Woody Creek, CO</div>
+                            <div class="text-green-400 font-semibold text-right">$5.7M</div>
+                        </div>
+                        <div class="grid grid-cols-3 gap-4 py-2 border-b border-gray-600 hover:bg-gray-700 transition">
+                            <div class="font-mono text-yellow-400 font-semibold">92657</div>
+                            <div class="text-gray-300">Newport Coast, CA</div>
+                            <div class="text-green-400 font-semibold text-right">$5.2M</div>
+                        </div>
+                    </div>
+                    
+                    <!-- Additional Zip Codes (Hidden by Default) -->
+                    <div class="space-y-2 text-sm hidden" id="additional-zip-codes">
+                        <div class="grid grid-cols-3 gap-4 py-2 border-b border-gray-600 hover:bg-gray-700 transition">
+                            <div class="font-mono text-yellow-400 font-semibold">90210</div>
+                            <div class="text-gray-300">Beverly Hills, CA</div>
+                            <div class="text-green-400 font-semibold text-right">$5.0M</div>
+                        </div>
+                        <div class="grid grid-cols-3 gap-4 py-2 border-b border-gray-600 hover:bg-gray-700 transition">
+                            <div class="font-mono text-yellow-400 font-semibold">94022</div>
+                            <div class="text-gray-300">Los Altos, CA</div>
+                            <div class="text-green-400 font-semibold text-right">$4.9M</div>
+                        </div>
+                        <div class="grid grid-cols-3 gap-4 py-2 border-b border-gray-600 hover:bg-gray-700 transition">
+                            <div class="font-mono text-yellow-400 font-semibold">93108</div>
+                            <div class="text-gray-300">Santa Barbara, CA</div>
+                            <div class="text-green-400 font-semibold text-right">$4.6M</div>
+                        </div>
+                        <div class="grid grid-cols-3 gap-4 py-2 border-b border-gray-600 hover:bg-gray-700 transition">
+                            <div class="font-mono text-yellow-400 font-semibold">11976</div>
+                            <div class="text-gray-300">Water Mill, NY</div>
+                            <div class="text-green-400 font-semibold text-right">$4.6M</div>
+                        </div>
+                        <div class="grid grid-cols-3 gap-4 py-2 border-b border-gray-600 hover:bg-gray-700 transition">
+                            <div class="font-mono text-yellow-400 font-semibold">92067</div>
+                            <div class="text-gray-300">Rancho Santa Fe, CA</div>
+                            <div class="text-green-400 font-semibold text-right">$4.5M</div>
+                        </div>
+                        <div class="grid grid-cols-3 gap-4 py-2 border-b border-gray-600 hover:bg-gray-700 transition">
+                            <div class="font-mono text-yellow-400 font-semibold">94024</div>
+                            <div class="text-gray-300">Los Altos, CA</div>
+                            <div class="text-green-400 font-semibold text-right">$4.5M</div>
+                        </div>
+                        <div class="grid grid-cols-3 gap-4 py-2 border-b border-gray-600 hover:bg-gray-700 transition">
+                            <div class="font-mono text-yellow-400 font-semibold">31561</div>
+                            <div class="text-gray-300">Sea Island, GA</div>
+                            <div class="text-green-400 font-semibold text-right">$4.4M</div>
+                        </div>
+                        <div class="grid grid-cols-3 gap-4 py-2 border-b border-gray-600 hover:bg-gray-700 transition">
+                            <div class="font-mono text-yellow-400 font-semibold">98039</div>
+                            <div class="text-gray-300">Medina, WA</div>
+                            <div class="text-green-400 font-semibold text-right">$4.4M</div>
+                        </div>
+                        <div class="grid grid-cols-3 gap-4 py-2 border-b border-gray-600 hover:bg-gray-700 transition">
+                            <div class="font-mono text-yellow-400 font-semibold">90402</div>
+                            <div class="text-gray-300">Santa Monica, CA</div>
+                            <div class="text-green-400 font-semibold text-right">$4.4M</div>
+                        </div>
+                        <div class="grid grid-cols-3 gap-4 py-2 border-b border-gray-600 hover:bg-gray-700 transition">
+                            <div class="font-mono text-yellow-400 font-semibold">94301</div>
+                            <div class="text-gray-300">Palo Alto, CA</div>
+                            <div class="text-green-400 font-semibold text-right">$4.2M</div>
+                        </div>
+                        <div class="grid grid-cols-3 gap-4 py-2 border-b border-gray-600 hover:bg-gray-700 transition">
+                            <div class="font-mono text-yellow-400 font-semibold">92662</div>
+                            <div class="text-gray-300">Newport Coast, CA</div>
+                            <div class="text-green-400 font-semibold text-right">$4.1M</div>
+                        </div>
+                        <div class="grid grid-cols-3 gap-4 py-2 border-b border-gray-600 hover:bg-gray-700 transition">
+                            <div class="font-mono text-yellow-400 font-semibold">02199</div>
+                            <div class="text-gray-300">Boston, MA</div>
+                            <div class="text-green-400 font-semibold text-right">$4.1M</div>
+                        </div>
+                        <div class="grid grid-cols-3 gap-4 py-2 border-b border-gray-600 hover:bg-gray-700 transition">
+                            <div class="font-mono text-yellow-400 font-semibold">95070</div>
+                            <div class="text-gray-300">Saratoga, CA</div>
+                            <div class="text-green-400 font-semibold text-right">$4.1M</div>
+                        </div>
+                        <div class="grid grid-cols-3 gap-4 py-2 border-b border-gray-600 hover:bg-gray-700 transition">
+                            <div class="font-mono text-yellow-400 font-semibold">11932</div>
+                            <div class="text-gray-300">Bridgehampton, NY</div>
+                            <div class="text-green-400 font-semibold text-right">$4.0M</div>
+                        </div>
+                    </div>
+                      <!-- Show More/Less Button -->
+                    <div class="mt-4 text-center">
+                        <div class="flex flex-col sm:flex-row gap-4 justify-center items-center">
+                            <button id="toggle-zip-codes" onclick="toggleZipCodes()" class="bg-gray-600 hover:bg-gray-500 px-6 py-2 rounded-lg transition">
+                                Show More (+14)
+                            </button>
+                            <a href="https://docs.google.com/spreadsheets/d/1WN1dFyRtjxu8Ai-k3E1LQVIuNLSdWb4vncuSLiHU3QE/" target="_blank" class="inline-block bg-blue-600 hover:bg-blue-700 px-6 py-2 rounded-lg transition">
+                                View Full Zip Code List →
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- PrintingForLess Service Explanation -->
+            <div class="info-card mb-8">
+                <h3 class="text-xl font-bold text-blue-400 mb-4">🖨️ About PrintingForLess EDDM Service</h3>
+                <div class="space-y-4">
+                    <p class="text-gray-300">
+                        The order form below is embedded directly from <strong>PrintingForLess</strong>, our trusted printing partner in the USA. 
+                        This allows you to order high-quality EDDM postcards without leaving this page.
+                    </p>
+                    
+                    <div class="bg-gray-800 rounded-lg p-4" style="display: none;">
+                        <h4 class="font-semibold text-blue-300 mb-2">What you'll see in the embedded form:</h4>
+                        <ul class="text-gray-300 space-y-1 text-sm">
+                            <li>• Size and paper options (we recommend 6x9, 120# Gloss Cover with UV coating)</li>
+                            <li>• Zip code selector for targeting specific areas</li>
+                            <li>• Quantity calculator based on households in selected zip codes</li>
+                            <li>• Upload area for your postcard design files</li>
+                            <li>• Real-time pricing and checkout</li>
+                        </ul>
+                    </div>
+
+                    <div class="flex flex-col sm:flex-row gap-4">
+                        <div class="flex-1">
+                            <p class="text-gray-300 text-sm">
+                                <strong>Prefer to order directly?</strong> You can also visit PrintingForLess directly in a new tab 
+                                to place your order if you prefer their full website experience.
+                            </p>
+                        </div>
+                        <div class="flex-shrink-0">
+                            <a href="https://www.printingforless1.com/pricing/pages/cardseddmpostcards.aspx" 
+                               target="_blank" 
+                               rel="noopener noreferrer"
+                               class="inline-block bg-green-600 hover:bg-green-700 px-6 py-2 rounded-lg transition font-semibold text-center">
+                                Open PrintingForLess Directly →
+                            </a>
+                        </div>
+                    </div>
+
+                    <div class="bg-blue-900 border border-blue-700 rounded-lg p-3">
+                        <p class="text-blue-200 text-sm">
+                            <strong>💡 Tip:</strong> If the embedded form doesn't load or you experience any issues, 
+                            use the "Open PrintingForLess Directly" button above to access their website directly.
+                        </p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Iframe Container -->
+            <div class="iframe-container">
+                <div class="loading-overlay" id="loading-overlay">
+                    <div class="text-center">
+                        <div class="loading-spinner mb-4"></div>
+                        <p class="text-gray-300">Loading order form...</p>
+                    </div>
+                </div>                <iframe
+                    id="pfl-iframe"
+                    src="https://www.printingforless1.com/pricing/pages/cardseddmpostcards.aspx"
+                    loading="lazy"
+                    sandbox="allow-forms allow-popups allow-scripts allow-same-origin"
+                    onload="hideLoading()">
+                </iframe>
+            </div>
+
+            <!-- Additional Information -->
+            <div class="mt-8 grid md:grid-cols-2 gap-6">
+                <div class="info-card">
+                    <h3 class="text-xl font-bold text-blue-400 mb-3">🎯 Need Help?</h3>
+                    <p class="text-gray-300 mb-3">
+                        If you need assistance with your order or have questions about EDDM campaigns, 
+                        we're here to help!
+                    </p>
+                    <a href="/contact" class="inline-block bg-blue-600 hover:bg-blue-700 px-6 py-2 rounded-lg transition">
+                        Contact Support
+                    </a>
+                </div>
+                  <div class="info-card">
+                    <h3 class="text-xl font-bold text-blue-400 mb-3">🎨 Design Resources</h3>
+                    <p class="text-gray-300 mb-3">
+                        Need the perfect design for your postcard? Browse our collection of professional 
+                        HEX and PulseChain designs ready for download and printing.
+                    </p>
+                    <a href="/designs" class="inline-block bg-purple-600 hover:bg-purple-700 px-6 py-2 rounded-lg transition">
+                        Browse Designs
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <div id="footer"></div>    <script>
+        function hideLoading() {
+            const loadingOverlay = document.getElementById('loading-overlay');
+            if (loadingOverlay) {
+                loadingOverlay.style.display = 'none';
+            }
+        }
+
+        function toggleZipCodes() {
+            const additionalCodes = document.getElementById('additional-zip-codes');
+            const toggleButton = document.getElementById('toggle-zip-codes');
+            
+            if (additionalCodes.classList.contains('hidden')) {
+                // Show additional zip codes
+                additionalCodes.classList.remove('hidden');
+                toggleButton.textContent = 'Show Less';
+                toggleButton.classList.remove('bg-gray-600', 'hover:bg-gray-500');
+                toggleButton.classList.add('bg-red-600', 'hover:bg-red-500');
+            } else {
+                // Hide additional zip codes
+                additionalCodes.classList.add('hidden');
+                toggleButton.textContent = 'Show More (+14)';
+                toggleButton.classList.remove('bg-red-600', 'hover:bg-red-500');
+                toggleButton.classList.add('bg-gray-600', 'hover:bg-gray-500');
+            }
+        }
+
+        // Fallback to hide loading after 10 seconds
+        setTimeout(hideLoading, 10000);
+
+        // Load footer
+        $(document).ready(function() {
+            $("#footer").load("footer.html");
+        });
+    </script>
+</body>
+</html>
