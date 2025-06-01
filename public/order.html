@@ -40,15 +40,14 @@
     <meta name="msapplication-TileColor" content="#da532c">
     <meta name="theme-color" content="#ffffff">
 
-    <style>
-        .iframe-container {
+    <style>          .iframe-container {
             position: relative;
             width: 100%;
             height: 80vh;
             min-height: 600px;
             background: #1f2937;
             border-radius: 0.5rem;
-            overflow: hidden;
+            overflow: visible;
             box-shadow: 0 10px 25px rgba(0, 0, 0, 0.3);
         }
 
@@ -56,6 +55,21 @@
             width: 100%;
             height: 100%;
             border: none;
+            min-width: 320px; /* Ensure minimum width for mobile */
+        }        /* Mobile-specific iframe handling */
+        @media (max-width: 768px) {
+            .iframe-container {
+                overflow: auto;
+                -webkit-overflow-scrolling: touch;
+                height: 70vh;
+                min-height: 500px;
+            }
+            
+            .iframe-container iframe {
+                min-width: 1000px; /* Increased width to show full content */
+                width: 1000px;
+                height: 100%;
+            }
         }
 
         .loading-overlay {
@@ -160,7 +174,7 @@
                     <div class="flex items-start">
                         <div class="step-number">2</div>
                         <div>
-                            <h4 class="font-semibold">Select Size 6x9, Ink Hi Gloss UV Coating, Paper 120# Gloss Cover 14pt</h4>
+                            <h4 class="font-semibold">Select Size 6.25x9, Ink Hi Gloss UV Coating, Paper 120# Gloss Cover 14pt</h4>
                             <p class="text-gray-300">Click Select your Routes "Start Here" button and enter in your zip codes</p>
                         </div>
                     </div>
@@ -364,7 +378,8 @@
                         <div class="loading-spinner mb-4"></div>
                         <p class="text-gray-300">Loading order form...</p>
                     </div>
-                </div>                <iframe
+                </div>                
+                <iframe
                     id="pfl-iframe"
                     src="https://www.printingforless1.com/pricing/pages/cardseddmpostcards.aspx"
                     loading="lazy"
