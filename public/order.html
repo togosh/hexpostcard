@@ -68,7 +68,7 @@
                 -webkit-overflow-scrolling: touch; /* Smooth scrolling on iOS */
                 height: 70vh; /* Adjust as needed for mobile */
                 min-height: 500px; /* Adjust as needed for mobile */
-                /* touch-action: pan-x pan-y pinch-zoom; -- This can be helpful but sometimes browsers handle it well without it if viewport is correct */
+                touch-action: pan-x pan-y pinch-zoom; /* Ensure this is active to guide browser gesture handling */
             }
             
             .iframe-container iframe {
