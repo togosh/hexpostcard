@@ -136,7 +136,7 @@
     <div id="navbar"></div>
 
     <!-- Main Content -->
-    <div class="pt-24 pb-16">
+    <div class="pt-36 pb-16">
         <div class="container mx-auto px-4">
             <!-- Header Section -->
             <div class="text-center mb-12">
@@ -455,8 +455,11 @@
         // Fallback to hide loading after 10 seconds
         setTimeout(hideLoading, 10000);
 
-        // Load footer
+        // Load navbar and footer
         $(document).ready(function() {
+            $('#navbar').load('/navbar.html', function() {
+                initMobileMenu();
+            });
             $("#footer").load("footer.html");
         });
     </script>

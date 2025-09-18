@@ -132,10 +132,11 @@
                         Direct Mail Marketing for <span class="text-blue-400">Crypto</span>
                     </h1>
                     <p class="text-xl text-gray-300 mb-8">
-                        We've delivered 536,000+ postcards to high-net-worth households. Join our community-driven initiative to promote HEX and PulseChain through targeted direct mail.
-                    </p>                    <div class="flex flex-col sm:flex-row gap-4">
+                        We've delivered 550,000+ postcards to high-net-worth households. Join our community-driven initiative to promote HEX and PulseChain through targeted direct mail.
+                    </p>                    
+                    <div class="flex flex-col sm:flex-row gap-4">
                         <a href="#donate" 
-                           class="bg-blue-600 hover:bg-blue-700 px-8 py-4 rounded-lg font-medium text-lg text-center transition">
+                           class="bg-blue-600 hover:bg-blue-700 px-8 py-4 rounded-lg font-medium text-lg text-center transition" hidden>
                             Donate Now
                         </a>
                         <a href="/order" 
@@ -170,7 +171,7 @@
             <div class="grid grid-cols-1 md:grid-cols-3 gap-8 text-center">
                 <div>
                     <div class="text-3xl font-bold text-blue-400 mb-2" data-stat="postcards">
-                        536,000+
+                        550,000+
                     </div>
                     <div class="text-gray-400">Postcards Delivered</div>
                 </div>
@@ -272,7 +273,7 @@
     </section>
 
     <!-- Donation Section -->
-    <section id="donate" class="py-20 bg-gray-800">
+    <section id="donate" class="py-20 bg-gray-800" hidden>
         <div class="container mx-auto px-4">
             <h2 class="text-3xl font-bold mb-12 text-center">Support Our Mission</h2>
             
@@ -339,7 +340,7 @@
     </section>
 
     <!-- Call to Action Section -->
-    <section class="py-20 bg-gray-900">
+    <section class="py-20 bg-gray-800">
         <div class="container mx-auto px-4 text-center">
             <h2 class="text-3xl font-bold mb-8">Ready to Take Action?</h2>
             <div class="flex flex-col md:flex-row gap-4 justify-center">
@@ -390,7 +391,7 @@
         // Update stats with international formatting
         function updateStats() {
             // Format postcards delivered
-            document.querySelector('[data-stat="postcards"]').textContent = formatInteger(536000) + '+';
+            document.querySelector('[data-stat="postcards"]').textContent = formatInteger(550000) + '+';
             
             // Format community members
             document.querySelector('[data-stat="members"]').textContent = formatInteger(900) + '+';
