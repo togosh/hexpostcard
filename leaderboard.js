@@ -42,17 +42,18 @@ function cleanupScheduledJobs() {
 
 // Enhanced request timeout and retry logic with circuit breaker
 async function fetchWithTimeout(url, options = {}, timeoutMs = 15000, maxRetries = 2) {
+  for (let attempt = 1; attempt <= maxRetries; attempt++) {
+    // New controller for each attempt
     const controller = new AbortController();
-    const timeoutId = setTimeout(() => controller.abort(), timeoutMs);
-    
-    for (let attempt = 1; attempt <= maxRetries; attempt++) {
-        try {
-            const response = await fetch(url, {
-                ...options,
-                signal: controller.signal,
-                timeout: timeoutMs
-            });
-            clearTimeout(timeoutId);
+    const timeout = setTimeout(() => controller.abort(), timeoutMs);
+    try {
+      const response = await fetch(url, {
+        ...options,
+        // Prefer AbortSignal.timeout in modern Node:
+        // signal: AbortSignal.timeout(timeoutMs),
+        signal: controller.signal
+      });
+      clearTimeout(timeout);
             
             if (!response.ok) {
                 throw new Error(`HTTP ${response.status}: ${response.statusText}`);

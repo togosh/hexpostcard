@@ -77,11 +77,13 @@ process.on('uncaughtException', (error) => {
     console.error('[CRASH PREVENTION] Uncaught Exception:', error);
     logMemoryUsage();
     // Don't exit immediately, log for debugging
+    process.exit(1);
 });
 
 process.on('unhandledRejection', (reason, promise) => {
     console.error('[CRASH PREVENTION] Unhandled Rejection at:', promise, 'reason:', reason);
     logMemoryUsage();
+    process.exit(1);
 });
 
 // Log memory on exit signals
@@ -192,7 +194,8 @@ const app = express();
 app.use(express.json());
 
 app.use((req, res, next) => {
-  const host = req.headers.host.split(':')[0];
+  const hostHeader = req.headers.host || '';
+  const host = hostHeader.split(':')[0] || '';
   if (!host.startsWith('www.') && 
       !host.match(/^(?:[0-9]{1,3}\.){3}[0-9]{1,3}$/) && 
       host !== 'localhost' && 
@@ -414,13 +417,16 @@ async function calculateBestDesigns() {
 
 // --- START: EMAIL CONTACT FORM FUNCTIONALITY ---
 // Configure nodemailer transporter
-const emailTransporter = nodemailer.createTransport({
-  service: CONFIG.email.service,
-  auth: {
-    user: CONFIG.email.auth.user,
-    pass: CONFIG.email.auth.pass
-  }
-});
+let emailTransporter = null;
+if (CONFIG.email && CONFIG.email.service && CONFIG.email.auth?.user && CONFIG.email.auth?.pass) {
+  emailTransporter = nodemailer.createTransport({
+    service: CONFIG.email.service,
+    auth: { user: CONFIG.email.auth.user, pass: CONFIG.email.auth.pass }
+  });
+  emailTransporter.verify(err => console.log('[EMAIL] verify:', err || 'OK'));
+} else {
+  console.warn('[EMAIL] Email config missing; /api/contact disabled');
+}
 
 // Verify email configuration on startup
 emailTransporter.verify((error, success) => {
@@ -443,9 +449,16 @@ const contactRateLimit = rateLimit({
 });
 
 // Contact form endpoint
-app.post('/api/contact', contactRateLimit, async (req, res) => {try {
+app.post('/api/contact', contactRateLimit, async (req, res) => {
+  try {
     console.log('[EMAIL] Received contact form submission:', req.body);
-    
+
+    if (!emailTransporter) {
+      return res.status(503).json({
+        error: 'Contact temporarily unavailable. Please try again later.'
+      });
+    }
+
     const { name, email, subject, message, source, website } = req.body;
     
     // Honeypot check - if this field is filled, it's likely a bot
@@ -624,8 +637,8 @@ process.on('SIGINT', async () => {
 });
 // --- END: LEADERBOARD DATA GRABBING AND SOCKET.IO ---
 
-httpServer.listen(httpPort, hostname, () => { log(`Server running at http://${hostname}:${httpPort}/`);});
-if(!DEBUG){ httpsServer.listen(httpsPort, hostname, () => { 
+httpServer.listen(httpPort, () => { log(`Server running at http://${hostname}:${httpPort}`);});
+if(!DEBUG){ httpsServer.listen(httpsPort, () => { 
     log('listening on *:' + httpsPort); 
   });
 }
